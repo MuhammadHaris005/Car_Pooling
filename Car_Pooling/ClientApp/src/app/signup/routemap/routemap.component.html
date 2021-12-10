@@ -1,0 +1,179 @@
+<!-- <div class="row d-flex justify-content-center " id="maptitle">
+  <h4><strong>Enter your Map Route</strong> </h4>
+</div>
+<div class="row d-flex justify-content-center" id="map">
+  <agm-map
+  [latitude]="lat"
+  [longitude]="lng"
+  [zoom]="zoom"
+  [zoomControl]="false"
+  (mapClick)="mapClicked($event)"
+>
+  <agm-marker
+    *ngFor="let m of markers; let i = index"
+    [latitude]="m.lat"
+    [longitude]="m.lng"
+    [label]="m.label"
+    [markerDraggable]="m.draggable"
+    (dragEnd)="markerDragEnd(m, $event)"
+  >
+  </agm-marker>
+</agm-map>
+</div>
+<div class="d-flex justify-content-center m-3">
+  <input class="btn btn-dark" type="submit" value="Submit" (click)=SavePoints() >
+</div>
+ -->
+
+ <!-- <app-headerfooter></app-headerfooter>
+<div  class=" d-flex justify-content-center"  >
+
+ <form class="p-5" method="POST">
+    <div class="d-flex justify-content-center m-auto pb-3 border-2">
+      <h2><strong>Sign Up</strong></h2>
+    </div>
+    <div class="group-gap">
+
+
+      <div class="avatar-upload">
+        <div class="avatar-edit">
+          <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)" />
+        </div>
+        <div class="avatar-preview">
+          <div id="imagePreview" [style.backgroundImage]="'url('+ imageUrl +')'">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+      <button type="submit" class="btn btn-danger btn-lg btn-sm" (click)="fileInput.click()">Upload Image</button>
+
+    <div class="form-row pt-3">
+      <div class="form-group col-6 pr-5">
+        <input type="text" class="form-control" placeholder="First Name" name="fname"  [(ngModel)] = "firstname" required>
+      </div>
+      <div class="form-group col-6 pl-5">
+        <input type="text" class="form-control" placeholder="Last Name" name="lname"  [(ngModel)] = "lastname" required>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-6 pr-5">
+        <input type="text"  class="form-control" placeholder="Email Address" name="email" [(ngModel)] = "email" required>
+      </div>
+      <div class="form-group col-6 pl-5">
+        <input type="text"  class="form-control" placeholder="CNIC" name="cnic" [(ngModel)] = "cnic" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-6 pr-5">
+        <input type="text"  class="form-control" placeholder="Mobile number" name="phone" [(ngModel)] = "phone" required>
+      </div>
+      <div class="form-group col-6 pl-5">
+        <input type="text"  class="form-control" placeholder="City" name="city" [(ngModel)] = "city">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-6 pr-5">
+        <input type="password" class="form-control"  placeholder="Password" name="password" [(ngModel)] = "password">
+      </div>
+      <div class="form-group col-6 pl-5">
+        <input type="password" class="form-control"  placeholder="Confirm Password" name="Cpassword" [(ngModel)] = "Cpassword">
+      </div>
+    </div>
+    <div class="d-flex justify-content-center p-5">
+      <button type="submit" class="btn btn-dark btn-block rounded-5" (click)="SignUp()">Sign Up</button>
+    </div>
+    <div id="or"> or </div>
+    <p class="footer-link col-xs-12">By signing up with Careem you agree to our&nbsp;<a  target="_blank">Terms &amp; Conditions </a></p>
+  </form>
+</div>
+<app-footer></app-footer>
+ -->
+
+ <body class="login-page">
+	<div class="login-header box-shadow">
+		<div class="container-fluid d-flex justify-content-between align-items-center">
+			<div class="brand-logo">
+				<a routerLink="/login">
+					<h3>ᑕᗩᖇ ᑭᗝᗝᒪIᑎᎶ</h3>
+				</a>
+			</div>
+			<div class="login-menu">
+				<ul>
+					<li><a routerLink="/login">Login</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="register-page-wrap d-flex align-items-center flex-wrap justify-content-center">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-md-2 col-lg-2">
+					<img src="../../assets/vendors/images/abc.jpg" alt="">
+				</div>
+				<div class="col-md-10 col-lg-10">
+					<div id="map" class="box bg-white box-shadow border-radius-10 p-4" >
+              <div class="login-title">
+                <h2 class="text-center text-primary">Registration</h2>
+              </div>
+              <!-- <h5 class="text-center text-black">Trip Route</h5> -->
+              <p class="text-center text-black">Mark Your Pickup Points</p>
+              <div class="map pl-2">
+                <agm-map
+                [latitude]="lat"
+                [longitude]="lng"
+                [zoom]="zoom"
+                [zoomControl]="false"
+                (mapClick)="mapClicked($event)"
+              >
+                <agm-marker
+                  *ngFor="let m of markers; let i = index"
+                  [latitude]="m.lat"
+                  [longitude]="m.lng"
+                  [label]="m.label"
+                  [markerDraggable]="m.draggable"
+                  (dragEnd)="markerDragEnd(m, $event)"
+                >
+                </agm-marker>
+              </agm-map>
+              </div>
+              <div class="row p-3">
+                <div class=" col-6 d-flex justify-content-start">
+                  <button type="submit" class="btn btn-md btn-primary rounded-top "routerLink= "/vehicle"><span class="fa fa-arrow-left"></span>  Previous</button>
+                </div>
+                <div class="col-6 d-flex justify-content-end">
+                  <button type="submit" class="btn btn-md btn-primary rounded-top " (click)="SavePoints()">Register</button>
+                </div>
+              </div>
+              <!-- <div class="d-flex justify-content-center pt-4">
+                <input class="btn btn-circle btn-primary" type="submit" value="Register" (click)=SavePoints() >
+              </div> -->
+
+            </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- success Popup html Start -->
+	<button type="button" id="success-modal-btn" hidden data-toggle="modal" data-target="#success-modal" data-backdrop="static">Launch modal</button>
+	<div class="modal fade" id="success-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered max-width-400" role="document">
+			<div class="modal-content">
+				<div class="modal-body text-center font-18">
+					<h3 class="mb-20">Form Submitted!</h3>
+					<div class="mb-30 text-center"><img src="../../assets/vendors/images/success.png"></div>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				</div>
+				<div class="modal-footer justify-content-center">
+					<a href="login.html" class="btn btn-primary">Done</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- success Popup html End -->
+	<!-- js -->
+
+</body>
+

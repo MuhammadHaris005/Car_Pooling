@@ -1,0 +1,227 @@
+<!-- <app-headerfooter></app-headerfooter>
+<div  class=" d-flex justify-content-center"  >
+
+ <form class="p-5" method="POST">
+    <div class="d-flex justify-content-center m-auto pb-3 border-2">
+      <h2><strong>Sign Up</strong></h2>
+    </div>
+    <div class="group-gap">
+
+
+      <div class="avatar-upload">
+        <div class="avatar-edit">
+          <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)" />
+        </div>
+        <div class="avatar-preview">
+          <div id="imagePreview" [style.backgroundImage]="'url('+ imageUrl +')'">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+      <button type="submit" class="btn btn-danger btn-lg btn-sm" (click)="fileInput.click()">Upload Image</button>
+
+    <div class="form-row pt-3">
+      <div class="form-group col-6 pr-5">
+        <input type="text" class="form-control" placeholder="First Name" name="fname"  [(ngModel)] = "firstname" required>
+      </div>
+      <div class="form-group col-6 pl-5">
+        <input type="text" class="form-control" placeholder="Last Name" name="lname"  [(ngModel)] = "lastname" required>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-6 pr-5">
+        <input type="text"  class="form-control" placeholder="Email Address" name="email" [(ngModel)] = "email" required>
+      </div>
+      <div class="form-group col-6 pl-5">
+        <input type="text"  class="form-control" placeholder="CNIC" name="cnic" [(ngModel)] = "cnic" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-6 pr-5">
+        <input type="text"  class="form-control" placeholder="Mobile number" name="phone" [(ngModel)] = "phone" required>
+      </div>
+      <div class="form-group col-6 pl-5">
+        <input type="text"  class="form-control" placeholder="City" name="city" [(ngModel)] = "city">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-6 pr-5">
+        <input type="password" class="form-control"  placeholder="Password" name="password" [(ngModel)] = "password">
+      </div>
+      <div class="form-group col-6 pl-5">
+        <input type="password" class="form-control"  placeholder="Confirm Password" name="Cpassword" [(ngModel)] = "Cpassword">
+      </div>
+    </div>
+    <div class="d-flex justify-content-center p-5">
+      <button type="submit" class="btn btn-dark btn-block rounded-5" (click)="SignUp()">Sign Up</button>
+    </div>
+    <div id="or"> or </div>
+    <p class="footer-link col-xs-12">By signing up with Careem you agree to our&nbsp;<a  target="_blank">Terms &amp; Conditions </a></p>
+  </form>
+</div>
+<app-footer></app-footer>
+ -->
+
+ <body class="login-page">
+	<div class="login-header box-shadow">
+		<div class="container-fluid d-flex justify-content-between align-items-center">
+			<div class="brand-logo ">
+				<a routerLink="/login">
+					<h3>ᑕᗩᖇ ᑭᗝᗝᒪIᑎᎶ</h3>
+				</a>
+			</div>
+			<div class="login-menu">
+				<ul>
+					<li><a routerLink="/login">Login</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="register-page-wrap d-flex align-items-center flex-wrap justify-content-center">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-md-4 col-lg-4">
+					<img src="../../assets/vendors/images/abc.jpg" alt="">
+				</div>
+				<div class="col-md-8 col-lg-8">
+					<div class="register-box bg-white box-shadow border-radius-10 p-5">
+              <div class="login-title">
+                <h2 class="text-center text-primary">Registration</h2>
+              </div>
+              <p class="text-center text-black">Personal Info</p>
+
+							<form [formGroup]= "generalForm" (ngSubmit)= "onSubmit()">
+                <div class="group-gap d-flex justify-content-center">
+                  <div class="avatar-upload">
+                    <div class="avatar-edit">
+                      <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)" />
+                    </div>
+                    <div class="avatar-preview">
+
+                      <div class="btn btn-light btn-lg btn-sm" (click)="fileInput.click()" id="imagePreview" [style.backgroundImage]="'url('+ imageUrl +')'">
+                        <i class="fa fa-picture-o fa-2x m-4 pt-3" ></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="form-row pt-3">
+
+                  <div class="form-group col-6 pr-3">
+                    <input type="text" class="form-control" placeholder="First Name" formControlName="firstName" [ngClass]= "{ 'is-invalid': submitted && f.firstName.errors }"/>
+                    <div class="input-group-append custom">
+                      <span class="input-group-text"><i class="icon-copy dw dw-name"></i></span>
+                    </div>
+                    <div *ngIf= "submitted && f.firstName.errors" class="invalid-feedback">
+                      <div *ngIf= "f.firstName.errors.required">First Name is required</div>
+                      <div *ngIf="f.firstName.errors.pattern">FirstName must be a alphabets</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group col-6 pl-3">
+                    <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName" [ngClass]= "{ 'is-invalid': submitted && f.lastName.errors }"/>
+                    <div class="input-group-append custom">
+                      <span class="input-group-text"><i class="icon-copy dw dw-name"></i></span>
+                    </div>
+                    <div *ngIf= "submitted && f.lastName.errors" class="invalid-feedback">
+                      <div *ngIf= "f.lastName.errors.required">Last Name is required</div>
+                      <div *ngIf="f.lastName.errors.pattern">LastName must be a alphabets</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group col-6 pr-3">
+                    <input type="text"  class="form-control" placeholder="Email Address" formControlName="email" [ngClass]= "{ 'is-invalid': submitted && f.email.errors }"/>
+                    <div class="input-group-append custom">
+                      <span class="input-group-text"><i class="icon-copy dw dw-email"></i></span>
+                    </div>
+                    <div *ngIf= "submitted && f.email.errors" class="invalid-feedback">
+                      <div *ngIf= "f.email.errors.required">Email is required</div>
+                      <div *ngIf= "f.email.errors.email">Email must be a valid Format address</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group col-6 pl-3">
+                    <input type="text"  class="form-control" placeholder="CNIC" formControlName="cnic" [ngClass]= "{ 'is-invalid': submitted && f.cnic.errors }">
+                    <div class="input-group-append custom">
+                      <span class="input-group-text"><i class="icon-copy dw dw-pencil"></i></span>
+                    </div>
+                    <div *ngIf= "submitted && f.cnic.errors" class="invalid-feedback">
+                      <div *ngIf= "f.cnic.errors.required">CNIC is required</div>
+                      <div *ngIf="f.cnic.errors.minlength">CNIC must be at 13 characters</div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Gender</label>
+                      <input type="radio"  formControlName="gender" value="Male">Male
+                      <input type="radio"  formControlName="gender" value="Female">Female
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-6 pr-3">
+                    <input type="text"  class="form-control" placeholder="Mobile number" formControlName="phoneNo" [ngClass]= "{ 'is-invalid': submitted && f.phoneNo.errors }">
+                    <div class="input-group-append custom">
+                      <span class="input-group-text"><i class="icon-copy dw dw-smartphone"></i></span>
+                    </div>
+                    <div *ngIf= "submitted && f.phoneNo.errors" class="invalid-feedback">
+                      <div *ngIf= "f.phoneNo.errors.required">Phone Number is required</div>
+                      <div *ngIf="f.phoneNo.errors.minlength">Phone Number must be at 11 characters</div>
+                    </div>
+
+                  </div>
+                  <div class="form-group col-6 pl-3">
+                    <input type="text"  class="form-control" placeholder="City" formControlName="city" [ngClass]= "{ 'is-invalid': submitted && f.city.errors }">
+                    <div class="input-group-append custom">
+                      <span class="input-group-text"><i class="icon-copy dw dw-city"></i></span>
+                    </div>
+                    <div *ngIf= "submitted && f.city.errors" class="invalid-feedback">
+                      <div *ngIf= "f.city.errors.required">City Name is required</div>
+                      <div *ngIf="f.city.errors.pattern">City Name must be a alphabets</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-6 pr-3">
+                    <input type="password" class="form-control"  placeholder="Password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                    <div class="input-group-append custom">
+                      <span class="input-group-text"><i class="icon-copy dw dw-password"></i></span>
+                    </div>
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                      <div *ngIf="f.password.errors.required">Password is required</div>
+                      <div *ngIf="f.password.errors.minlength">Password must be at least 8 characters</div>
+                  </div>
+                  </div>
+                  <div class="form-group col-6 pl-3">
+                    <input type="password" class="form-control"  placeholder="Confirm Password" formControlName="confirmPassword" [ngClass]= "{ 'is-invalid': submitted && f.confirmPassword.errors }">
+                    <div class="input-group-append custom">
+                      <span class="input-group-text"><i class="icon-copy dw dw-password"></i></span>
+                    </div>
+                    <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                      <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+                      <div *ngIf="f.confirmPassword.errors.minlength">Password must be at least 6 characters</div>
+                  </div>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                  <button type="submit" class="btn btn-primary rounded-5">Next &nbsp;<i class="icon-copy dw dw-right-arrow"></i></button>
+                </div>
+              </form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- success Popup html Start -->
+
+	<!-- success Popup html End -->
+	<!-- js -->
+
+</body>

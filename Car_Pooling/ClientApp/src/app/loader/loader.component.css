@@ -1,0 +1,80 @@
+
+.spinner-container {
+  width: 100px;
+  height: 100px;
+  top: 40%;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  display: block;
+}
+.ngx-overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99998!important;
+  background-color: rgb(255, 255, 255);
+  cursor: progress;
+}
+.sk-three-strings {
+  width: 100%;
+  height: 100%;
+}
+
+.sk-three-strings > div {
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.sk-three-strings > div:nth-child(1) {
+  left: 0%;
+  top: 0%;
+  animation: sk-threeStrings-rotateOne 1s linear infinite ;
+  border-bottom: 6px solid rgb(20, 106, 146);
+}
+
+.sk-three-strings > div:nth-child(2) {
+  right: 0%;
+  top: 0%;
+  animation: sk-threeStrings-rotateTwo 1s linear infinite;
+  border-right: 6px solid rgb(20, 106, 146);
+}
+
+.sk-three-strings > div:nth-child(3) {
+  right: 0%;
+  bottom: 0%;
+  animation: sk-threeStrings-rotateThree 1s linear infinite;
+  border-top: 6px solid rgb(20, 106, 146);
+}
+
+@keyframes sk-threeStrings-rotateOne {
+  0% {
+    transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+  }
+}
+
+@keyframes sk-threeStrings-rotateTwo {
+  0% {
+    transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+  }
+}
+
+@keyframes sk-threeStrings-rotateThree {
+  0% {
+    transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+  }
+}

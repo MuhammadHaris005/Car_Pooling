@@ -1,0 +1,153 @@
+<!-- <div  class="row p-5 d-flex justify-content-center">
+  <form class="p-5">
+    <div class="d-flex justify-content-center m-auto pb-5">
+      <h4><strong>  Vehicle Information</strong> </h4>
+    </div>
+
+    <div class="form-row m-3">
+      <div class="form-group col-6 pr-4">
+        <input type="text" class="form-control" placeholder="Vehicle Name">
+      </div>
+      <div class="form-group col-6 pl-4">
+        <input type="text" class="form-control" placeholder="Registration No">
+      </div>
+    </div>
+    <div class="form-row m-3">
+      <div class="form-group col-6 pr-4">
+        <input type="text"  class="form-control" placeholder="Model">
+      </div>
+      <div class="form-group col-6 pl-4">
+        <input type="text"  class="form-control" placeholder="Maker">
+      </div>
+    </div>
+
+    <div class="form-row m-3">
+      <div class="form-group col-6 pr-4">
+        <input type="text"  class="form-control" placeholder="Color">
+      </div>
+      <div class="form-group col-6 pl-4">
+        <input type="text"  class="form-control" placeholder="Seating Capacity">
+      </div>
+    </div>
+    <div class="d-flex justify-content-end mr-3">
+      <button type="submit" class="btn btn-md btn-dark rounded-top "routerLink= "/routemap">Next  <fa-icon [icon] = "faArrowRight"></fa-icon></button>
+    </div>
+  </form>
+</div>
+ -->
+
+ <body class="login-page">
+	<div class="login-header box-shadow">
+		<div class="container-fluid d-flex justify-content-between align-items-center">
+			<div class="brand-logo">
+				<a routerLink="/login">
+					<h3>ᑕᗩᖇ ᑭᗝᗝᒪIᑎᎶ</h3>
+				</a>
+			</div>
+			<div class="login-menu">
+				<ul>
+					<li><a routerLink="/login">Login</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="register-page-wrap d-flex align-items-center flex-wrap justify-content-center">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-md-4 col-lg-4">
+					<img src="../../assets/vendors/images/abc.jpg" alt="">
+				</div>
+				<div class="col-md-8 col-lg-8">
+					<div class="register-box bg-white box-shadow border-radius-10 p-5">
+              <div class="login-title">
+                <h2 class="text-center text-primary">Registration</h2>
+              </div>
+              <p class="text-center text-black">Vehicle Info</p>
+							<form [formGroup]= "vehicleForm" (ngSubmit)= "onSubmit()">
+                <div class="form-row pt-3">
+                  <div class="form-group col-6 pl-3">
+                    <input type="text" class="form-control" placeholder="Registration No" formControlName="regno" [ngClass]= "{ 'is-invalid': submitted && f.regno.errors }">
+                    <div class="input-group-append custom">
+                      <span class="input-group-text"><i class="icon-copy dw dw-car"></i></span>
+                    </div>
+                    <div *ngIf= "submitted && f.regno.errors" class="invalid-feedback">
+                      <div *ngIf= "f.regno.errors.required">Registration No is required</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row ">
+                  <div class="form-group col-6 pr-3">
+                    <input type="text"  class="form-control" placeholder="Model" formControlName="model" [ngClass]= "{ 'is-invalid': submitted && f.model.errors }">
+                    <div class="input-group-append custom">
+                      <span class="input-group-text"><i class="icon-copy dw dw-opacity"></i></span>
+                    </div>
+                    <div *ngIf= "submitted && f.model.errors" class="invalid-feedback">
+                      <div *ngIf= "f.model.errors.required">Model is required</div>
+                    </div>
+                  </div>
+                  <div class="form-group col-6 pl-3">
+                    <input type="text"  class="form-control" placeholder="Maker" formControlName="maker" [ngClass]= "{ 'is-invalid': submitted && f.maker.errors }">
+                    <div class="input-group-append custom">
+                      <span class="input-group-text"><i class="icon-copy dw dw-caravan"></i></span>
+                    </div>
+                    <div *ngIf= "submitted && f.maker.errors" class="invalid-feedback">
+                      <div *ngIf= "f.maker.errors.required">Maker is required</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row ">
+                  <div class="form-group col-6 pr-3">
+                    <input type="text"  class="form-control" placeholder="Color" formControlName="color" [ngClass]= "{ 'is-invalid': submitted && f.color.errors }">
+                    <div class="input-group-append custom">
+                      <span class="input-group-text"><i class="icon-copy dw dw-edit"></i></span>
+                    </div>
+                    <div *ngIf= "submitted && f.color.errors" class="invalid-feedback">
+                      <div *ngIf= "f.color.errors.required">Color is required</div>
+                    </div>
+                  </div>
+                  <div class="form-group col-6 pl-3">
+                    <input type="number"  class="form-control" placeholder="Seating Capacity" formControlName="seats" [ngClass]= "{ 'is-invalid': submitted && f.seats.errors }">
+                    <div class="input-group-append custom">
+                      <span class="input-group-text"><i class="icon-copy dw dw-chat"></i></span>
+                    </div>
+                    <div *ngIf= "submitted && f.seats.errors" class="invalid-feedback">
+                      <div *ngIf= "f.seats.errors.required">No. of Vehicle Seats is required</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row pt-3">
+                  <div class=" col-6 d-flex justify-content-start">
+                    <button type="submit" class="btn btn-md btn-primary rounded-top "routerLink= "/general"><span class="fa fa-arrow-left"></span>  Previous</button>
+                  </div>
+                  <div class="col-6 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-md btn-primary rounded-top " >Next  <span class="fa fa-arrow-right"></span> </button>
+                  </div>
+                </div>
+
+              </form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- success Popup html Start -->
+	<button type="button" id="success-modal-btn" hidden data-toggle="modal" data-target="#success-modal" data-backdrop="static">Launch modal</button>
+	<div class="modal fade" id="success-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered max-width-400" role="document">
+			<div class="modal-content">
+				<div class="modal-body text-center font-18">
+					<h3 class="mb-20">Form Submitted!</h3>
+					<div class="mb-30 text-center"><img src="../../assets/vendors/images/success.png"></div>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				</div>
+				<div class="modal-footer justify-content-center">
+					<a href="login.html" class="btn btn-primary">Done</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- success Popup html End -->
+	<!-- js -->
+
+</body>

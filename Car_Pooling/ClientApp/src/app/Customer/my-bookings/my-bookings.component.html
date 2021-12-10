@@ -1,0 +1,38 @@
+
+<div class="wrapper d-flex align-items-stretch">
+  <app-sidebar></app-sidebar>
+
+    <!-- Page Content  -->
+  <div id="content" class="p-4">
+    <div class="card-box mb-30">
+      <div class="pd-20">
+        <h4 class="title">My Bookings</h4>
+      </div>
+      <div class="pb-20">
+        <table class="data-table table stripe hover nowrap" id="datatable">
+          <thead>
+            <tr>
+              <th class="table-plus datatable-nosort">Driver Name</th>
+              <th>Book Seats</th>
+              <th>Trip Start Time</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let i of list">
+              <td>{{i.name}}</td>
+              <td>{{i.seats}}</td>
+              <td>{{i.time}}</td>
+              <td>
+                <div class="btn btn-sm btn-danger">cancel</div>
+              </td>
+              <td></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,39 @@
+
+<div class="wrapper d-flex align-items-stretch">
+  <app-sidebar></app-sidebar>
+  <div id="content" class="p-md">
+    <div class="row  d-flex justify-content-center">
+
+      <div class="map pl-2">
+        <h4 class="text-center text-black">Mark Your Pickup Points</h4>
+        <agm-map
+        [latitude]="lat"
+        [longitude]="lng"
+        [zoom]="zoom"
+        [zoomControl]="false"
+        (mapClick)="mapClicked($event)"
+        >
+          <agm-marker
+            *ngFor="let m of markers; let i = index"
+            [latitude]="m.lat"
+            [longitude]="m.lng"
+            [label]="m.label"
+            [markerDraggable]="m.draggable"
+            (dragEnd)="markerDragEnd(m, $event)"
+          >
+          </agm-marker>
+        </agm-map>
+      </div>
+
+    </div>
+    <div class="row ml-5 p-5">
+      <div class=" col-4 ml-5 pl-5 d-flex justify-content-start">
+        <button type="submit" class="btn btn-dark rounded-top "routerLink= "/captain"><span class="fa fa-arrow-left"></span> Back</button>
+      </div>
+      <div class="col-4 pl-5 ml-5 d-flex justify-content-end">
+        <button type="submit" class="btn btn-dark rounded-top " (click)="SavePoints()">Save Points</button>
+      </div>
+    </div>
+
+  </div>
+</div>

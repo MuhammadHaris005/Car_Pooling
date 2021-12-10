@@ -1,0 +1,97 @@
+<!-- <app-headerfooter></app-headerfooter> -->
+		<div class="wrapper d-flex align-items-stretch">
+			<app-sidebar></app-sidebar>
+        <!-- Page Content  -->
+      <div id="content" class="">
+        <!-- <div class="bg-primary row align-items-center">
+          <button class="btn btn-light m-2 p-1">Hello</button>
+          <button class="btn btn-light m-2 p-1">Asd</button>
+          <button class="btn btn-light m-2 p-1">Bsd</button>
+          <button class="btn btn-light m-2 p-1">ao</button>
+        </div> -->
+        <div class="row d-flex justify-content-end pr-5">
+          <button class="btn btn-black p-2 border-2" routerLink="/addroute"><i class="fa fa-plus"></i> Add New Route</button>
+        </div>
+
+        <div class="row p-lg-5 ml-2">
+          <div class="col-md-5 col-sm-12" >
+            <form class="form">
+              <h4>Offer Your Ride</h4>
+              <div class="form-row mt-3">
+                <label>Trip Schedule:</label>
+                <select name="triptype" id="trip" [(ngModel)]="triptype" (change)="changetype($event)">
+                  <option value="OneTime">One Time</option>
+                  <option value="Daily">Daily</option>
+                </select>
+              </div>
+              <div class="form-row mt-3" *ngIf="showDays">
+                <label class="font-weight-bold">Days</label>
+                <div class="custom-control custom-checkbox ml-5">
+                  <input type="checkbox" class="custom-control-input" id="customCheck3-1">
+                  <label class="custom-control-label mr-1" for="customCheck3-1">Mon</label>
+                </div>
+                <div class="custom-control custom-checkbox ml-4">
+                  <input type="checkbox" class="custom-control-input" id="customCheck3-1">
+                  <label class="custom-control-label mr-1" for="customCheck3-1">Tue</label>
+                </div>
+                <div class="custom-control custom-checkbox ml-4">
+                  <input type="checkbox" class="custom-control-input" id="customCheck3-1">
+                  <label class="custom-control-label  mr-1" for="customCheck3-1">Wed</label>
+                </div>
+                <div class="custom-control custom-checkbox ml-4">
+                  <input type="checkbox" class="custom-control-input" id="customCheck3-1">
+                  <label class="custom-control-label mr-1" for="customCheck3-1">Thu</label>
+                </div>
+                <div class="custom-control custom-checkbox  ml-4">
+                  <input type="checkbox" class="custom-control-input" id="customCheck3-1">
+                  <label class="mr-1 custom-control-label" for="customCheck3-1">Fri</label>
+                </div>
+                <div class="custom-control custom-checkbox ml-4">
+                  <input type="checkbox" class="custom-control-input" id="customCheck3-1">
+                  <label class="mr-1 custom-control-label" for="customCheck3-1">Sat</label>
+                </div>
+                <div class="custom-control custom-checkbox ml-4">
+                  <input type="checkbox" class="custom-control-input" id="customCheck3-1">
+                  <label class="mr-1 custom-control-label" for="customCheck3-1">Sun</label>
+                </div>
+              </div>
+              <div class="form-group row m-3">
+                <label class="form-label">Trip Start Time</label>
+                <input class="form-control" placeholder="Select time" type="time" [(ngModel)]="Stime" name="Stime">
+              </div>
+              <div class="form-group row m-3" >
+                <div class="custom-control custom-checkbox ml-4">
+                  <input type="checkbox" class="custom-control-input" id="customCheck1" (change)="ShowHide()" [(ngModel)]="istwoway" name="istwoway">
+                  <label class="custom-control-label" for="customCheck1">Round Trip</label>
+                </div>
+              </div>
+              <div class="form-group row m-3" *ngIf="showfield" id="timepicker">
+								<label class="form-label">Trip Return Time</label>
+								<input class="form-control " placeholder="time" type="time" [(ngModel)]="Rtime" name="Rtime">
+							</div>
+              <div class="form-group row m-3" >
+                <button type="submit" class="btn btn-dark p-2 " (click)= "SaveTime()">Offer Ride</button>
+              </div>
+
+            </form>
+          </div>
+          <div class="col-md-5 col-sm-12 ml-5">
+            <agm-map class="col-md-6 col sm-12" [zoom]= "12" [latitude]= "latitude" [longitude]= "longitude" class="col-md-6 col sm-12">
+              <agm-marker *ngFor="let item of points let i=index " [latitude]=item.lat [longitude]=item.lng  (markerClick)="clickedMarker(infowindow)">
+                <agm-info-window  #infowindow>
+                  <strong>{{labels[i]}}</strong>
+                </agm-info-window>
+              </agm-marker>
+              <agm-polyline [visible]="true" [strokeWeight]="3" [strokeColor]="'#07b57a'">
+                <agm-polyline-point
+                *ngFor="let p of points;"
+                [latitude]=p.lat
+                [longitude]=p.lng></agm-polyline-point>
+              </agm-polyline>
+            </agm-map>
+          </div>
+
+        </div>
+      </div>
+		</div>
+<!-- <app-footer></app-footer> -->

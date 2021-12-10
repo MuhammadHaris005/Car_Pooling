@@ -1,0 +1,16 @@
+agm-map{
+
+  height: 400px;
+  width: 920px;
+}
+#maptitle{
+  font-family: Georgia, 'Times New Roman';
+}
+.register-page-wrap .box {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.map{
+  border: solid white;
+  border-radius: 5px ;
+}
