@@ -14,8 +14,7 @@ export class SignupComponent {
 
   ngOnInit() {
     debugger;
-  GlobalService.role = "captain";
-  this.route.navigate(['/general']);
+    this.route.navigate(['/general']);
   }
 
 }

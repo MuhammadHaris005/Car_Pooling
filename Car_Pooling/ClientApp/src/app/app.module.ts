@@ -17,7 +17,8 @@ import { LandingpageComponent } from './landingpage/landingpage.component';
 import { LoginComponent } from './login/login.component';
 import { RoutemapComponent } from './signup/routemap/routemap.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
+import { SidebarComponent } from './Driver/sidebar/sidebar.component';
+import { C_SidebarComponent } from './Customer/c_sidebar/c_sidebar.component';
 import { CaptainComponent } from './Driver/captain/captain.component';
 import { UserComponent } from './Customer/user/user.component';
 import { ThemeComponent } from './Customer/theme/theme.component';
@@ -37,6 +38,7 @@ import { AttributesComponent } from './signup/attributes/attributes.component';
     RoutemapComponent,
     NavbarComponent,
     SidebarComponent,
+    C_SidebarComponent,
     CaptainComponent,
     UserComponent,
     ThemeComponent,

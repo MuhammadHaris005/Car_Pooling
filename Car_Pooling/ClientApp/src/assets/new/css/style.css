@@ -8197,8 +8197,8 @@ h1, h2, h3, h4, h5,
   min-height: 718px;
   max-height: 718px;
   background: white;
-  color: #fff;
-  box-shadow: 0 2px 11px inset lightgrey;
+  color: #343a40ff;
+  box-shadow: 0 5px 20px #e2e7ec;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
@@ -8229,9 +8229,9 @@ h1, h2, h3, h4, h5,
           padding: 15px;
           margin-bottom: 15px;
           display: block;
-          border-radius: 10px;
-          box-shadow: 0 0 5px black;
-          color: black;
+          border-radius: 30px;
+          box-shadow: 2px 3px 5px lightslategrey;
+          color: #343a40;
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       }
     #sidebar ul li.active > a {

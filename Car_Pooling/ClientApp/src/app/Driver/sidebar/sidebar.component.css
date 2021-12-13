@@ -1,0 +1,14 @@
+.navbar-logo{
+  min-width: 270px;
+  max-width: 270px;
+	color: #fff;
+  background: #154a74;
+  font-size: 25px;
+  padding: 13px;
+  display: flex;
+  justify-content: center;
+}
+#logo {
+  justify-items: center;
+  margin-left: 0px;
+}

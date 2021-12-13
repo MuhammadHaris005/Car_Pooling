@@ -45,7 +45,7 @@ export class GeneralinfoComponent implements OnInit {
     Global.personaldata = this.generalForm.value;
     // display form values on success
     alert(JSON.stringify(Global.personaldata));
-    if(GlobalService.role=='Passenger'){
+    if(GlobalService.role=='passenger'){
       this.route.navigate(['/login']);
     }
     else
