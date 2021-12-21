@@ -26,4 +26,7 @@ export class SignUpService {
     debugger;
     return this.http.post<any>("https://localhost:44358/"+controllerName+controllerMethod,data);
   }
+  UpdateStatus<T> (controllerName:any,controllerMethod:any,data:any){
+    return this.http.post<any>("https://localhost:44358/"+controllerName+controllerMethod,data);
+  }
 }

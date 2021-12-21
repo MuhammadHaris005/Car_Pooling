@@ -11,14 +11,15 @@ import { SignUpService } from 'src/app/general.service';
 })
 export class Add_RouteComponent implements OnInit {
 
-  zoom: number = 10;
+  zoom: number = 5;
 
   // initial center position for the map
-  lat: number = 33.70880;
-  lng: number = 73.06554;
+  lat: number = 33.708805656;
+  lng: number = 73.065545454;
   phone: any;
   points :any;
-  index=1;
+  source:any;
+  destination:any;
   constructor( private route:Router, private service:SignUpService){
 
   }
@@ -30,6 +31,7 @@ export class Add_RouteComponent implements OnInit {
     this.markers.push({
       lat: $event.coords.lat,
       lng : $event.coords.lng,
+      iconURl: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
       draggable: true
     });
   }
@@ -48,8 +50,10 @@ export class Add_RouteComponent implements OnInit {
   Save(){
     debugger
     var mappoints = this.points;
-    var phone = GlobalService.PhoneNo
-    this.service.PostMethod("api/Captain/","Routes",{mappoints,phone}).subscribe(response => {
+    var phoneNo = GlobalService.PhoneNo;
+    var source = this.source;
+    var destination = this.destination;
+    this.service.PostMethod("api/Captain/","Routes",{mappoints,phoneNo,source,destination,'status':false}).subscribe(response => {
       if(response == true){
         alert("Route Added Successfully");
       }
@@ -64,5 +68,6 @@ interface marker {
 	lat: number;
 	lng: number;
   label?: string;
+  iconURl:string | google.maps.Icon | google.maps.Symbol;
 	draggable: boolean;
 }

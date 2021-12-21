@@ -18,7 +18,7 @@ export class LandingpageComponent implements OnInit {
     debugger;
     this.route.navigate(['/signup']);
    }
-   btnridee(){
+   btnride(){
     GlobalService.role = "passenger";
     debugger;
     this.route.navigate(['/signup']);

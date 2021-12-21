@@ -1,0 +1,38 @@
+<div class="wrapper d-flex align-items-stretch">
+  <app-sidebar></app-sidebar>
+    <!-- Page Content  -->
+  <div id="content" class="p-5" >
+    <div class="row mb-3">
+      <div class=" col-md-12 d-flex justify-content-center">
+        <h3>Current Routes</h3>
+      </div>
+    </div>
+    <div class=" row d-flex justify-content-center">
+      <div class="card card-box col-md-10 mb-2" *ngFor="let i of list">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-8 colsm-6">
+              <h5>{{i.source}}    to   {{i.destination}}</h5>
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-info"><i class="icon-copy dw dw-eye"></i></button>
+            </div>
+            <div class="col-md-2 col-sm-4 d-flex justify-content-end">
+              <label class="switch" >
+                <input  type="checkbox" id="togBtn" (change)="function($event,i.id)"  [checked]="i.status">
+                <div class="slider round">
+                 <!--ADDED HTML -->
+                 <span class="on" >Active</span>
+                 <span class="off" >Inactive</span>
+                 <!--END-->
+                </div>
+               </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+

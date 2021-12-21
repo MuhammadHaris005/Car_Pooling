@@ -63,9 +63,9 @@
                 <h2 class="text-center text-primary">Registration</h2>
               </div>
               <p class="text-center text-black">Vehicle Info</p>
-							<form [formGroup]= "vehicleForm" (ngSubmit)= "onSubmit()">
+							<form [formGroup]= "vehicleForm" (ngSubmit)="onSubmit()">
                 <div class="form-row pt-3">
-                  <div class="form-group col-6 pl-3">
+                  <div class="form-group col-6">
                     <input type="text" class="form-control" placeholder="Registration No" formControlName="regno" [ngClass]= "{ 'is-invalid': submitted && f.regno.errors }">
                     <div class="input-group-append custom">
                       <span class="input-group-text"><i class="icon-copy dw dw-car"></i></span>
@@ -118,7 +118,7 @@
                 </div>
                 <div class="form-row pt-3">
                   <div class=" col-6 d-flex justify-content-start">
-                    <button type="submit" class="btn btn-md btn-primary rounded-top "routerLink= "/general"><span class="fa fa-arrow-left"></span>  Previous</button>
+                    <button class="btn btn-md btn-primary rounded-top " routerLink="/general"><span class="fa fa-arrow-left"></span>  Previous</button>
                   </div>
                   <div class="col-6 d-flex justify-content-end">
                     <button type="submit" class="btn btn-md btn-primary rounded-top " >Next  <span class="fa fa-arrow-right"></span> </button>

@@ -17,18 +17,18 @@ export class GeneralinfoComponent implements OnInit {
   constructor( private cd: ChangeDetectorRef, private signupservices : SignUpService, private route:Router,private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-      GlobalService.role = "Driver";
       this.generalForm = this.formBuilder.group({
       role:GlobalService.role,
+      image:['',[Validators.required]],
       firstName: ['', [Validators.required,Validators.pattern('^[a-zA-Z ]*$')]],
       lastName: ['', [Validators.required,Validators.pattern('^[a-zA-Z ]*$')]],
       // validates date format yyyy-mm-dd
       cnic: ['',[Validators.required,Validators.minLength(13)]],
       email: ['', [Validators.required, Validators.email]],
       city: ['',[ Validators.required,Validators.pattern('^[a-zA-Z ]*$')]],
-      phoneNo: ['',[Validators.required,Validators.minLength(11)]],
+      phoneNo: ['',[Validators.required,Validators.minLength(3)]],
       gender:['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(3)]],
       confirmPassword: ['', Validators.required],
   });
   }
@@ -36,7 +36,9 @@ export class GeneralinfoComponent implements OnInit {
   get f() { return this.generalForm.controls; }
 
   onSubmit() {
+    debugger;
     this.submitted = true;
+    var image = this.FileUpload;
     var role = GlobalService.role;
     // stop here if form is invalid
     if (this.generalForm.invalid) {
@@ -45,8 +47,9 @@ export class GeneralinfoComponent implements OnInit {
     Global.personaldata = this.generalForm.value;
     // display form values on success
     alert(JSON.stringify(Global.personaldata));
-    if(GlobalService.role=='passenger'){
-      this.route.navigate(['/login']);
+    debugger;
+    if(GlobalService.role=="passenger"){
+      this.route.navigate(['/attributes']);
     }
     else
     this.route.navigate(['/vehicle']);
@@ -70,14 +73,10 @@ export class GeneralinfoComponent implements OnInit {
       }
       // ChangeDetectorRef since file is loading outside the zone
       this.cd.markForCheck();
+
     }
   }
-
-
    SignUp(){
-    debugger;
-
-
     debugger;
     this.route.navigate(['/vehicle']);
     //  if(firstname == undefined || lastname ==undefined || email==undefined|| cnic ==undefined|| city== undefined || phone ==undefined || password==undefined|| cpassword ==undefined){

@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -13,15 +12,15 @@ export class VehicleinfoComponent implements OnInit {
   vehicleForm: FormGroup;
   submitted = false;
 
-  constructor(private rout:Router,private formBuilder: FormBuilder) { }
+  constructor(private rout: Router, private formBuilder: FormBuilder) { }
   ngOnInit() {
     this.vehicleForm = this.formBuilder.group({
       regno: ['', Validators.required],
       model: ['', Validators.required],
-      maker: ['',Validators.required],
+      maker: ['', Validators.required],
       seats: ['', Validators.required],
-      color: ['',Validators.required],
-      phoneNo:Global.personaldata.phoneNo,
+      color: ['', Validators.required],
+      phoneNo: Global.personaldata.phoneNo,
   });
   }
 
@@ -35,10 +34,11 @@ export class VehicleinfoComponent implements OnInit {
         return;
     }
     Global.vehicledata = this.vehicleForm.value;
+    // tslint:disable-next-line:no-debugger
     debugger;
     // display form values on success
     alert(JSON.stringify(Global.vehicledata));
-    this.rout.navigate(['/routemap']);
+    this.rout.navigate(['/attribute']);
   }
 
 }

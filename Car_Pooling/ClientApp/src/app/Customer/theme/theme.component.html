@@ -63,9 +63,9 @@
               <div class="form-group ml-5">
                 <label>Total Seats</label>&nbsp; &nbsp;
                 <div>
-                 <button class="btn btn-danger p-1" (click)="decrement()">-</button>
+                 <button id="Btn" class="btn btn-danger" (click)="decrement()">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;</button>
                   <span class="m-3">{{seats}}</span>
-                  <button class="btn btn-success p-1" (click)="increment()">+</button>
+                  <button id="Btn" class="btn btn-success" (click)="increment()">&nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;</button>
                 </div>
               </div>
             </div>
@@ -84,7 +84,7 @@
 							<img class="card-img-top  pl-5 pr-5" src="../../assets/vendors/images/abc.jpg" alt="Card image cap">
 							<div class="card-body p-3">
 								<h5 class="card-title weight-500">{{i.firstname+" "+i.lastname}}</h5>
-								<p class="card-text"> {{vehicledetails[a].vname}} &nbsp; seats:{{vehicledetails[a].vseats}}</p>
+								<p class="card-text"> {{vehicledetails[a].model}} &nbsp; seats:{{vehicledetails[a].seats}}</p>
 								<p class="text-success m-1">Time: {{routedetails[a]}}</p>
                 <a class="btn btn-block text-white btn-primary p-2" (click)="Book(i,vehicledetails[a])">Book</a>
 							</div>

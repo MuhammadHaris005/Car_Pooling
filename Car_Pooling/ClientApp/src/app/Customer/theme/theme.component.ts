@@ -78,6 +78,7 @@ import { Router } from '@angular/router';
     SearchRide(){
       this.signupservices.GetRides("api/Captain/","GetRides").subscribe(response => {
         if(response!= null){
+          debugger
           //alert(JSON.stringify(response));
           for (let i = 0; i < response.length; i++) {
             debugger;
@@ -89,8 +90,9 @@ import { Router } from '@angular/router';
                   for (let x = j; x < a.length; x++) {
                     var z = this.getDistanceFromLatLonInKm(a[x].lat,a[x].lng,this.Deslatitude,this.Deslongitude);
                     if(z<1){
-                      var phone = response[i].phone;
-                      this.signupservices.GetCaptainMethod("api/Captain/","GetCaptain",{'phone':phone}).subscribe(response1=>{
+                      debugger
+                      var phoneNo = response[i].phoneNo;
+                      this.signupservices.GetCaptainMethod("api/Captain/","GetCaptain",{'phoneNo':phoneNo}).subscribe(response1=>{
                         if(response1!=null){
                           //alert(JSON.stringify(response[0]));
                           this.driversdetails.push(response1[0]);

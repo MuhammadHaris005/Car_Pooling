@@ -9,22 +9,28 @@
           <button class="btn btn-light m-2 p-1">Bsd</button>
           <button class="btn btn-light m-2 p-1">ao</button>
         </div> -->
-        <h3>Offer Your Ride</h3>
-        <div class="row d-flex justify-content-end mr-3">
+        <h2 class="ml-5">Offer Your Ride</h2>
+        <div class="row d-flex justify-content-end mr-5">
           <button class="btn btn-outline-primary p-2 border-2" routerLink="/addroute"><i class="fa fa-plus"></i> Add New Route</button>
         </div>
 
-        <div class="row">
-          <div class="col-md-4 col-sm-12" >
+        <div class="row mt-3">
+          <div class="col-md-4 col-sm-12 mr-5" >
             <form class="form">
               <div class="form-group">
                 <label>Trip Type: </label>
-                <select class="form-control" name="type" style="width: 100%; height: 38px;">
+                <select class="form-control" name="type" (change)="changetype($event)" style="width: 100%; height: 38px;" >
                     <option value="Once">Once</option>
-                    <option value="Schedule">Schedule</option>  
+                    <option value="Schedule">Schedule</option>
+                    <option value="Daily">Daily</option>
                 </select>
               </div>
-              
+              <div class="form-group mt-3" *ngIf="showDate" >
+                <label class="col-sm-12 col-md-4 col-form-label">Date</label>
+                <div class="col-sm-12 col-md-12">
+                  <input class="form-control date-picker" placeholder=" Select Date" type="date">
+                </div>
+              </div>
               <div class="form-group mt-3">
                 <label class="form-label">Trip Start Time</label>
                 <input class="form-control" placeholder="Select time" type="time" [(ngModel)]="Stime" name="Stime">
@@ -45,7 +51,7 @@
 
             </form>
           </div>
-          <!-- <div class="col-md-5 col-sm-12 ml-5">
+          <div class="col-md-7 col-sm-12 pl-5">
             <agm-map class="col-md-6 col sm-12" [zoom]= "12" [latitude]= "latitude" [longitude]= "longitude" class="col-md-6 col sm-12">
               <agm-marker *ngFor="let item of points let i=index " [latitude]=item.lat [longitude]=item.lng  (markerClick)="clickedMarker(infowindow)">
                 <agm-info-window  #infowindow>
@@ -59,7 +65,7 @@
                 [longitude]=p.lng></agm-polyline-point>
               </agm-polyline>
             </agm-map>
-          </div> -->
+          </div>
 
         </div>
       </div>

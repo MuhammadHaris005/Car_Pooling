@@ -8166,7 +8166,7 @@ h1, h2, h3, h4, h5,
   line-height: 1.5;
   font-weight: 400;
   font-family: "Poppins", Arial, sans-serif;
-  color: #fff; }
+ }
 
 .ftco-section {
   padding: 7em 0; }
@@ -8194,8 +8194,8 @@ h1, h2, h3, h4, h5,
 #sidebar {
   min-width: 270px;
   max-width: 270px;
-  min-height: 718px;
-  max-height: 718px;
+  min-height: 749px;
+  max-height: 749px;
   background: white;
   color: #343a40ff;
   box-shadow: 0 5px 20px #e2e7ec;

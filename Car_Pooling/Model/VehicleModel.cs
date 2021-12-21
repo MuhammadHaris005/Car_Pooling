@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CarPooling.Model
+namespace Car_Pooling.Model
 {
     public class VehicleModel
     {

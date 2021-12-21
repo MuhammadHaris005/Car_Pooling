@@ -27,25 +27,25 @@
 						</div>
 						<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 							<div class="input-group custom">
-								<input type="text" class="form-control form-control-lg" formControlName="phone" placeholder="Phone Number" required>
-
-								<div class="input-group-append custom">
+								<input type="text" class="form-control form-control-lg" formControlName="phone" placeholder="Phone Number" [ngClass]= "{ 'is-invalid': submitted && f.phone.errors }">
+								<div *ngIf= "submitted && f.phone.errors" class="invalid-feedback">
+                  <div *ngIf= "f.phone.errors.required">PhoneNo is required</div>
+                </div>
+                <!-- <div class="input-group-append custom">
 									<span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
-								</div>
+								</div> -->
 							</div>
 							<div class="input-group custom">
-								<input type="password" class="form-control form-control-lg" formControlName="password" placeholder="**********"  required>
-								<div class="input-group-append custom">
+								<input type="password" class="form-control form-control-lg" formControlName="password" placeholder="**********"  [ngClass]= "{ 'is-invalid': submitted && f.password.errors }">
+								<div *ngIf= "submitted && f.password.errors" class="invalid-feedback">
+                  <div *ngIf= "f.password.errors.required">Password is required</div>
+                </div>
+                <!-- <div class="input-group-append custom">
 									<span class="input-group-text"><i class="dw dw-padlock1"></i></span>
-								</div>
+								</div> -->
 							</div>
 							<div class="row pb-30">
-								<div class="col-6">
-									<div class="custom-control custom-checkbox">
-										<input type="checkbox" class="custom-control-input" id="customCheck1">
-										<label class="custom-control-label" for="customCheck1">Remember</label>
-									</div>
-								</div>
+
 								<div class="col-6">
 									<!-- <div class="forgot-password"><a href="forgot-password.html">Forgot Password</a></div> -->
 								</div>

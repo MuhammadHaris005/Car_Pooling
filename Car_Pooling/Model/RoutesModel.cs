@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CarPooling.Model
+namespace Car_Pooling.Model
 {
     public class RoutesModel
     {
+        public int ID { get; set; }
         public string mappoints { get; set; }
+        public string source { get; set; }
+        public string destination { get; set; }
         public string phoneNo { get; set; }
         public string stime { get; set; }
-        public string status {get; set;}
+        public bool status {get; set;}
     }
 }

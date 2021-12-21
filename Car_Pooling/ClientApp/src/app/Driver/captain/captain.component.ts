@@ -21,7 +21,7 @@ export class CaptainComponent implements OnInit {
   labels=["Start"];
 
   triptype:any;
-  showDays :boolean= false;
+  showDate :boolean= false;
   ShowHide() {
     this.showfield = this.showfield ? false : true;
   }
@@ -37,7 +37,7 @@ export class CaptainComponent implements OnInit {
         alert(JSON.stringify(response));
         debugger;
         for(let a of response){
-          if(a.status=='active'){
+          if(a.status==true){
             this.points = eval(a.mappoints);
             this.latitude = this.points[2].lat;
             this.longitude = this.points[2].lng;
@@ -68,19 +68,19 @@ export class CaptainComponent implements OnInit {
   changetype($event){
     debugger;
     var type = $event.target.value;
-    if(type=="OneTime"){
-      this.showDays = true;
+    if(type=="Once"){
+      this.showDate = false;
     }
     else
-      this.showDays = false;
+      this.showDate = true;
   }
   SaveTime(){
     var stime = this.Stime;
-    var phone = GlobalService.PhoneNo;
+    var phoneNo = GlobalService.PhoneNo;
     var time = new Date().toLocaleString('en-US', { hour: 'numeric',minute:'numeric', hour12: true });
     debugger;
     if(stime>time && stime!=undefined){
-      this.signupservices.PostMethod("api/Captain/","UpdateTime",{'phone':phone,'stime':stime}).subscribe(response => {
+      this.signupservices.PostMethod("api/Captain/","UpdateTime",{'phoneNo':phoneNo,'stime':stime}).subscribe(response => {
         if(response==true){
           alert("Time Updated");
         }
@@ -89,7 +89,7 @@ export class CaptainComponent implements OnInit {
         this.points.reverse();
         var mappoints = JSON.stringify(this.points);
         var rtime = this.Rtime;
-        this.signupservices.PostMethod("api/Captain/","Routes",{mappoints,phone,'stime':rtime}).subscribe(response => {
+        this.signupservices.PostMethod("api/Captain/","Routes",{mappoints,phoneNo,'stime':rtime}).subscribe(response => {
           if(response == true){
 
           }
@@ -109,7 +109,7 @@ export class CaptainComponent implements OnInit {
         this.set.push([a[i],a[j]]);
       }
     }
-    alert(JSON.stringify(this.set));
+    //alert(JSON.stringify(this.set));
   }
   getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
     var R = 6371; // Radius of the earth in km

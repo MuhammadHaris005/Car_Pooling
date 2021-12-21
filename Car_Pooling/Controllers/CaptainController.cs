@@ -1,4 +1,4 @@
-﻿using CarPooling.Model;
+﻿using Car_Pooling.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CarPooling.Controllers
+namespace Car_Pooling.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -20,7 +20,7 @@ namespace CarPooling.Controllers
         {
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string query = "insert into PersonalInfo values('" + captain.phoneNo + "','" + captain.firstname + "','" + captain.lastname + "','" + captain.gender + "','" + captain.cnic + "','" + captain.email + "','" + captain.city + "','" + captain.password + "','" + captain.confirmPassword + "','" + captain.role + "','" + captain.image+"')";
+            string query = "insert into Personal values('" + captain.phoneNo + "','" + captain.firstname + "','" + captain.lastname + "','" + captain.gender + "','" + captain.cnic + "','" + captain.email + "','" + captain.city + "','" + captain.password + "','" + captain.confirmPassword + "','" + captain.role + "','" + captain.image+"')";
             SqlCommand com = new SqlCommand(query, con);
             com.ExecuteNonQuery();
             return true;
@@ -37,12 +37,26 @@ namespace CarPooling.Controllers
             return true;
         }
         [HttpPost]
+        [Route("Habits")]
+        public bool Habits([FromBody] HabitsModel habits)
+        {
+            SqlConnection con = new SqlConnection(constring);
+            con.Open();
+            string query = "insert into PersonHabits values('" + habits.smooking + "','" + habits.talkative + "','" + habits.music + "' ,'" + habits.phoneNo + "')";
+            SqlCommand com = new SqlCommand(query, con);
+            com.ExecuteNonQuery();
+            string query2= "insert into HabitsAllowed values('" + habits.allowsmooking + "','" + habits.allowtalkative + "','" + habits.allowmusic + "','" + habits.phoneNo + "')";
+            SqlCommand com1 = new SqlCommand(query2, con);
+            com1.ExecuteNonQuery();
+            return true;        
+        }
+        [HttpPost]
         [Route("Routes")]
         public bool Routes([FromBody] RoutesModel route)
         {
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string query = "insert into Routes values('" + route.mappoints + "','" + route.phoneNo + "','"+route.stime+"','inactive')";
+            string query = "insert into Routes values('" + route.mappoints + "','" + route.source + "','" + route.destination + "','" + route.phoneNo + "','"+route.stime+"','"+route.status+"')";
             SqlCommand com = new SqlCommand(query, con);
             com.ExecuteNonQuery();
             return true;
@@ -68,9 +82,10 @@ namespace CarPooling.Controllers
                 c.phoneNo = sdr["phone_no"].ToString();
                 c.city = sdr["city"].ToString();
                 c.role = sdr["role"].ToString();
+                c.image = sdr["image"].ToString();
                 info.Add(c);
             }
-            if (info == null)
+            if (info.Count == 0)
             {
                 return null;
             }
@@ -84,7 +99,7 @@ namespace CarPooling.Controllers
             
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string query = "select route_points,status from Routes where phone_no = '"+obj.phoneNo+"'" ;
+            string query = "select * from Routes where phone_no = '"+obj.phoneNo+"'" ;
             SqlCommand com = new SqlCommand(query, con);
             SqlDataReader sdr = com.ExecuteReader();
             List<object> list = new List<object>();
@@ -92,8 +107,12 @@ namespace CarPooling.Controllers
             while (sdr.Read())
             {
                 p = new RoutesModel();
+                p.ID = (Int32)sdr["route_ID"];
                 p.mappoints = sdr["route_points"].ToString();
-                p.status = sdr["status"].ToString();
+                p.source = sdr["source"].ToString();
+                p.destination = sdr["destination"].ToString();
+                p.stime = sdr["start_time"].ToString();
+                p.status = (bool)sdr["status"];
                 list.Add(p);
             }
             return list;
@@ -112,11 +131,11 @@ namespace CarPooling.Controllers
             while (sdr.Read())
             {
                 r = new RoutesModel();
-                r.mappoints = sdr["mappoints"].ToString();
-                r.phoneNo = sdr["phone"].ToString();
-                r.phoneNo = sdr["phone"].ToString();
+                r.mappoints = sdr["route_points"].ToString();
+                r.phoneNo = sdr["phone_no"].ToString();
+                r.phoneNo = sdr["phone_no"].ToString();
                 r.stime = sdr["start_time"].ToString();
-                r.status = sdr["Status"].ToString();
+                r.status = (bool)sdr["Status"];
                 list.Add(r);
             }
              return list;
@@ -128,13 +147,14 @@ namespace CarPooling.Controllers
             List<object> info = new List<object>();
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string query = string.Format("Select * from CaptainInfo where phone_no = {0} ", obj.phoneNo);
+            string query = string.Format("Select * from Personal where phone_no = {0}", obj.phoneNo);
             SqlCommand com = new SqlCommand(query, con);
             SqlDataReader sdr = com.ExecuteReader();
             CaptainInfo c;
             while (sdr.Read())
             {
                 c = new CaptainInfo();
+                c.image = sdr["image"].ToString();
                 c.firstname = sdr["first_name"].ToString();
                 c.lastname = sdr["last_name"].ToString();
                 c.email = sdr["email"].ToString();
@@ -145,7 +165,7 @@ namespace CarPooling.Controllers
                 info.Add(c);
             }
             sdr.Close();
-            string query1 = "Select * from VehicleInfo where phone= '"+obj.phoneNo+"'";
+            string query1 = "Select * from VehicleInfo where phone_no= '"+obj.phoneNo+"'";
             SqlCommand comm = new SqlCommand(query1, con);
             SqlDataReader sdr1 = comm.ExecuteReader();
             
@@ -153,11 +173,11 @@ namespace CarPooling.Controllers
             while (sdr1.Read())
             {
                 v = new VehicleModel();
-                v.regno = sdr1["vehicle_regno"].ToString();
-                v.model = sdr1["vehicle_model"].ToString();
-                v.maker = sdr1["vehicle_company"].ToString();
-                v.color = sdr1["vehicle_color"].ToString();
-                v.seats = (Int32)sdr1["vehicle_seats"];
+                v.regno = sdr1["registration_no"].ToString();
+                v.model = sdr1["model"].ToString();
+                v.maker = sdr1["maker"].ToString();
+                v.color = sdr1["color"].ToString();
+                v.seats = (Int32)sdr1["seats"];
                 info.Add(v);
             }
             return info;
@@ -169,7 +189,7 @@ namespace CarPooling.Controllers
         {
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string query = "Update Routes set start_time= '" + obj.stime + "' where phone = '"+obj.phoneNo+"'";
+            string query = "Update Routes set start_time= '" + obj.stime + "' where phone_no = '"+obj.phoneNo+"'";
             SqlCommand com = new SqlCommand(query, con);
             com.ExecuteNonQuery();
             return true;
@@ -181,7 +201,7 @@ namespace CarPooling.Controllers
         {
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string query = "Update VehicleInfo set vehicle_seats= '" + obj.seats + "' where phone = '" + obj.phoneNo + "'";
+            string query = "Update VehicleInfo set vehicle_seats= '" + obj.seats + "' where phone_no = '" + obj.phoneNo + "'";
             SqlCommand com = new SqlCommand(query, con);
             com.ExecuteNonQuery();
             return true;
@@ -219,6 +239,21 @@ namespace CarPooling.Controllers
             }
             return list;
         }
+        [HttpPost]
+        [Route("UpdateStatus")]
+        public bool Update([FromBody] RoutesModel obj)
+        {
+            SqlConnection con = new SqlConnection(constring);
+            con.Open();
+            string query1 = "update Routes set status = 'false' where phone_no = '" + obj.phoneNo + "' and status = 'true'";
+            string query = "update Routes set status = '" + obj.status + "' where phone_no = '" + obj.phoneNo + "' and route_ID='" + obj.ID + "'";
+            SqlCommand com = new SqlCommand(query1, con);
+            com.ExecuteNonQuery();
+            SqlCommand com1 = new SqlCommand(query, con);
+            com1.ExecuteNonQuery();   
+            return true;
+        }
+
 
     }
 }

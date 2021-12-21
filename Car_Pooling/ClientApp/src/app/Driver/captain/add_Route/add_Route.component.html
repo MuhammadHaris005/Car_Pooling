@@ -6,6 +6,20 @@
 
       <div class="map pl-2">
         <h4 class="text-center text-black">Mark Your Pickup Points</h4>
+        <form class="row ml-5" >
+          <div class="form-group">
+            <label class="col-sm-12 col-md-6 col-form-label">Source</label>
+            <div class="col-sm-12 col-md-12">
+              <input class="form-control" type="text" [(ngModel)]= "source" name="source" placeholder="Enter Source">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-12 col-md-6 col-form-label">Destination</label>
+            <div class="col-sm-12 col-md-12">
+              <input class="form-control" type="text" [(ngModel)]= "destination" name="destination" placeholder="Enter Destination">
+            </div>
+          </div>
+        </form>
         <agm-map
         [latitude]="lat"
         [longitude]="lng"
@@ -18,6 +32,7 @@
             [latitude]="m.lat"
             [longitude]="m.lng"
             [label]="m.label"
+            [iconUrl]="m.iconURl"
             [markerDraggable]="m.draggable"
             (dragEnd)="markerDragEnd(m, $event)"
           >

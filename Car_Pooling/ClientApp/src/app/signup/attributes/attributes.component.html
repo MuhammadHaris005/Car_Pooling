@@ -21,34 +21,93 @@
 				</div>
 				<div class="col-md-8 col-lg-8">
 					<div class="register-box bg-white box-shadow border-radius-10 p-5">
-              <p class="text-center text-black"></p>
-							<form>
-                <div class="form-group">
-                  <label class="weight-1000">Please confirm your habits during trip</label>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="chk1">
-                    <label class="custom-control-label" for="chk1">Are you Smooking during trip ?</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="chk2">
-                    <label class="custom-control-label" for="chk2">Are you Talking during trip ?</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="chk3">
-                    <label class="custom-control-label" for="chk3">Are you Listening Music during trip ?</label>
-                  </div>
-                </div>
+						<p class="text-center text-black"></p>
+						<form [formGroup]= "HabitsForm" (ngSubmit)= "onSubmit()">
+						<label class="weight-90000 font-weight-bold">Please confirm your habits during trip</label>
+						<div class="form-group">
+							<label class="weight-10000">Are you Smooking during trip ?</label>
+							<div class="custom-control custom-radio custom-control-inline ml-5">
+								<input type="radio" id="smook1" formControlName="smooking" class="custom-control-input" value="1">
+								<label class="custom-control-label" for="smook1">Yes</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" id="smook0" formControlName="smooking" class="custom-control-input" value="0">
+								<label class="custom-control-label" for="smook0">No</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="weight-10000">Are you Talking during trip ?</label>
+							<div class="custom-control custom-radio custom-control-inline ml-5">
+								<input type="radio" id="talk1" formControlName="talkative" class="custom-control-input" value="1">
+								<label class="custom-control-label" for="talk1">Yes</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" id="talk0" formControlName="talkative" class="custom-control-input" value="0">
+								<label class="custom-control-label" for="talk0">No</label>
+							</div>
+						</div>
+						<div class="form-group" >
+							<label class="weight-10000">Are you Listening Music during trip ?</label>
+							<div class="custom-control custom-radio custom-control-inline ml-5">
+								<input type="radio" id="music1"  formControlName="music" class="custom-control-input" value="1">
+								<label class="custom-control-label" for="music1">Yes</label>
+							</div>
+							<div class="custom-control custom-radio custom-control-inline">
+								<input type="radio" id="music2"  formControlName="music" class="custom-control-input" value="0">
+								<label class="custom-control-label" for="music2" >No</label>
+							</div>
+						</div>
 
-                <div class="form-row pt-3">
-                  <div class=" col-6 d-flex justify-content-start">
-                    <button type="submit" class="btn btn-md btn-primary rounded-top "routerLink= "/general"><span class="fa fa-arrow-left"></span>  Previous</button>
-                  </div>
-                  <div class="col-6 d-flex justify-content-end">
-                    <button type="submit" class="btn btn-md btn-primary rounded-top " >Next  <span class="fa fa-arrow-right"></span> </button>
-                  </div>
-                </div>
+							<label class="weight-90000 font-weight-bold">Habits of other Person during trip</label>
+							<div class="form-group">
+								<label class="weight-10000">Allow Smooking during trip ?</label>
+								<div class="custom-control custom-radio custom-control-inline ml-5">
+									<input type="radio" id="allowsmook1" formControlName="allowsmooking" class="custom-control-input" value="1">
+									<label class="custom-control-label" for="allowsmook1">Yes</label>
+								</div>
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" id="allowsmook0" formControlName="allowsmooking" class="custom-control-input" value="0">
+									<label class="custom-control-label" for="allowsmook0">No</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="weight-10000">Allow Talking during trip ?</label>
+								<div class="custom-control custom-radio custom-control-inline ml-5">
+									<input type="radio" id="allowtalk1" formControlName="allowtalkative" class="custom-control-input" value="1">
+									<label class="custom-control-label" for="allowtalk1">Yes</label>
+								</div>
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" id="allowtalk0" formControlName="allowtalkative" class="custom-control-input" value="0">
+									<label class="custom-control-label" for="allowtalk0">No</label>
+								</div>
+							</div>
+							<div class="form-group" >
+								<label class="weight-10000">Allow Music during trip ?</label>
+								<div class="custom-control custom-radio custom-control-inline ml-5">
+									<input type="radio" id="allowmusic1"  formControlName="allowmusic" class="custom-control-input" value="1">
+									<label class="custom-control-label" for="allowmusic1">Yes</label>
+								</div>
+								<div class="custom-control custom-radio custom-control-inline">
+									<input type="radio" id="allowmusic2"  formControlName="allowmusic" class="custom-control-input" value="0">
+									<label class="custom-control-label" for="allowmusic2" >No</label>
+								</div>
+							</div>
+							<div class="form-row pt-3">
+								<div class=" col-6 d-flex justify-content-start" *ngIf= "button">
+								  <button type="submit" class="btn btn-md btn-primary rounded-top "routerLink= "/vehicle"><span class="fa fa-arrow-left"></span>  Previous</button>
+								</div>
+                <div class=" col-6 d-flex justify-content-start" *ngIf= "!button">
+								  <button type="submit" class="btn btn-md btn-primary rounded-top "routerLink= "/general"><span class="fa fa-arrow-left"></span>  Previous</button>
+								</div>
+								<div class="col-6 d-flex justify-content-end" *ngIf= "button">
+								  <button class="btn btn-md btn-primary rounded-top " >Next  <span class="fa fa-arrow-right"></span> </button>
+								</div>
+                <div class="col-6 d-flex justify-content-end" *ngIf= "!button">
+								  <button type="submit" class="btn btn-md btn-primary rounded-top " >Confirm  <span class="fa fa-arrow-right"></span> </button>
+								</div>
+							</div>
+						</form>
 
-              </form>
 					</div>
 				</div>
 			</div>

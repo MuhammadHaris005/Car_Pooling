@@ -11,8 +11,8 @@
       <li [routerLinkActive]= "['active']">
         <a routerLink="['/Ride']"><span class="fa fa-road mr-3"></span> My Rides</a>
       </li>
-      <li>
-        <a ><span class="fa fa-user-secret mr-3"></span> Profile</a>
+      <li [routerLinkActive]= "['active']">
+        <a [routerLink]="['/routes']"><span class="fa fa-user-secret mr-3"></span> Routes</a>
       </li>
       <li>
         <a ><span class="fa fa-cogs mr-3"></span> Settings</a>
