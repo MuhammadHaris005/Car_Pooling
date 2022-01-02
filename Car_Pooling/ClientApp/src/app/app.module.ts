@@ -4,10 +4,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AgmCoreModule } from '@agm/core';
+//import { NgxStarRatingModule } from 'ngx-star-rating';
 // import { FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {AmexioLayoutModule, AmexioWidgetModule} from 'amexio-ng-extensions';
 import {AmexioEnterpriseModule} from 'amexio-ng-extensions';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ModalModule } from './_modal';
 
 import { AppComponent } from './app.component';
 import { SignupComponent} from './signup/signup.component';
@@ -23,11 +25,12 @@ import { CaptainComponent } from './Driver/captain/captain.component';
 import { UserComponent } from './Customer/user/user.component';
 import { ThemeComponent } from './Customer/theme/theme.component';
 import { RidesComponent } from './Driver/rides/rides.component';
-import { Add_RouteComponent } from './Driver/captain/add_Route/add_Route.component';
+import { Add_RouteComponent } from './Driver/routes/add_Route/add_Route.component';
 import { MyBookingsComponent } from './customer/my-bookings/my-bookings.component';
 import { LoaderComponent } from './loader/loader.component';
 import { AttributesComponent } from './signup/attributes/attributes.component';
 import { RoutesComponent } from './Driver/routes/routes.component';
+import { PassengerComponent } from './Customer/passenger/passenger.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +39,7 @@ import { RoutesComponent } from './Driver/routes/routes.component';
     GeneralinfoComponent,
     LandingpageComponent,
     LoginComponent,
+
     RoutemapComponent,
     NavbarComponent,
     SidebarComponent,
@@ -48,13 +52,16 @@ import { RoutesComponent } from './Driver/routes/routes.component';
     MyBookingsComponent,
     LoaderComponent,
     AttributesComponent,
-    RoutesComponent
+    RoutesComponent,
+    PassengerComponent
    ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    //NgxStarRatingModule,
     FormsModule,
     ReactiveFormsModule,
+    ModalModule,
     // FontAwesomeModule,
     AmexioLayoutModule,
     AmexioWidgetModule,
@@ -79,7 +86,8 @@ import { RoutesComponent } from './Driver/routes/routes.component';
       {path: 'mybookings', component: MyBookingsComponent},
       {path: 'loader', component: LoaderComponent},
       {path: 'attributes', component: AttributesComponent},
-      {path: 'routes', component: RoutesComponent}
+      {path: 'routes', component: RoutesComponent},
+      {path: 'passenger', component:PassengerComponent}
     ]),
     BrowserAnimationsModule
   ],

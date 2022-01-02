@@ -38,8 +38,7 @@ export class Add_RouteComponent implements OnInit {
   markerDragEnd($event: MouseEvent) {
   }
 
-  markers: marker[] = [
-  ]
+  markers : marker[] =[];
 
   SavePoints(){
     this.points=""

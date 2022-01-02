@@ -8198,7 +8198,7 @@ h1, h2, h3, h4, h5,
   max-height: 749px;
   background: white;
   color: #343a40ff;
-  box-shadow: 0 5px 20px #e2e7ec;
+  box-shadow: 0 5px 10px #e2e7ec;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
@@ -8229,13 +8229,13 @@ h1, h2, h3, h4, h5,
           padding: 15px;
           margin-bottom: 15px;
           display: block;
-          border-radius: 30px;
-          box-shadow: 2px 3px 5px lightslategrey;
+          border-radius: 10px;
+          box-shadow: 3px 4px 8px #77a19dc2;
           color: #343a40;
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       }
     #sidebar ul li.active > a {
-      background: #154a74;
+      background: linear-gradient(to right, #005c7a 57%, #279c9a 112%);
       color: white; }
   @media (max-width: 991.98px) {
     #sidebar {
@@ -8323,8 +8323,8 @@ a[data-toggle="collapse"] {
   color: #000;
   font-size: 8px;
   border-radius: 4px;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important;
+
+  box-shadow: 0 10px 20px #e2e7ec;
   border: transparent; }
   .form-control:focus, .form-control:active {
     border-color: #000; }

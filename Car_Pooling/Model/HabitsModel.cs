@@ -7,12 +7,12 @@ namespace Car_Pooling.Model
 {
     public class HabitsModel
     {
-        public byte smooking { get; set; }
-        public byte talkative { get; set; }
-        public byte music { get; set; }
-        public byte allowsmooking { get; set; }
-        public byte allowtalkative { get; set; }
-        public byte allowmusic { get; set; }
+        public bool smooking { get; set; }
+        public bool talkative { get; set; }
+        public bool music { get; set; }
+        public bool allowsmooking { get; set; }
+        public bool allowtalkative { get; set; }
+        public bool allowmusic { get; set; }
         public string phoneNo { get; set; }
     }
 }

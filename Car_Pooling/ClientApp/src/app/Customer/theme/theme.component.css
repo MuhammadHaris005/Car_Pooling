@@ -6,7 +6,10 @@
 }
 agm-map{
   height: 350px;
-  width: 950px;
+}
+.btn-outline-light:disabled {
+  color: #000000;
+  background-color: transparent;
 }
 .row{
 

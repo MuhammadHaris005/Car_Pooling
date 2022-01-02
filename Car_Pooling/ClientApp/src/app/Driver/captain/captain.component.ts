@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalService } from '../../global.service';
 import { SignUpService } from '../../general.service';
+import { DriverGlobalService } from '../driver.service';
 
 declare const $ :any;
 @Component({
@@ -14,15 +15,33 @@ export class CaptainComponent implements OnInit {
   latitude:any;
   longitude:any;
   previous;
-  Stime:any;
+  //Stime= new Date().getTime().toLocaleString();
   Rtime:any;
+  type:any;
+  Date=new Date();
   istwoway:any;
   showfield:boolean=false;
   labels=["Start"];
 
-  triptype:any;
+  id:any;
+  seats:any;
+  miles:any;
+
   showDate :boolean= false;
+  showDays:boolean=false;
+
+  Mon=true;
+  Tue=true;
+  Wed=true;
+  Thu=true;
+  Fri=true;
+  Sat=true;
+  Sun=true;
+  s:any;
+
+
   ShowHide() {
+    debugger;
     this.showfield = this.showfield ? false : true;
   }
   constructor(private signupservices: SignUpService) {
@@ -34,18 +53,20 @@ export class CaptainComponent implements OnInit {
     this.signupservices.GetPointsMethod("api/Captain/","GetPoints",{'phoneNo':this.phoneNo}).subscribe(response => {
       if(response!= null){
         //response.stringify;
-        alert(JSON.stringify(response));
-        debugger;
+        // alert(JSON.stringify(response));
         for(let a of response){
           if(a.status==true){
+            debugger;
             this.points = eval(a.mappoints);
             this.latitude = this.points[2].lat;
             this.longitude = this.points[2].lng;
+            this.id = a.id;
+            this.seats = a.seats;
+            this.s = a.seats;
+            DriverGlobalService.routeID=a.id;
           }
         }
         this.findDistance();
-        debugger;
-        this.FindSets(this.points);
       }
       else{
         alert("Error");
@@ -69,48 +90,64 @@ export class CaptainComponent implements OnInit {
     debugger;
     var type = $event.target.value;
     if(type=="Once"){
-      this.showDate = false;
-    }
-    else
+      this.showDays =false;
       this.showDate = true;
+    }
+    if(type=="Daily"){
+      this.showDate = true;
+      this.showDays = true;
+    }
+
   }
-  SaveTime(){
-    var stime = this.Stime;
-    var phoneNo = GlobalService.PhoneNo;
-    var time = new Date().toLocaleString('en-US', { hour: 'numeric',minute:'numeric', hour12: true });
+  timeArr=[];
+  calculateTime(time2:Date){
     debugger;
-    if(stime>time && stime!=undefined){
-      this.signupservices.PostMethod("api/Captain/","UpdateTime",{'phoneNo':phoneNo,'stime':stime}).subscribe(response => {
+
+    let time = new Date(time2);
+    let tim = new Date(time2);
+    this.timeArr.push(tim);
+    for(let i=1;i<this.labels.length;i++){
+      let h = parseFloat(this.labels[i])/0.5;
+      time.setMinutes(time.getMinutes()+h);
+      let t = new Date(time);
+      debugger;
+      this.timeArr.push(t);
+
+    }
+  }
+  SaveTime(e){
+    let s_time = new Date(this.Date);
+    var r_time = this.Rtime;
+    var phoneNo = GlobalService.PhoneNo;
+    var today = new Date();
+    let route_ID = e;
+    var type = this.type;
+    var date = new Date(this.Date);
+    let seats_offer = this.seats;
+    let totalpoints = this.points.length;
+    debugger;
+    this.calculateTime(this.Date);
+    let e_time = this.timeArr;
+    let days = [this.Mon, this.Tue,this.Wed,this.Thu,this.Fri,this.Sat,this.Sun].toLocaleString();
+    var time = new Date();
+    debugger;
+
+    if(today<date  && s_time!=undefined && date!=undefined){
+      if(type="Once"){
+        days=null;
+      }
+      this.signupservices.PostMethod("api/Captain/","Offer",{route_ID,type,seats_offer,date,s_time,r_time,days,totalpoints,e_time}).subscribe(response => {
         if(response==true){
-          alert("Time Updated");
+          alert("Ride Offered Successfully.....");
         }
       });
-      if(this.istwoway==true && this.Rtime!=undefined){
-        this.points.reverse();
-        var mappoints = JSON.stringify(this.points);
-        var rtime = this.Rtime;
-        this.signupservices.PostMethod("api/Captain/","Routes",{mappoints,phoneNo,'stime':rtime}).subscribe(response => {
-          if(response == true){
-
-          }
-        });
-      }
     }
     else{
       alert("Select Correct Time")
     }
 
   }
-  set=[];
-  FindSets(a){
-    debugger;
-    for (let i = 0; i < a.length; i++) {
-      for (let j = i+1; j < a.length; j++) {
-        this.set.push([a[i],a[j]]);
-      }
-    }
-    //alert(JSON.stringify(this.set));
-  }
+
   getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
     var R = 6371; // Radius of the earth in km
     var dLat = this.deg2rad(lat2-lat1);  // deg2rad below

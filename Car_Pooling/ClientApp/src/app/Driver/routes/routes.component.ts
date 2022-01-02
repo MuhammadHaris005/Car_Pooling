@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SignUpService } from 'src/app/general.service';
 import { GlobalService } from 'src/app/global.service';
+import { DriverGlobalService } from '../driver.service';
+import { ModalService } from 'src/app/_modal';
 
 @Component({
   selector: 'app-routes',
@@ -12,9 +14,11 @@ export class RoutesComponent implements OnInit {
 
   list:any;
   phoneNo:any;
+  points;
+  longitude ;
+  latitude ;
 
-
-  constructor(private service: SignUpService, private route: Router) {
+  constructor(private service: SignUpService, private route: Router,private modalService: ModalService) {
     if(GlobalService.role!="driver"){
       this.route.navigate(['/login']);
     }
@@ -24,7 +28,17 @@ export class RoutesComponent implements OnInit {
   ngOnInit() {
 
   }
+    openModal(id: string,apoints:any) {
+      debugger;
+      this.points = eval(apoints);
+      this.latitude = this.points[2].lat;
+      this.longitude = this.points[2].lng;
+      this.modalService.open(id);
+  }
 
+  closeModal(id: string) {
+      this.modalService.close(id);
+  }
   get(){
     this.phoneNo = GlobalService.PhoneNo;
     this.service.GetPointsMethod("api/Captain/","GetPoints",{'phoneNo':this.phoneNo}).subscribe(response => {
@@ -33,6 +47,11 @@ export class RoutesComponent implements OnInit {
         debugger;
         //alert(JSON.stringify(response));
         this.list = response;
+        for(let i=0;i<response.length;i++){
+          if(response[i].status==true){
+            DriverGlobalService.routeID=response[i].id;
+          }
+        }
       }
       else{
         alert("Error");

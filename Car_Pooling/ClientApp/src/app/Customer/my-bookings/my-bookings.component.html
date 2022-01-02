@@ -9,20 +9,22 @@
         <h4 class="title">My Bookings</h4>
       </div>
       <div class="pb-20">
-        <table class="data-table table stripe hover nowrap" id="datatable">
+        <table class="data-table table stripe hover nowrap" id="datatable" >
           <thead>
             <tr>
               <th class="table-plus datatable-nosort">Driver Name</th>
+              <th>Registration No</th>
+              <th>Car</th>
               <th>Book Seats</th>
-              <th>Trip Start Time</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let i of list">
-              <td>{{i.name}}</td>
+              <td>{{i.firstname+i.lastname}}</td>
+              <td>{{i.regno}}</td>
+              <td>{{i.model}}</td>
               <td>{{i.seats}}</td>
-              <td>{{i.time}}</td>
               <td>
                 <div class="btn btn-sm btn-danger">cancel</div>
               </td>

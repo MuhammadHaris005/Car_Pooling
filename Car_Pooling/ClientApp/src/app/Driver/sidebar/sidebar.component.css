@@ -2,7 +2,7 @@
   min-width: 270px;
   max-width: 270px;
 	color: #fff;
-  background: #154a74;
+  background: linear-gradient(to right, #005c7a 57%, #279c9a 112%);
   font-size: 25px;
   padding: 13px;
   display: flex;

@@ -19,7 +19,6 @@ export class GeneralinfoComponent implements OnInit {
   ngOnInit() {
       this.generalForm = this.formBuilder.group({
       role:GlobalService.role,
-      image:['',[Validators.required]],
       firstName: ['', [Validators.required,Validators.pattern('^[a-zA-Z ]*$')]],
       lastName: ['', [Validators.required,Validators.pattern('^[a-zA-Z ]*$')]],
       // validates date format yyyy-mm-dd
@@ -28,6 +27,7 @@ export class GeneralinfoComponent implements OnInit {
       city: ['',[ Validators.required,Validators.pattern('^[a-zA-Z ]*$')]],
       phoneNo: ['',[Validators.required,Validators.minLength(3)]],
       gender:['', Validators.required],
+      image: [''],
       password: ['', [Validators.required, Validators.minLength(3)]],
       confirmPassword: ['', Validators.required],
   });
@@ -38,7 +38,6 @@ export class GeneralinfoComponent implements OnInit {
   onSubmit() {
     debugger;
     this.submitted = true;
-    var image = this.FileUpload;
     var role = GlobalService.role;
     // stop here if form is invalid
     if (this.generalForm.invalid) {
@@ -68,6 +67,7 @@ export class GeneralinfoComponent implements OnInit {
       // When file uploads set it to file formcontrol
       reader.onload = () => {
         this.imageUrl = reader.result;
+        this.generalForm.controls['image'].setValue(reader.result);
         this.editFile = false;
         this.removeUpload = true;
       }

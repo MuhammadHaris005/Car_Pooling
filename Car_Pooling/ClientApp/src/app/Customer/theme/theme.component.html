@@ -8,59 +8,79 @@
             <div class="p-3 d-flex justify-content-center">
               <h2>Mark Your Sourse & Destination</h2>
             </div>
-
-            <agm-map [latitude]= "Srclatitude" [longitude]= "Srclongitude" [zoom]="13" [mapTypeId]="'roadmap'">
-
-              <agm-marker color = "Blue" [latitude]= "Srclatitude" [longitude]= "Srclongitude"   [label]= "$any('Src')"  [markerDraggable]= "true"(dragEnd) = "SrcDragEnd($event)"></agm-marker>
-
-              <agm-marker [latitude]= "Deslatitude" [longitude]= "Deslongitude" [label]= "$any('Des')"  [markerDraggable]= "true" (dragEnd) = "DesDragEnd($event)"></agm-marker>
-               <agm-polyline [visible]="true" [strokeWeight]="3" [strokeColor]="'#07b57a'">
-                <agm-polyline-point
-                [latitude]="Srclatitude"
-                [longitude]="Srclongitude"></agm-polyline-point>
-                <agm-polyline-point
-                [latitude]="Deslatitude"
-                [longitude]="Deslongitude"></agm-polyline-point>
-              </agm-polyline>
-            </agm-map>
+            <agm-map class="col-md-9 col-sm-12"
+                [latitude]="lat"
+                [longitude]="lng"
+                [zoom]="zoom"
+                [zoomControl]="false"
+                (mapClick)="mapClicked($event)"
+              >
+                <agm-marker
+                  *ngFor="let m of markers; let i = index"
+                  [iconUrl]="m.iconUrl"
+                  [latitude]="m.lat"
+                  [longitude]="m.lng"
+                  [label]="m.label"
+                  [markerDraggable]="m.draggable"
+                  (dragEnd)="markerDragEnd(m, $event)"
+                >
+                </agm-marker>
+              </agm-map>
           <form class="form p-3 mt-3">
-            <div class="form-row">
+            <div class="row d-flex justify-content-center">
+              <div class="form-group col-md-3">
+                <label>Trip Type: </label>
+                <select class="form-control" name="type"  (change)="changetype($event)" style="width: 100%; height: 38px;" [(ngModel)]="type">
+                    <option value="Once">Once</option>
+                    <option value="Daily">Daily</option>
+                </select>
+              </div>
+              <div class="form-group col-md-3 ml-md-3" *ngIf="showDate" >
+                <label class="col-sm-12 col-md-4 col-form-label">Date</label>
+                <div class="col-sm-12 col-md-12">
+                  <input class="form-control date-picker" [(ngModel)]="Date" name="Date" placeholder=" Select Date" type="datetime-local" min="{{time}}" required>
+                </div>
+              </div>
+              <!-- <div class="form-group col-md-3 ml-md-3">
+                <label>Travelling Time</label> &nbsp;
+                <input class="form-control" type="time" placeholder="time" [(ngModel)]="time" name="tme" >
+              </div> -->
+            </div>
+
+            <div class="form-row mt-2" *ngIf="showDays">
               <label class="font-weight-bold">Days</label>
-              <div class="custom-control custom-checkbox ml-5">
-                <input type="checkbox" class="custom-control-input" id="customCheck3-1">
-                <label class="custom-control-label" for="customCheck3-1">Mon</label>
+              <div class="custom-control custom-checkbox ml-5" >
+                <input type="checkbox"  name="Mon" [(ngModel)]="Mon" class="custom-control-input" id="M" checked>
+                <label class="custom-control-label" for="M">Mon</label>
               </div>
               <div class="custom-control custom-checkbox ml-5">
-                <input type="checkbox" class="custom-control-input" id="customCheck3-1">
-                <label class="custom-control-label" for="customCheck3-1">Tue</label>
+                <input type="checkbox"  name="Tue" [(ngModel)]="Tue"  class="custom-control-input" id="Tu" checked>
+                <label class="custom-control-label" for="Tu">Tue</label>
               </div>
               <div class="custom-control custom-checkbox ml-5">
-                <input type="checkbox" class="custom-control-input" id="customCheck3-1">
-                <label class="custom-control-label" for="customCheck3-1">Wed</label>
+                <input type="checkbox"  name="Wed" [(ngModel)]="Wed" class="custom-control-input" id="W" checked>
+                <label class="custom-control-label" for="W">Wed</label>
               </div>
               <div class="custom-control custom-checkbox ml-5">
-                <input type="checkbox" class="custom-control-input" id="customCheck3-1">
-                <label class="custom-control-label ml-2" for="customCheck3-1">Thu</label>
+                <input type="checkbox" name="Thu" [(ngModel)]="Thu" class="custom-control-input" id="Th" checked>
+                <label class="custom-control-label " for="Th">Thu</label>
               </div>
               <div class="custom-control custom-checkbox  ml-5">
-                <input type="checkbox" class="custom-control-input" id="customCheck3-1">
-                <label class="ml-2 custom-control-label" for="customCheck3-1">Fri</label>
+                <input type="checkbox" name="Fri" [(ngModel)]="Fri" class="custom-control-input" id="F" checked>
+                <label class=" custom-control-label" for="F">Fri</label>
               </div>
               <div class="custom-control custom-checkbox ml-5">
-                <input type="checkbox" class="custom-control-input" id="customCheck3-1">
-                <label class="ml-2 custom-control-label" for="customCheck3-1">Sat</label>
+                <input type="checkbox" name="Sat" [(ngModel)]="Sat" class="custom-control-input" id="Sat" checked>
+                <label class=" custom-control-label" for="Sat">Sat</label>
               </div>
               <div class="custom-control custom-checkbox ml-5">
-                <input type="checkbox" class="custom-control-input" id="customCheck3-1">
-                <label class="ml-2 custom-control-label" for="customCheck3-1">Sun</label>
+                <input type="checkbox" name="Sun" [(ngModel)]="Sun" class="custom-control-input" id="Sun" checked>
+                <label class=" custom-control-label" for="Sun">Sun</label>
               </div>
             </div>
             <div class="form-row mt-4">
-              <div class="form-group ">
-                <label>Travelling Time</label> &nbsp;
-                <input class="form-control time-picker-default" placeholder="time" [(ngModel)]="time" name="tme">
-              </div>
-              <div class="form-group ml-5">
+
+              <div class="form-group">
                 <label>Total Seats</label>&nbsp; &nbsp;
                 <div>
                  <button id="Btn" class="btn btn-danger" (click)="decrement()">&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;</button>
@@ -81,12 +101,12 @@
         <div class="row">
           <div class="col-lg-3 col-md-3 col-sm-12 mb-30 mx-3" *ngFor="let i of driversdetails;let a=index">
 						<div class="card card-box" >
-							<img class="card-img-top  pl-5 pr-5" src="../../assets/vendors/images/abc.jpg" alt="Card image cap">
+							<img class="card-img-top  pl-5 pr-5" src={{i.image}} >
 							<div class="card-body p-3">
 								<h5 class="card-title weight-500">{{i.firstname+" "+i.lastname}}</h5>
-								<p class="card-text"> {{vehicledetails[a].model}} &nbsp; seats:{{vehicledetails[a].seats}}</p>
-								<p class="text-success m-1">Time: {{routedetails[a]}}</p>
-                <a class="btn btn-block text-white btn-primary p-2" (click)="Book(i,vehicledetails[a])">Book</a>
+								<p class="card-text"> {{vehicledetails[a].model}} &nbsp; seats:{{seatsArray[a]}}</p>
+								<p class="text-success m-1">Time: {{exp_time[a]}}</p>
+                <a class="btn btn-block text-white btn-primary p-2" (click)="Book(i,vehicledetails[a],bookings[a])">Book</a>
 							</div>
 						</div>
 					</div>

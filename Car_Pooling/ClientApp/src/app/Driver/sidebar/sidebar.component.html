@@ -1,4 +1,4 @@
-<nav id="sidebar">
+<nav id="sidebar" >
   <h4 id="logo"><a  class="navbar-brand navbar-logo" href="#">ᑕᗩᖇ ᑭᗝᗝᒪIᑎᎶ</a></h4>
   <div class="p-4">
     <ul class="list-unstyled components mb-5">
@@ -9,10 +9,10 @@
         <a   [routerLink]= "['/captain']"><span class="fa fa-car mr-3"></span>Offer Ride</a>
       </li>
       <li [routerLinkActive]= "['active']">
-        <a routerLink="['/Ride']"><span class="fa fa-road mr-3"></span> My Rides</a>
+        <a [routerLink]="['/rides']"><span class="fa fa-road mr-3"></span> My Rides</a>
       </li>
       <li [routerLinkActive]= "['active']">
-        <a [routerLink]="['/routes']"><span class="fa fa-user-secret mr-3"></span> Routes</a>
+        <a [routerLink]="['/routes']"><span class="dw dw-route mr-3"></span> Routes</a>
       </li>
       <li>
         <a ><span class="fa fa-cogs mr-3"></span> Settings</a>
@@ -24,4 +24,7 @@
 
   </div>
 </nav>
+<!-- <button style="position: absolute ; top:0;left:0;" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button> -->
 

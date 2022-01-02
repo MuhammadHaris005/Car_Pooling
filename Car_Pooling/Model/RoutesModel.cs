@@ -11,8 +11,7 @@ namespace Car_Pooling.Model
         public string mappoints { get; set; }
         public string source { get; set; }
         public string destination { get; set; }
-        public string phoneNo { get; set; }
-        public string stime { get; set; }
+        public string phoneNo { get; set; } 
         public bool status {get; set;}
     }
 }

@@ -14,13 +14,16 @@ export class MyBookingsComponent implements OnInit {
 
 
   ngOnInit() {
-    $("#datatable").DataTable();
     var phone = GlobalService.PhoneNo;
     this.service.GetCaptainMethod("api/Captain/","GetBookings",{'u_phone':phone}).subscribe(response => {
       if(response!= null){
+        debugger;
         this.list = response;
       }
     });
+    $("#datatable").DataTable();
+
+
   }
 
 }

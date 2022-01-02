@@ -29,4 +29,10 @@ export class SignUpService {
   UpdateStatus<T> (controllerName:any,controllerMethod:any,data:any){
     return this.http.post<any>("https://localhost:44358/"+controllerName+controllerMethod,data);
   }
+  Searching<T> (controllerName:any,controllerMethod:any,data:any){
+    return this.http.post<any>("https://localhost:44358/"+controllerName+controllerMethod,data);
+  }
+  Delete<T> (controllerName:any,controllerMethod:any,data:any){
+    return this.http.post<any>("https://localhost:44358/"+controllerName+controllerMethod,data);
+  }
 }
