@@ -6,5 +6,6 @@ import { Injectable } from '@angular/core';
 export abstract class DriverGlobalService {
 
   public static routeID;
+  public static notifylist;
   constructor() { }
 }

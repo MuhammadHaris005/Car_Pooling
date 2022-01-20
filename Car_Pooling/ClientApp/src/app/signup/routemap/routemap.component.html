@@ -138,6 +138,7 @@
                 <agm-map
                 [latitude]="lat"
                 [longitude]="lng"
+
                 [zoom]="zoom"
                 [zoomControl]="false"
                 (mapClick)="mapClicked($event)"
@@ -146,6 +147,7 @@
                   *ngFor="let m of markers; let i = index"
                   [latitude]="m.lat"
                   [longitude]="m.lng"
+                  [iconUrl]="m.iconUrl"
                   [label]="m.label"
                   [markerDraggable]="m.draggable"
                   (dragEnd)="markerDragEnd(m, $event)"

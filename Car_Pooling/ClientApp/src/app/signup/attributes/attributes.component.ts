@@ -22,12 +22,12 @@ export class AttributesComponent implements OnInit {
 
   ngOnInit() {
     this.HabitsForm = this.formBuilder.group({
-      smooking: ["", Validators.required],
-      talkative: ["", Validators.required],
-      music: ["", Validators.required],
-      allowsmooking: ["", Validators.required],
-      allowtalkative: ["", Validators.required],
-      allowmusic: ["", Validators.required],
+      smooking: [Validators.required],
+      talkative: [Validators.required],
+      music: [Validators.required],
+      allowsmooking: [Validators.required],
+      allowtalkative: [Validators.required],
+      allowmusic: [Validators.required],
       phoneNo: Global.personaldata.phoneNo,
     });
     if(GlobalService.role=="passenger"){
@@ -39,6 +39,7 @@ export class AttributesComponent implements OnInit {
   }
 
   onSubmit() {
+    debugger;
     this.submitted = true;
 
     // stop here if form is invalid

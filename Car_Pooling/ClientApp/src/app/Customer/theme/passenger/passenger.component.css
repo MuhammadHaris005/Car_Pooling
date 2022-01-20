@@ -53,15 +53,14 @@
 }
 
 .rating label:last-child .icon {
-  color: #000;
+  color: rgb(194, 194, 194);
 }
-
 .rating:not(:hover) label input:checked ~ .icon,
 .rating:hover label:hover input ~ .icon {
-  color: rgb(196, 144, 2);
+  color: rgb(255, 208, 0);
 }
 
-.rating label input:focus:not(:checked) ~ .icon:last-child {
+/* .rating label input:focus:not(:checked) ~ .icon:last-child {
   color: #000;
   text-shadow: 0 0 5px #09f;
-}
+} */

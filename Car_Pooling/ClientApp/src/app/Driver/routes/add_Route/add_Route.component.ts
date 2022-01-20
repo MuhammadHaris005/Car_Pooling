@@ -25,6 +25,9 @@ export class Add_RouteComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(GlobalService.role!="driver"){
+      this.route.navigate(['/login']);
+    }
   }
 
   mapClicked($event: MouseEvent) {
@@ -49,17 +52,24 @@ export class Add_RouteComponent implements OnInit {
   Save(){
     debugger
     var mappoints = this.points;
+
     var phoneNo = GlobalService.PhoneNo;
     var source = this.source;
     var destination = this.destination;
-    this.service.PostMethod("api/Captain/","Routes",{mappoints,phoneNo,source,destination,'status':false}).subscribe(response => {
-      if(response == true){
-        alert("Route Added Successfully");
-      }
-      else{
-        alert("api Error");
-      }
-    });
+    if(mappoints.lenght>2){
+      this.service.PostMethod("api/Captain/","Routes",{mappoints,phoneNo,source,destination,'status':false}).subscribe(response => {
+        if(response == true){
+          alert("Route Added Successfully");
+        }
+        else{
+          alert("api Error");
+        }
+      });
+    }
+    else{
+      alert("Select Complete Route...");
+    }
+
   }
 
 }

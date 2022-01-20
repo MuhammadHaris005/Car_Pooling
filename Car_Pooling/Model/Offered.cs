@@ -14,7 +14,8 @@ namespace Car_Pooling.Model
         public DateTime date { get; set; }
         public DateTime s_time { get; set; }
         public string r_time { get; set; }
-
+        public int distance { get; set; }
+        public int ridestatus { get; set; }
 
     }
 }

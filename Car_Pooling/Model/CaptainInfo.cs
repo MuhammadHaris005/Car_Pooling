@@ -15,7 +15,6 @@ namespace Car_Pooling.Model
         public string city { get; set; }
         public string email { get; set; }
         public string password { get; set; }
-        public string confirmPassword { get; set; }
         public string image { get; set; }
         public string role { get; set; }
     }

@@ -12,3 +12,12 @@
   justify-items: center;
   margin-left: 0px;
 }
+.button__badge {
+  background-color: #ff4141;
+    border-radius: 22px;
+    color: #ffffff;
+    padding: 1px 8px;
+    font-size: 12px;
+    position: absolute;
+    margin-left: 55px;
+}

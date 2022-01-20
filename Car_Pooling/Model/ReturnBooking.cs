@@ -7,8 +7,14 @@ namespace Car_Pooling.Model
 {
     public class ReturnBooking
     {
-        public CaptainInfo c = new CaptainInfo();
-        public VehicleModel v = new VehicleModel();
-        public BookingModel b = new BookingModel();
+
+        public ReturnBooking(){
+            captianInfo = new CaptainInfo();
+            vehicle = new VehicleModel();
+            booking = new BookingModel();
+            }
+        public CaptainInfo captianInfo { get; set; }
+        public VehicleModel vehicle { get; set; }
+        public BookingModel booking { get; set; }
     }
 }

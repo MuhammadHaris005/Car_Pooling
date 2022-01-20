@@ -8,15 +8,24 @@
         <div class="row mt-5">
           <div class="col-md-4 col-sm-12 mr-md-3 p-3" id="formdiv">
             <form class="form">
-              <div class="form-group" >
-                <label>Trip Type: </label>
-                <select class="form-control pl-2" name="type"  (change)="changetype($event)"  [(ngModel)]="type">
-                    <option value="Once">Once</option>
-                    <option value="Daily">Daily</option>
-                </select>
+              <div class="form-row ml-4">
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="once" [(ngModel)]="type" name="type" class="custom-control-input" value="Once" (change)="changetype($event)" checked>
+                  <label class="custom-control-label" for="once">Once</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline ml-5">
+                  <input type="radio" id="daily" [(ngModel)]="type" name="type" class="custom-control-input" value="Daily" (change)="changetype($event)">
+                  <label class="custom-control-label" for="daily" >Daily</label>
+                </div>
               </div>
               <div class="form-group mt-3" *ngIf="showDate" >
-                <label class="col-sm-12 col-md-4 col-form-label">Date</label>
+                <label class="col-sm-12 col-md-4 col-form-label">Start Date</label>
+                <div class="col-sm-12 col-md-12">
+                  <input class="form-control pl-2" [(ngModel)]="Date" name="Date" placeholder=" Select Date" type="datetime-local" required>
+                </div>
+              </div>
+              <div class="form-group mt-3" *ngIf="showDays" >
+                <label class="col-sm-12 col-md-4 col-form-label">End Date</label>
                 <div class="col-sm-12 col-md-12">
                   <input class="form-control pl-2" [(ngModel)]="Date" name="Date" placeholder=" Select Date" type="datetime-local" required>
                 </div>
@@ -58,16 +67,16 @@
                 <label class="form-label">Trip Start Time</label>
                 <input class="form-control pl-2" placeholder="Select time" type="time" [(ngModel)]="Stime" name="Stime">
               </div> -->
-              <div class="form-group mt-3" >
+              <!-- <div class="form-group mt-3" >
                 <div class="custom-control custom-checkbox ml-4" *ngIf="showDays || showDate">
                   <input type="checkbox" class="custom-control-input" id="customCheck1" (change)="ShowHide()" [(ngModel)]="istwoway" name="istwoway">
                   <label class="custom-control-label" for="customCheck1">Return Trip</label>
                 </div>
-              </div>
-              <div class="form-group mt-3" *ngIf="showfield" id="timepicker">
+              </div> -->
+              <!-- <div class="form-group mt-3" *ngIf="showfield" id="timepicker">
 								<label class="form-label">Trip Return Time</label>
 								<input class="form-control pl-2" placeholder="time" type="time" [(ngModel)]="Rtime" name="Rtime">
-							</div>
+							</div> -->
               <div class="form-row mt-3" >
                 <div class="col-md-6  px-0 pr-1">
                   <label class="form--label" >No of Seats</label>
@@ -86,7 +95,7 @@
           </div>
           <div class="col-md-7 col-sm-12 pl-md-5 mt-5 mt-md-0">
             <agm-map class="col-md-6 col sm-12" [zoom]= "12" [latitude]= "latitude" [longitude]= "longitude" class="col-md-6 col sm-12">
-              <agm-marker *ngFor="let item of points let i=index " [latitude]=item.lat [longitude]=item.lng  (markerClick)="clickedMarker(infowindow)">
+              <agm-marker *ngFor="let item of points let i=index " [latitude]=item.lat [longitude]=item.lng [iconUrl]=item.iconUrl [label]=item.label (markerClick)="clickedMarker(infowindow)">
                 <agm-info-window  #infowindow>
                   <strong>{{labels[i]}}</strong>
                 </agm-info-window>
@@ -104,3 +113,5 @@
       </div>
 		</div>
 <!-- <app-footer></app-footer> -->
+
+<button id="sa-success" hidden>Click</button>

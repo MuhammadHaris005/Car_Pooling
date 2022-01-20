@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GlobalService } from '../../global.service';
 import { SignUpService } from '../../general.service';
 import { DriverGlobalService } from '../driver.service';
+import { Router } from '@angular/router';
 
 declare const $ :any;
 @Component({
@@ -44,11 +45,18 @@ export class CaptainComponent implements OnInit {
     debugger;
     this.showfield = this.showfield ? false : true;
   }
-  constructor(private signupservices: SignUpService) {
+  constructor(private signupservices: SignUpService,private router:Router) {
     this.phoneNo = "";
   }
   ngOnInit() {
+
+    if(GlobalService.role!="driver"){
+      this.router.navigate(['/login']);
+    }
     debugger;
+    $.SweetAlert.init();
+
+    //setTimeout(function(){ $("#sa-success").SweetAlert().init()}, 500);
     this.phoneNo = GlobalService.PhoneNo;
     this.signupservices.GetPointsMethod("api/Captain/","GetPoints",{'phoneNo':this.phoneNo}).subscribe(response => {
       if(response!= null){
@@ -74,7 +82,8 @@ export class CaptainComponent implements OnInit {
     });
   }
   findDistance(){
-    for (let i = 0; i < this.points.length-1; i++) {
+    debugger;
+    for (let i = 0; i < this.points.length -1; i++) {
       var d = this.getDistanceFromLatLonInKm(this.points[i].lat,this.points[i].lng,this.points[i+1].lat,this.points[i+1].lng);
       this.labels.push(d+" km");
     }
@@ -101,8 +110,6 @@ export class CaptainComponent implements OnInit {
   }
   timeArr=[];
   calculateTime(time2:Date){
-    debugger;
-
     let time = new Date(time2);
     let tim = new Date(time2);
     this.timeArr.push(tim);
@@ -125,6 +132,7 @@ export class CaptainComponent implements OnInit {
     var date = new Date(this.Date);
     let seats_offer = this.seats;
     let totalpoints = this.points.length;
+    let distance = this.miles;
     debugger;
     this.calculateTime(this.Date);
     let e_time = this.timeArr;
@@ -136,9 +144,9 @@ export class CaptainComponent implements OnInit {
       if(type="Once"){
         days=null;
       }
-      this.signupservices.PostMethod("api/Captain/","Offer",{route_ID,type,seats_offer,date,s_time,r_time,days,totalpoints,e_time}).subscribe(response => {
+      this.signupservices.PostMethod("api/Captain/","Offer",{route_ID,type,seats_offer,date,s_time,r_time,days,totalpoints,e_time,distance}).subscribe(response => {
         if(response==true){
-          alert("Ride Offered Successfully.....");
+          document.getElementById('sa-success').click();
         }
       });
     }
@@ -168,3 +176,5 @@ interface Sets{
   P2:any;
   seats:any;
 }
+
+

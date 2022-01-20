@@ -1,0 +1,256 @@
+<div class="wrapper d-flex align-items-stretch">
+  <app-sidebar></app-sidebar>
+    <!-- Page Content  -->
+  <div id="content" class="p-md-3 px-2">
+    <h4>Personal</h4><hr/>
+    <div class="d-flex justify-content-center mb-2">
+      <form [formGroup]= "generalForm" (ngSubmit)= "onSubmit()" class="col-md-8 col-sm-12">
+        <div class="group-gap d-flex justify-content-center">
+          <div class="avatar-upload">
+            <div class="avatar-edit">
+              <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput (change)="uploadFile($event)" formControlName="image" src="image"/>
+            </div>
+            <div class="avatar-preview">
+
+              <div class="btn btn-light btn-lg btn-sm" (click)="fileInput.click()" id="imagePreview" [style.backgroundImage]="'url('+ imageUrl +')'">
+                <i *ngIf="generalForm.controls['image'].value==''" class="fa fa-picture-o fa-2x m-4 pt-3" ></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-6 pr-3">
+            <input type="text" class="form-control" placeholder="First Name" formControlName="firstName" [ngClass]= "{ 'is-invalid': submitted && f.firstName.errors }"/>
+            <!-- <div class="input-group-append custom">
+              <span class="input-group-text"><i class="icon-copy dw dw-name"></i></span>
+            </div> -->
+            <div *ngIf= "submitted && f.firstName.errors" class="invalid-feedback">
+              <div *ngIf= "f.firstName.errors.required">First Name is required</div>
+              <div *ngIf="f.firstName.errors.pattern">FirstName must be a alphabets</div>
+            </div>
+          </div>
+
+          <div class="form-group col-6 pl-3">
+            <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName" [ngClass]= "{ 'is-invalid': submitted && f.lastName.errors }"/>
+            <!-- <div class="input-group-append custom">
+              <span class="input-group-text"><i class="icon-copy dw dw-name"></i></span>
+            </div> -->
+            <div *ngIf= "submitted && f.lastName.errors" class="invalid-feedback">
+              <div *ngIf= "f.lastName.errors.required">Last Name is required</div>
+              <div *ngIf="f.lastName.errors.pattern">LastName must be a alphabets</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-6 pr-3">
+            <input type="text"  class="form-control" placeholder="Email Address" formControlName="email" [ngClass]= "{ 'is-invalid': submitted && f.email.errors }"/>
+            <!-- <div class="input-group-append custom">
+              <span class="input-group-text"><i class="icon-copy dw dw-email"></i></span>
+            </div> -->
+            <div *ngIf= "submitted && f.email.errors" class="invalid-feedback">
+              <div *ngIf= "f.email.errors.required">Email is required</div>
+              <div *ngIf= "f.email.errors.email">Email must be a valid Format address</div>
+            </div>
+          </div>
+
+          <div class="form-group col-6 pl-3">
+            <input type="text"  class="form-control" placeholder="CNIC" formControlName="cnic" [ngClass]= "{ 'is-invalid': submitted && f.cnic.errors }">
+            <!-- <div class="input-group-append custom">
+              <span class="input-group-text"><i class="icon-copy dw dw-pencil"></i></span>
+            </div> -->
+            <div *ngIf= "submitted && f.cnic.errors" class="invalid-feedback">
+              <div *ngIf= "f.cnic.errors.required">CNIC is required</div>
+              <div *ngIf="f.cnic.errors.minlength">CNIC must be at 13 characters</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label class="weight-99900">Gender:</label>
+            <div class="custom-control custom-radio custom-control-inline ml-5">
+              <input type="radio" id="male"  formControlName="gender" class="custom-control-input" value="Male">
+              <label class="custom-control-label" for="male">Male</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="female"  formControlName="gender" class="custom-control-input" value="Female">
+              <label class="custom-control-label" for="female" >Female</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-6 pr-3">
+            <input type="text"  class="form-control" placeholder="City" formControlName="city" [ngClass]= "{ 'is-invalid': submitted && f.city.errors }">
+            <!-- <div class="input-group-append custom">
+              <span class="input-group-text"><i class="icon-copy dw dw-city"></i></span>
+            </div> -->
+            <div *ngIf= "submitted && f.city.errors" class="invalid-feedback">
+              <div *ngIf= "f.city.errors.required">City Name is required</div>
+              <div *ngIf="f.city.errors.pattern">City Name must be a alphabets</div>
+            </div>
+          </div>
+          <div class="form-group col-6 pl-3">
+            <input type="password" class="form-control"  placeholder="Password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+            <!-- <div class="input-group-append custom">
+              <span class="input-group-text"><i class="icon-copy dw dw-password"></i></span>
+            </div> -->
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+              <div *ngIf="f.password.errors.required">Password is required</div>
+              <div *ngIf="f.password.errors.minlength">Password must be at least 8 characters</div>
+          </div>
+          </div>
+        </div>
+        <!-- <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary rounded-5">Next &nbsp;<i class="icon-copy dw dw-right-arrow"></i></button>
+        </div> -->
+      </form>
+    </div>
+    <h4>Vehicle</h4><hr/>
+    <div class="d-flex justify-content-center mb-2">
+      <form [formGroup]= "vehicleForm" (ngSubmit)="onSubmit()" class="col-md-8 col-sm-12">
+        <div class="form-row pt-3">
+          <div class="form-group col-6 pr-3">
+            <input type="text" class="form-control" placeholder="Registration No" formControlName="regno" [ngClass]= "{ 'is-invalid': submitted && g.regno.errors }">
+            <div *ngIf= "submitted && g.regno.errors" class="invalid-feedback">
+              <div *ngIf= "g.regno.errors.required">Registration No is required</div>
+            </div>
+          </div>
+          <div class="form-group col-6 pl-3">
+            <input type="text"  class="form-control" placeholder="Color" formControlName="color" [ngClass]= "{ 'is-invalid': submitted && g.color.errors }">
+            <!-- <div class="input-group-append custom">
+              <span class="input-group-text"><i class="icon-copy dw dw-edit"></i></span>
+            </div> -->
+            <div *ngIf= "submitted && g.color.errors" class="invalid-feedback">
+              <div *ngIf= "g.color.errors.required">Color is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row ">
+          <div class="form-group col-6 pr-3">
+            <input type="text"  class="form-control" placeholder="Model" formControlName="model" [ngClass]= "{ 'is-invalid': submitted && g.model.errors }">
+            <!-- <div class="input-group-append custom">
+              <span class="input-group-text"><i class="icon-copy dw dw-opacity"></i></span>
+            </div> -->
+            <div *ngIf= "submitted && g.model.errors" class="invalid-feedback">
+              <div *ngIf= "g.model.errors.required">Model is required</div>
+            </div>
+          </div>
+          <div class="form-group col-6 pl-3">
+            <input type="text"  class="form-control" placeholder="Maker" formControlName="maker" [ngClass]= "{ 'is-invalid': submitted && g.maker.errors }">
+            <!-- <div class="input-group-append custom">
+              <span class="input-group-text"><i class="icon-copy dw dw-caravan"></i></span>
+            </div> -->
+            <div *ngIf= "submitted && g.maker.errors" class="invalid-feedback">
+              <div *ngIf= "g.maker.errors.required">Maker is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row ">
+          <div class="form-group col-6 pr-3">
+            <input type="number"  class="form-control" placeholder="Seating Capacity" formControlName="seats" [ngClass]= "{ 'is-invalid': submitted && g.seats.errors }">
+            <!-- <div class="input-group-append custom">
+              <span class="input-group-text"><i class="icon-copy dw dw-chat"></i></span>
+            </div> -->
+            <div *ngIf= "submitted && g.seats.errors" class="invalid-feedback">
+              <div *ngIf= "g.seats.errors.required">No. of Vehicle Seats is required</div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="form-row pt-3">
+          <div class=" col-6 d-flex justify-content-start">
+            <button class="btn btn-md btn-primary rounded-top " routerLink="/general"><span class="fa fa-arrow-left"></span>  Previous</button>
+          </div>
+          <div class="col-6 d-flex justify-content-end">
+            <button type="submit" class="btn btn-md btn-primary rounded-top " >Next  <span class="fa fa-arrow-right"></span> </button>
+          </div>
+        </div> -->
+      </form>
+    </div>
+    <h5>Habits</h5><hr/>
+    <div class="justify-content-center">
+      <form [formGroup]= "HabitsForm"  class="row">
+        <div class="col-md-5 ml-md-5">
+          <label class="weight-90000 font-weight-bold">Please confirm your habits during trip</label>
+          <div class="form-group">
+            <label class="weight-10000">Are you Smooking during trip ?</label>
+            <div class="custom-control custom-radio custom-control-inline ml-5">
+              <input type="radio" id="smook1" formControlName="smooking" class="custom-control-input" value="True">
+              <label class="custom-control-label" for="smook1">Yes</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="smook0" formControlName="smooking" class="custom-control-input" value="False">
+              <label class="custom-control-label" for="smook0">No</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="weight-10000">Are you Talking during trip ?</label>
+            <div class="custom-control custom-radio custom-control-inline ml-5">
+              <input type="radio" id="talk1" formControlName="talkative" class="custom-control-input" value="True">
+              <label class="custom-control-label" for="talk1">Yes</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="talk0" formControlName="talkative" class="custom-control-input" value="False">
+              <label class="custom-control-label" for="talk0">No</label>
+            </div>
+          </div>
+          <div class="form-group" >
+            <label class="weight-10000">Are you Listening Music during trip ?</label>
+            <div class="custom-control custom-radio custom-control-inline ml-5">
+              <input type="radio" id="music1"  formControlName="music" class="custom-control-input" value="True">
+              <label class="custom-control-label" for="music1">Yes</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="music2"  formControlName="music" class="custom-control-input" value="False">
+              <label class="custom-control-label" for="music2" >No</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <label class="weight-90000 font-weight-bold">Habits of other Person during trip</label>
+          <div class="form-group">
+            <label class="weight-10000">Allow Smooking during trip ?</label>
+            <div class="custom-control custom-radio custom-control-inline ml-5">
+              <input type="radio" id="allowsmook1" formControlName="allowsmooking" class="custom-control-input" value="True">
+              <label class="custom-control-label" for="allowsmook1">Yes</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="allowsmook0" formControlName="allowsmooking" class="custom-control-input" value="False">
+              <label class="custom-control-label" for="allowsmook0">No</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="weight-10000">Allow Talking during trip ?</label>
+            <div class="custom-control custom-radio custom-control-inline ml-5">
+              <input type="radio" id="allowtalk1" formControlName="allowtalkative" class="custom-control-input" value="True">
+              <label class="custom-control-label" for="allowtalk1">Yes</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="allowtalk0" formControlName="allowtalkative" class="custom-control-input" value="False">
+              <label class="custom-control-label" for="allowtalk0">No</label>
+            </div>
+          </div>
+          <div class="form-group" >
+            <label class="weight-10000">Allow Music during trip ?</label>
+            <div class="custom-control custom-radio custom-control-inline ml-5">
+              <input type="radio" id="allowmusic1"  formControlName="allowmusic" class="custom-control-input" value="True">
+              <label class="custom-control-label" for="allowmusic1">Yes</label>
+            </div>5
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="allowmusic2"  formControlName="allowmusic" class="custom-control-input" value="False">
+              <label class="custom-control-label" for="allowmusic2" >No</label>
+            </div>
+          </div>
+        </div>
+
+      </form>
+      <div class="d-flex justify-content-center mt-2 mb-2">
+        <button class="btn btn-primary " (click)="onSubmit(generalForm,vehicleForm,HabitsForm)">Update</button>
+      </div>
+    </div>
+
+  </div>
+
+
+

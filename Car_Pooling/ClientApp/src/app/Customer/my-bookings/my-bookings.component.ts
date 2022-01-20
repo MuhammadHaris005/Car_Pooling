@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { SignUpService } from '../../general.service';
 import { GlobalService } from '../../global.service';
 declare const $ :any;
@@ -10,20 +11,38 @@ declare const $ :any;
 export class MyBookingsComponent implements OnInit {
 
   list:any;
-  constructor(private service: SignUpService) { }
+  constructor(private service: SignUpService,private router: Router) { }
 
 
   ngOnInit() {
+    if(GlobalService.role!="passenger"){
+      this.router.navigate(['/login']);
+    }
+    this.bookingList();
+  }
+  bookingList(){
     var phone = GlobalService.PhoneNo;
     this.service.GetCaptainMethod("api/Captain/","GetBookings",{'u_phone':phone}).subscribe(response => {
-      if(response!= null){
+      if(response){
         debugger;
+        response= response.map(response=>({...response.captianInfo,...response.vehicle,...response.booking}))
         this.list = response;
+        setTimeout(function(){ $("#datatable").DataTable()}, 500);
       }
     });
-    $("#datatable").DataTable();
-
-
+  }
+  Cancelbooking(x){
+    let booking_id = x.id;
+    let id = x.order_id;
+    let P1 = x.s_point;
+    let P2 = x.e_point;
+    let seats = x.seats;
+    this.service.PostMethod("api/User/","UpdateBookSeats",{id,booking_id,P1,P2,seats}).subscribe(resp=>{
+      if(resp){
+        alert("Deleted.....");
+        this.bookingList();
+      }
+    })
   }
 
 }

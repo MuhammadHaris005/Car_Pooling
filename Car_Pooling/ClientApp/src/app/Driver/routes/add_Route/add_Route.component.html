@@ -1,12 +1,12 @@
 
 <div class="wrapper d-flex align-items-stretch">
   <app-sidebar></app-sidebar>
-  <div id="content" class="p-md">
+  <div id="content" class="p-md-5">
     <div class="row  d-flex justify-content-center">
 
       <div class="map pl-2">
-        <h4 class="text-center text-black">Mark Your Pickup Points</h4>
-        <form class="row ml-5" >
+        <h4 class="text-center text-black">Mark Your Pickup Points</h4><hr>
+        <form class="row ml-5 mt-3" >
           <div class="form-group">
             <label class="col-sm-12 col-md-6 col-form-label">Source</label>
             <div class="col-sm-12 col-md-12">
@@ -41,12 +41,12 @@
       </div>
 
     </div>
-    <div class="row ml-5 p-5">
-      <div class=" col-4 ml-5 pl-5 d-flex justify-content-start">
-        <button type="submit" class="btn btn-dark rounded-top "routerLink= "/captain"><span class="fa fa-arrow-left"></span> Back</button>
+    <div class="row ml-5 p-3 d-flex justify-content-center">
+      <div class=" col-4 ml-5 pl-5 ">
+        <button type="submit" class="btn btn-primary rounded-top "routerLink= "/routes"><span class="fa fa-arrow-left"></span> Back</button>
       </div>
-      <div class="col-4 pl-5 ml-5 d-flex justify-content-end">
-        <button type="submit" class="btn btn-dark rounded-top " (click)="SavePoints()">Save Points</button>
+      <div class="col-4 pl-5 ml-5 ">
+        <button type="submit" class="btn btn-primary rounded-top " (click)="SavePoints()">Save Points</button>
       </div>
     </div>
 

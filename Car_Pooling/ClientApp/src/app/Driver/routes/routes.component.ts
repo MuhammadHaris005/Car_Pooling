@@ -19,14 +19,13 @@ export class RoutesComponent implements OnInit {
   latitude ;
 
   constructor(private service: SignUpService, private route: Router,private modalService: ModalService) {
-    if(GlobalService.role!="driver"){
-      this.route.navigate(['/login']);
-    }
     this.get();
    }
 
   ngOnInit() {
-
+    if(GlobalService.role!="driver"){
+      this.route.navigate(['/login']);
+    }
   }
     openModal(id: string,apoints:any) {
       debugger;
@@ -70,6 +69,9 @@ export class RoutesComponent implements OnInit {
         }
       });
   }
-
+  Delete(id){
+    debugger;
+    let ID = id;
+  }
 
 }

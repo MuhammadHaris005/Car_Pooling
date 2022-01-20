@@ -3,7 +3,7 @@ import { SignUpService } from '../../general.service';
 import{MouseEvent} from '@agm/core'
 import { GlobalService } from '../../global.service';
 import { Router } from '@angular/router';
-import { getLocaleDateFormat } from '@angular/common';
+
 
  @Component({
     selector: 'app-theme',
@@ -23,12 +23,14 @@ import { getLocaleDateFormat } from '@angular/common';
     Sat=true;
     Sun=true;
 
+    DriverID:any;
+    child:boolean=false;
     lat:number;
     lng:number;
     zoom:number= 10;
     center:any;
     time = new Date();
-
+    Message=[];
     seatsArray=[];
     driversdetails =[];
     vehicledetails=[];
@@ -36,7 +38,6 @@ import { getLocaleDateFormat } from '@angular/common';
     exp_time=[];
 
     bookings: Booking[]=[];
-
     showDate :boolean= false;
     showDays:boolean=false;
     Date=new Date();
@@ -84,11 +85,14 @@ import { getLocaleDateFormat } from '@angular/common';
       this.seatsArray = [];
       this.routedetails=[];
       this.exp_time = [];
+      this.drivers=[];
       this.ShowHideButton();
     }
 
     ShowHideButton() {
-      this.showMainContent = this.showMainContent ? false : true;
+
+        this.showMainContent = this.showMainContent ? false : true;
+
     }
     constructor(private signupservices: SignUpService,private router : Router) {
       //this.time = new Date();
@@ -108,6 +112,7 @@ import { getLocaleDateFormat } from '@angular/common';
       //     lng: position.coords.longitude,
       //   }
       // })
+      this.CheckReview();
     }
     private setCurrentLocation() {
       if ('geolocation' in navigator) {
@@ -117,6 +122,18 @@ import { getLocaleDateFormat } from '@angular/common';
           this.zoom = 12;
         });
       }
+    }
+    CheckReview(){
+      debugger;
+      let u_phone = GlobalService.PhoneNo;
+      this.signupservices.Searching("api/Captain/","Review",{u_phone}).subscribe(res=>{
+        if(res!=null){
+          var booking_ID = res;
+          this.Message=[GlobalService.PhoneNo,booking_ID]
+          debugger;
+          this.child=true;
+        }
+      })
     }
     decrement(){
       if(this.seats!=1){
@@ -170,101 +187,104 @@ import { getLocaleDateFormat } from '@angular/common';
           alert("Select date and Time Correct...");
         }
         else{
-          var type = this.type;
-          this.available_seats=10;
-        this.signupservices.Searching("api/Captain/","Searching",{type,date}).subscribe(response => {
-      /* this.signupservices.GetRides("api/Captain/","GetRides"). */
-        if(response!= null){
-          for (let i = 0; i < response.length; i++) {
-            if(response[i].status==true ){
-              let a  =eval(response[i].mappoints) ;
-              for (let j = 0; j < a.length; j++) {
-                var d = this.getDistanceFromLatLonInKm(a[j].lat,a[j].lng,this.markers[0].lat,this.markers[0].lng);
-                if(d<1){
-                  debugger;
-                  let P1 = j;
-                  for (let x = j; x < a.length; x++) {
-                    var z = this.getDistanceFromLatLonInKm(a[x].lat,a[x].lng,this.markers[1].lat,this.markers[1].lng);
-                    if(z<1){
-                      let P2 = x;
-                      let id = response[i].id;
-                      var s =this.seats;
-                      this.CHeckSeats(P1,P2,id,s).then(reslt=>{
+              var type = this.type;
+              this.available_seats=10;
+              this.signupservices.Searching("api/Captain/","Searching",{type,date}).toPromise().then(async response => {
+              if(response){
+                debugger;
+                for (let i = 0; i < response.length; i++) {
+
+                    let a  =eval(response[i].mappoints) ;
+                    for (let j = 0; j < a.length; j++) {
+                      var d = this.getDistanceFromLatLonInKm(a[j].lat,a[j].lng,this.markers[0].lat,this.markers[0].lng);
+                      if(d<=response[i].distance){
                         debugger;
-                        if(reslt==true){
-                          debugger;
-                          var phoneNo = response[i].phoneNo;
-                          this.signupservices.GetCaptainMethod("api/Captain/","GetCaptain",{'phoneNo':phoneNo}).subscribe(response1=>{
-                          if(response1!=null){
-                            debugger;
-                            //let check = this.GetUserHabits(GlobalService.PhoneNo,response1[2]);
-                            this.GetUserHabits(GlobalService.PhoneNo,response1[2]).then(ret => {
-                              if(ret==true){
+                        let P1 = j;
+                        for (let x = j; x < a.length; x++) {
+                          var z = this.getDistanceFromLatLonInKm(a[x].lat,a[x].lng,this.markers[1].lat,this.markers[1].lng);
+                          if(z<=response[i].distance){
+                            let P2 = x;
+                            let id = response[i].id;
+                            var seats =this.seats;
+                            let ph = response[i].phoneNo;
+                            this.signupservices.PostMethod("api/Search/","MatchRide",{'P1':P1,'P2':P2,'seats':seats,'id':id,'owner_phoneNo':ph,'user_phoneNo':GlobalService.PhoneNo}).subscribe(response1 => {
+                              if(response1){
                                 debugger;
-                                this.driversdetails.push(response1[0]);
-                                this.vehicledetails.push(response1[1]);
-                                this.seatsArray.push(this.available_seats);
-                                let t = this.extime;
-                                this.exp_time.push(t);
-                                this.routedetails.push(response[i].stime);
-                                this.bookings.push({
-                                  o_id:id,
-                                  p1:P1,
-                                  p2:P2,
-                                  bookseats:s,
+                                let t = new Date(response1[2]);
+                                var date = response[i].date.split('T');
+                                this.drivers.push({
+                                  driver: response1[0],
+                                  vehicle:response1[1],
+                                  seats: response1[3],
+                                  time: t,
+                                  date: date[0],
+                                  rank : response1[4],
+                                  Booking: {o_id:id,p1:P1,p2:P2,bookseats:seats}
                                 });
-                                debugger;
+                                this.drivers.sort((a, b) => a.rank - b.rank);
                               }
-                            })
+                            });
+                            break;
+                            /* const reslt = await this.CHeckSeats(P1,P2,id,s)
+                              debugger;
+                              if(reslt==true){
+                                debugger;
+                                var phoneNo = response[i].phoneNo;
+                                this.signupservices.GetCaptainMethod("api/Captain/","GetCaptain",{'phoneNo':phoneNo}).subscribe(async response1=>{
+                                  if(response1!=null){
+                                    debugger;
+                                    //let check = this.GetUserHabits(GlobalService.PhoneNo,response1[2]);
+                                    const ret = await this.GetUserHabits(GlobalService.PhoneNo,response1[2]);
+                                      if(ret==true){
+                                        debugger;
+                                        let a_seats = this.available_seats
+                                        //this.seatsArray.push(a_seats);
+                                        let t = new Date(this.extime);
+                                        //this.exp_time.push(t);
+                                        var date = response[i].date.split('T');
+                                        //this.routedetails.push(date[0]);
+                                        this.drivers.push({
+                                          driver: response1[0],
+                                          vehicle:response1[1],
+                                          seats: a_seats,
+                                          time: t,
+                                          date: date[0],
+                                          rank : response1[3],
+                                          Booking: {o_id:id,p1:P1,p2:P2,bookseats:s}
+                                        });
+                                        this.drivers.sort((a, b) => a.rank - b.rank);
+                                        //this.driversdetails.push(response1[0]);
+                                        //this.vehicledetails.push(response1[1]);
+                                        // this.bookings.push({
+                                        //   o_id:id,
+                                        //   p1:P1,
+                                        //   p2:P2,
+                                        //   bookseats:s,
+                                        // });
+                                      }
+                                  }
+                                });
+                                break;
+                              } */
                           }
-                        });
                         }
-                      })
-                      break;
+                        break;
+                      }
                     }
-
-                  }
-                  break;
                 }
+                debugger;
+              this.ShowHideButton();
               }
+                else{
+                  alert("Error");
+                }
+              });
             }
-          }
-          debugger;
-            this.ShowHideButton();
-        }
-        else{
-          alert("Error");
-        }
-      });
-        }
-
       }
-
-    }
-    Book(x,y,b){
-      debugger;
-      let id = b.o_id;
-      let P1 = b.p1;
-      let P2 = b.p2;
-      let seats = b.bookseats;
-      var d_phone = x.phoneNo;
-      var vehicle_ID = y.vehicle_ID;
-      var u_phone = GlobalService.PhoneNo;
-      this.signupservices.PostMethod("api/Captain/","UpdateSeats",{id,P1,P2,seats}).subscribe(response1=>{
-        if(response1!=null){
-          alert("Your Seats Reserved");
-          debugger;
-          this.signupservices.BookingMethod("api/Captain/","Booking",{d_phone,u_phone,vehicle_ID,seats,'order_id':id}).subscribe(response=>{
-            if(response==true){
-              alert("Booked");
-            }
-          });
-        }
-      });
     }
     GetUserHabits(phone,list){
       var phoneNo = phone;
-      return new Promise(resolve=>{ this.signupservices.Searching("api/Captain/","GetHabits",{phoneNo}).subscribe(responce =>{
+      return new Promise(resolve=>{ this.signupservices.Searching("api/Captain/","GetHabits",{phoneNo}).toPromise().then(responce =>{
         if(responce[0]!=null){
           debugger;
           let x = responce[0];
@@ -281,39 +301,69 @@ import { getLocaleDateFormat } from '@angular/common';
         }
       })
     })
-  }
-  CHeckSeats(p1,p2,ID,s){
-    debugger;
-    let Offer_ID = ID;
-
-    return new Promise(resolve=>{
-      this.signupservices.Searching("api/Captain/","GetSeats",{Offer_ID}).subscribe(res =>{
+    }
+    Book(x){
       debugger;
-        if(res[0]!=null){
+      let id = x.Booking.o_id;
+      let P1 = x.Booking.p1;
+      let P2 = x.Booking.p2;
+      let book_date = x.date;
+      let seats = x.Booking.bookseats;
+      var d_phone = x.driver.phoneNo;
+      var vehicle_ID = x.vehicle.vehicle_ID;
+      var u_phone = GlobalService.PhoneNo;
+      var status = 0;
+      this.signupservices.PostMethod("api/Captain/","UpdateSeats",{id,P1,P2,seats}).subscribe(response1=>{
+        if(response1!=null){
+          alert("Your Seats Reserved");
           debugger;
-          for(let i=p1+1;i<=p2;i++){
-            if(res[i].seats_offer>=s ){
-              resolve(true);
-              if(this.available_seats>res[i].seats_offer){
-                debugger;
-                this.extime = new Date(res[i].ex_time).toLocaleString('en-US', { hour: 'numeric',minute:'numeric', hour12: false });
-                this.available_seats = res[i].seats_offer;
+          this.signupservices.BookingMethod("api/Captain/","Booking",{d_phone,u_phone,vehicle_ID,seats,'order_id':id,book_date,status,'s_point':P1,'e_point':P2}).subscribe(response=>{
+            if(response==true){
+              alert("Booked");
+              let sender = GlobalService.PhoneNo;
+              let reciever = d_phone;
+              let message = "Book your ride"
+              debugger;
+              this.signupservices.PostMethod("api/User/","SendNotification",{sender,reciever,message}).subscribe();
+              this.router.navigate['/theme'];
+            }
+          });
+        }
+      });
+    }
+    CHeckSeats(p1,p2,ID,s){
+      debugger;
+      let Offer_ID = ID;
+
+      return new Promise(resolve=>{
+        this.signupservices.Searching("api/Captain/","GetSeats",{Offer_ID}).subscribe(res =>{
+        debugger;
+          if(res[0]!=null){
+            debugger;
+            for(let i=p1+1;i<=p2;i++){
+              if(res[i].seats_offer>=s ){
+                if(this.available_seats>res[i].seats_offer){
+                  debugger;
+                  this.extime = new Date(res[i].ex_time);
+                  this.available_seats = res[i].seats_offer;
+                }
+                resolve(true);
+              }
+              else{
+                resolve(false);
+                break;
               }
             }
-            else{
-              resolve(false);
-              break;
-            }
           }
-        }
-        else{
-          resolve(false);
-        }
+          else{
+            resolve(false);
+          }
+        })
       })
-    })
-  }
+    }
 
   markers: marker[] = [];
+  drivers: AvailableDrivers[] = [];
 }
 
  interface marker {
@@ -328,4 +378,13 @@ interface Booking{
   p1:number;
   p2:number;
   bookseats:number;
+}
+interface AvailableDrivers{
+  driver,
+  vehicle,
+  seats,
+  time,
+  date,
+  rank,
+  Booking:Booking
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import{MouseEvent} from '@agm/core'
 import { SignUpService } from '../../general.service';
+import { GlobalService } from 'src/app/global.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -14,11 +16,14 @@ export class UserComponent implements OnInit {
   Deslatitude  = 33.71799084268011;
   Deslongitude =  73.071967760310;
 
-  constructor(private signupservices: SignUpService) {
+  constructor(private signupservices: SignUpService, private router:Router) {
 
    }
 
   ngOnInit() {
+    if(GlobalService.role!="passenger"){
+      this.router.navigate(['/login']);
+    }
     var d = this.getDistanceFromLatLonInKm(this.Srclatitude,73.05458691101076,33.59948117296982,73.06261193466185);
     console.log(d);
   }

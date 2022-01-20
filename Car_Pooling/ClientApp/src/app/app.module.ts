@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { AgmCoreModule } from '@agm/core';
 //import { NgxStarRatingModule } from 'ngx-star-rating';
 // import { FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {AmexioLayoutModule, AmexioWidgetModule} from 'amexio-ng-extensions';
+import {AmexioLayoutModule, AmexioWidgetModule,AmexioNotificationComponent} from 'amexio-ng-extensions';
 import {AmexioEnterpriseModule} from 'amexio-ng-extensions';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalModule } from './_modal';
@@ -19,6 +19,7 @@ import { LandingpageComponent } from './landingpage/landingpage.component';
 import { LoginComponent } from './login/login.component';
 import { RoutemapComponent } from './signup/routemap/routemap.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { D_NotificationComponent } from './Driver/D_notification/D_notification.component';
 import { SidebarComponent } from './Driver/sidebar/sidebar.component';
 import { C_SidebarComponent } from './Customer/c_sidebar/c_sidebar.component';
 import { CaptainComponent } from './Driver/captain/captain.component';
@@ -30,16 +31,20 @@ import { MyBookingsComponent } from './customer/my-bookings/my-bookings.componen
 import { LoaderComponent } from './loader/loader.component';
 import { AttributesComponent } from './signup/attributes/attributes.component';
 import { RoutesComponent } from './Driver/routes/routes.component';
-import { PassengerComponent } from './Customer/passenger/passenger.component';
+import { PassengerComponent } from './Customer/theme/passenger/passenger.component';
+import { NotificationComponent } from './Customer/notification/notification.component';
+import { ProfileComponent } from './Driver/profile/profile.component';
 @NgModule({
   declarations: [
     AppComponent,
     SignupComponent,
+    ProfileComponent,
     VehicleinfoComponent,
     GeneralinfoComponent,
     LandingpageComponent,
     LoginComponent,
-
+    NotificationComponent,
+    D_NotificationComponent,
     RoutemapComponent,
     NavbarComponent,
     SidebarComponent,
@@ -87,7 +92,10 @@ import { PassengerComponent } from './Customer/passenger/passenger.component';
       {path: 'loader', component: LoaderComponent},
       {path: 'attributes', component: AttributesComponent},
       {path: 'routes', component: RoutesComponent},
-      {path: 'passenger', component:PassengerComponent}
+      {path: 'passenger', component:PassengerComponent},
+      {path: 'notify', component:NotificationComponent},
+      {path: 'dnotify', component:D_NotificationComponent},
+      {path: 'profile', component:ProfileComponent}
     ]),
     BrowserAnimationsModule
   ],

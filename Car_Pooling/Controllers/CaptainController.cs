@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace Car_Pooling.Controllers
         {
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string query = "insert into Personal values('" + captain.phoneNo + "','" + captain.firstname + "','" + captain.lastname + "','" + captain.gender + "','" + captain.cnic + "','" + captain.email + "','" + captain.city + "','" + captain.password + "','" + captain.confirmPassword + "','" + captain.role + "','" + captain.image+"')";
+            string query = "insert into Personal values('" + captain.phoneNo + "','" + captain.firstname + "','" + captain.lastname + "','" + captain.gender + "','" + captain.cnic + "','" + captain.email + "','" + captain.city + "','" + captain.password + "','" + captain.role + "','" + captain.image +"')";
             SqlCommand com = new SqlCommand(query, con);
             com.ExecuteNonQuery();
             return true;
@@ -135,6 +136,7 @@ namespace Car_Pooling.Controllers
                 r.phoneNo = sdr["phone_no"].ToString();
                 r.phoneNo = sdr["phone_no"].ToString();
                 r.status = (bool)sdr["Status"];
+             
                 list.Add(r);
             }
              return list;
@@ -146,11 +148,7 @@ namespace Car_Pooling.Controllers
             List<object> info = new List<object>();
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            //string query = string.Format("Select * from Personal where phone_no = {0}", obj.phoneNo);
-            //SqlCommand com = new SqlCommand(query, con);
-            //SqlDataReader sdr = com.ExecuteReader();
             CaptainInfo c;
-            
             //sdr.Close();
             string query1 = "Select * from Personal p inner Join VehicleInfo v on p.phone_no = v.phone_no inner Join PersonHabits h on p.phone_no =  h.phone_no inner Join HabitsAllowed a on p.phone_no =  a.phone_no where p.phone_no ='" + obj.phoneNo+"'";
             SqlCommand comm = new SqlCommand(query1, con);
@@ -169,6 +167,8 @@ namespace Car_Pooling.Controllers
                 c.city = sdr1["city"].ToString();
                 c.role = sdr1["role"].ToString();
                 c.phoneNo = sdr1["phone_no"].ToString();
+                c.gender = sdr1["gender"].ToString();
+                c.password = sdr1["password"].ToString();
                 info.Add(c);
                 v = new VehicleModel();
                 v.vehicle_ID = (int)sdr1["vehicle_ID"];
@@ -179,14 +179,26 @@ namespace Car_Pooling.Controllers
                 v.seats = (Int32)sdr1["seats"];
                 info.Add(v);
                 h = new HabitsModel();
-                h.music = (bool)sdr1["ListenMusic"];
-                h.smooking = (bool)sdr1["Smooker"];
-                h.talkative = (bool)sdr1["Talkative"];
-                h.allowmusic = (bool)sdr1["ListenMusic"];
-                h.allowsmooking = (bool)sdr1["AllowSmooker"];
-                h.allowtalkative = (bool)sdr1["AllowTalkative"];
+                h.music = sdr1["ListenMusic"].ToString();
+                h.smooking = sdr1["Smooker"].ToString();
+                h.talkative = sdr1["Talkative"].ToString();
+                h.allowmusic = sdr1["ListenMusic"].ToString();
+                h.allowsmooking = sdr1["AllowSmooker"].ToString();
+                h.allowtalkative = sdr1["AllowTalkative"].ToString();
                 info.Add(h);
             }
+            sdr1.Close();
+            string query = "Select AVG(score) As Rank from Review where to_ID ='" + obj.phoneNo + "'";
+            SqlCommand com = new SqlCommand(query, con);
+            SqlDataReader sdr = com.ExecuteReader();
+            sdr.Read();
+            string a = sdr["Rank"].ToString();
+            if (a!="")
+            {
+                double rank = (double)sdr["Rank"];
+                info.Add(rank);
+            }
+            con.Close();
             return info;
         }
         [HttpPost]
@@ -222,7 +234,7 @@ namespace Car_Pooling.Controllers
         {
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string query = "Insert into Bookings values ('" + obj.d_phone + "','" + obj.u_phone + "','" + obj.vehicle_ID + "','" + obj.order_id + "','" + obj.seats + "')";
+            string query = "Insert into Bookings values ('" + obj.d_phone + "','" + obj.u_phone + "','" + obj.vehicle_ID + "','" + obj.order_id + "','" + obj.seats + "','"+obj.book_date+"','"+obj.status+"','"+obj.s_point+"','"+obj.e_point+"')";
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.ExecuteNonQuery();
             return true;
@@ -234,21 +246,25 @@ namespace Car_Pooling.Controllers
 
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string query = "select first_name,last_name,image,book_seats,registration_no,model,order_ID from Personal p Join Bookings b on p.phone_no = b.D_ID inner join VehicleInfo v on v.vehicle_ID = b.vehicle_ID where b.P_ID = '" + obj.u_phone + "'";
+            string query = "select * from Personal p Join Bookings b on p.phone_no = b.D_ID inner join VehicleInfo v on v.vehicle_ID = b.vehicle_ID where b.P_ID = '" + obj.u_phone + "'";
             SqlCommand com = new SqlCommand(query, con);
             SqlDataReader sdr = com.ExecuteReader();
             List<ReturnBooking> list = new List<ReturnBooking>();
-            ReturnBooking p;
+            
             
             while (sdr.Read())
             {
-                p = new ReturnBooking();
-                p.c.firstname = sdr["first_name"].ToString();
-                p.c.lastname = sdr["last_name"].ToString();
-                p.b.seats =  (int)sdr["book_seats"];
-                p.b.order_id = (int)sdr["order_ID"];
-                p.v.regno = sdr["registration_no"].ToString();
-                p.v.model = sdr["model"].ToString();
+                ReturnBooking p = new ReturnBooking();
+                p.captianInfo.firstname = sdr["first_name"].ToString();
+                p.captianInfo.lastname = sdr["last_name"].ToString();
+                p.booking.ID = (int)sdr["ID"];
+                p.booking.seats =  (int)sdr["book_seats"];
+                p.booking.order_id = (int)sdr["order_ID"];
+                p.booking.s_point = (byte)sdr["start_point"];
+                p.booking.e_point = (byte)sdr["end_point"];
+                p.booking.s_point = (byte)sdr["status"];
+                p.vehicle.regno = sdr["registration_no"].ToString();
+                p.vehicle.model = sdr["model"].ToString();
                 list.Add(p);
             }
             return list;
@@ -273,7 +289,7 @@ namespace Car_Pooling.Controllers
         {
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string query = "insert into OfferedRides values('" + obj.route_ID + "','" + obj.type + "','" + obj.seats_offer + "','" + obj.date + "','" + obj.s_time + "','" + obj.r_time + "','"+obj.days+"' )";
+            string query = "insert into OfferedRides values('" + obj.route_ID + "','" + obj.type + "','" + obj.seats_offer + "','" + obj.date + "','" + obj.s_time + "','" + obj.r_time + "','"+obj.days+"','"+obj.distance+"',-1 )";
             SqlCommand com = new SqlCommand(query, con);
             com.ExecuteNonQuery();
             string query2 = "Select MAX(ID) AS ID from OfferedRides";
@@ -296,12 +312,12 @@ namespace Car_Pooling.Controllers
         }
         [HttpPost]
         [Route("Searching")]
-        public List<RoutesModel> SearchingRides([FromBody] Offered obj)
+        public List<OfferDays> SearchingRides([FromBody] Offered obj)
         {
-            List<RoutesModel> list = new List<RoutesModel>();
+            List<OfferDays> list = new List<OfferDays>();
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string query = "Select route_points,status,phone_no,ID,days from Routes INNER JOIN OfferedRides ON Routes.route_ID=OfferedRides.route_ID WHERE OfferedRides.type='"+obj.type+"' and date >= '"+obj.date+"'";
+            string query = "Select route_points,status,phone_no,ID,days,date,distance from Routes INNER JOIN OfferedRides ON Routes.route_ID=OfferedRides.route_ID WHERE OfferedRides.type='"+obj.type+"' and date >= '"+obj.date+"'";
             SqlCommand com = new SqlCommand(query, con);
             SqlDataReader sdr = com.ExecuteReader();
             OfferDays r;
@@ -313,6 +329,8 @@ namespace Car_Pooling.Controllers
                 r.phoneNo = sdr["phone_no"].ToString();
                 r.status = (bool)sdr["status"];
                 r.days = sdr["days"].ToString();
+                r.date = (DateTime)sdr["date"];
+                r.distance = (int)sdr["distance"];
                 list.Add(r);
             }
             con.Close();
@@ -333,12 +351,12 @@ namespace Car_Pooling.Controllers
             while (sdr.Read())
             {
                 r = new HabitsModel();
-                r.music = (bool)sdr["ListenMusic"];
-                r.smooking = (bool)sdr["Smooker"];
-                r.talkative = (bool)sdr["Talkative"];
-                r.allowmusic = (bool)sdr["ListenMusic"];
-                r.allowsmooking = (bool)sdr["AllowSmooker"];
-                r.allowtalkative = (bool)sdr["AllowTalkative"];
+                r.music = sdr["ListenMusic"].ToString();
+                r.smooking = sdr["Smooker"].ToString();
+                r.talkative = sdr["Talkative"].ToString();
+                r.allowmusic = sdr["ListenMusic"].ToString();
+                r.allowsmooking = sdr["AllowSmooker"].ToString();
+                r.allowtalkative = sdr["AllowTalkative"].ToString();
                 list.Add(r);
             }
             return list;
@@ -356,10 +374,12 @@ namespace Car_Pooling.Controllers
             OfferDays r;
             while (sdr.Read())
             {
+                
                 r = new OfferDays();
                 r.totalpoints = (int)sdr["point"];
                 r.seats_offer = (int)sdr["available_seats"];
                 r.ex_time = sdr["e_time"].ToString();
+                
                 list.Add(r);
             }
             return list;
@@ -385,28 +405,63 @@ namespace Car_Pooling.Controllers
                 r.source = sdr["source"].ToString();
                 r.destination = sdr["destination"].ToString();
                 r.date = (DateTime)sdr["date"];
+                r.ridestatus = (int)sdr["ridestatus"];
                 list.Add(r);
             }
             return list;
         }
         [HttpPost]
         [Route("DeleteRide")]
-        public  bool DeleteRide([FromBody] Offered obj)
+        public  List<object> DeleteRide([FromBody] Offered obj)
         {
             SqlConnection con = new SqlConnection(constring);
             con.Open();
+            string query= "Delete from Driver_Offers where offerride_id ='" + obj.Offer_ID + "'";
+            SqlCommand cmd = new SqlCommand(query, con);
+            int res = cmd.ExecuteNonQuery();
+            string query0 = "Select P_ID from Bookings where order_id ='" + obj.Offer_ID + "'";
+            SqlCommand cmd0 = new SqlCommand(query0, con);
+            SqlDataReader sdr = cmd0.ExecuteReader();
+            List<object> users = new List<object>();
+            while (sdr.Read())
+            {
+                string id = sdr["P_ID"].ToString();
+                users.Add(id);
+            }
+            sdr.Close();
+            if (users.Count > 0)
+            {
+                string query2 = "Delete from Bookings where order_id ='" + obj.Offer_ID + "'";
+                SqlCommand cmd2 = new SqlCommand(query2, con);
+                cmd2.ExecuteNonQuery();
+                
+            }
             string query1 = "Delete from OfferedRides where OfferedRides.ID ='" + obj.Offer_ID + "'";
             SqlCommand cmd1 = new SqlCommand(query1, con);
-            int res1 = cmd1.ExecuteNonQuery();
-            if (res1 > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            cmd1.ExecuteNonQuery();
+            return users;
         }
+        [HttpPost]
+        [Route("Review")]
+        public string CheckReview([FromBody] BookingModel obj)
+        {
 
+            SqlConnection con = new SqlConnection(constring);
+            con.Open();
+            string query = "select top 1 from_ID,ID  from Bookings left Join Review on Bookings.ID = Review.booking_ID where status = 2 and P_ID='"+obj.u_phone+ "' order by book_date Desc";
+            SqlCommand com = new SqlCommand(query, con);
+            SqlDataReader sdr = com.ExecuteReader();
+            List<BookingModel> list = new List<BookingModel>();
+            if (!sdr.HasRows)
+            {
+                return "";
+            }
+            sdr.Read();
+            if (sdr["from_ID"].ToString() != "")
+            {
+                return "";
+            }
+            return sdr["ID"].ToString();
+        }
     }
 }

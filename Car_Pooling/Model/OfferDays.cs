@@ -12,5 +12,6 @@ namespace Car_Pooling.Model
         public int totalpoints { get; set; }
         public string ex_time { get; set; }
 
+
     }
 }

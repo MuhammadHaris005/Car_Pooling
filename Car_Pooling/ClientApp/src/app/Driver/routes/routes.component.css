@@ -3,10 +3,9 @@ h5{
   padding: 5px;
 }
 .card{
-  background: linear-gradient(to right, #279c9a 22%, #005c7a 68%)
+  background: linear-gradient(to right, #279c9a 22%, #005c7a 68%);
 }
 #btnclose{
-  display: flex;
   justify-content: end;
 }
 .switch {
@@ -57,13 +56,11 @@ input:checked + .slider:before {
 }
 
 /*------ ADDED CSS ---------*/
-.on
-{
+.on{
   display: none;
 }
 
-.on
-{
+.on{
   color: white;
   position: absolute;
   transform: translate(-50%,-50%);
@@ -72,8 +69,7 @@ input:checked + .slider:before {
   font-size: 14px;
   font-family: Verdana, sans-serif;
 }
-.off
-{
+.off{
   color: white;
   position: absolute;
   transform: translate(-50%,-50%);
@@ -97,4 +93,5 @@ input:checked + .slider .off
 }
 
 .slider.round:before {
-  border-radius: 50%;}
+  border-radius: 50%;
+}

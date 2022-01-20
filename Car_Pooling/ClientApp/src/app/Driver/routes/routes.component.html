@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="row d-flex justify-content-end mr-md-5 mb-3 pr-md-5">
-      <button class="btn btn-outline-primary p-2 border-2" routerLink="/addroute"><i class="fa fa-plus"></i> Add New Route</button>
+      <button class="btn btn-primary p-2 border-2" routerLink="/addroute"><i class="fa fa-plus"></i> Add New Route</button>
     </div>
     <div class=" row d-flex justify-content-center">
       <div class="card card-box col-md-10 mb-2" *ngFor="let i of list">
@@ -19,7 +19,7 @@
             </div>
             <div class="col-md-2">
               <button class="btn btn-sm btn-info" (click)="openModal('custom-modal-1',i.mappoints)"><i class="icon-copy fa fa-eye"></i></button>
-              <button class="btn btn-sm btn-info ml-1" ><i class="icon-copy fa fa-trash"></i></button>
+              <button class="btn btn-sm btn-info ml-1" (click)="Delete(i.id)"><i class="icon-copy fa fa-trash"></i></button>
             </div>
             <div class="col-md-2 col-sm-4 d-flex justify-content-end">
               <label class="switch" >
