@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { GlobalService } from '../global.service';
 import { SignUpService } from '../general.service';
 import { Global } from '../signup/signup_global';
+import { DriverGlobalService } from '../Driver/driver.service';
 declare const $:any;
  @Component({
   selector: 'app-login',
@@ -21,6 +22,8 @@ export class LoginComponent implements OnInit {
   }
   ngOnInit() {
    // $('#loader').remove();
+   GlobalService.role = "";
+   DriverGlobalService.routeID="";
   }
   get f() {
     return this.loginForm.controls;
@@ -46,8 +49,11 @@ export class LoginComponent implements OnInit {
           if(response[0].role=="passenger"){
             this.router.navigate(['/theme']);
           }
+          else if(response[0].role=="Admin"){
+            this.router.navigate(['/settings']);
+          }
           else{
-            this.router.navigate(['/captain']);
+            this.router.navigate(['/routes']);
           }
         }
       });

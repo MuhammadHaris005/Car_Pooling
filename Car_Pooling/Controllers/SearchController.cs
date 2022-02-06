@@ -16,6 +16,8 @@ namespace Car_Pooling.Controllers
         private string constring = @"Data Source= DESKTOP-P94RTL3\SQLEXPRESS ; Initial Catalog =CarPooling; Integrated Security = True";
         string extime;
         int a_seats;
+        string days;
+        string EndDate;
         [HttpPost]
         [Route("MatchRide")]
         public List<object> Match([FromBody] UpdateSeats obj)
@@ -40,33 +42,41 @@ namespace Car_Pooling.Controllers
         {
             List<OfferDays> l = new List<OfferDays>();
             l = GetSeat(id);
-            for (int i = P1 + 1; i <= P2; i++)
+            if (l.Count != 0)
             {
-                if (l[i].seats_offer >= seats)
+
+                for (int i = P1 + 1; i <= P2; i++)
                 {
-                    extime = l[i].ex_time;
-                    a_seats = l[i].seats_offer;
+                    if (l[i].seats_offer >= seats)
+                    {
+                        extime = l[P1].ex_time;
+                        a_seats = l[i].seats_offer;
+                        days = l[i].days;
+                        EndDate = l[i].endDate;
+                    }
                 }
+                return true;
             }
-            return true;
+            else
+                return false;
         }
         public List<OfferDays> GetSeat(int Offer_ID)
         {
             List<OfferDays> list = new List<OfferDays>();
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string query = "Select * from Driver_Offers where offerride_id = '" + Offer_ID + "'";
+            string query = "Select point,available_seats,e_time,end_date,days from Driver_Offers d left join OfferedRides o on d.offerride_id = o.ID where offerride_id ='" + Offer_ID + "' and ridestatus !='1'";
             SqlCommand com = new SqlCommand(query, con);
             SqlDataReader sdr = com.ExecuteReader();
             OfferDays r;
             while (sdr.Read())
             {
-
                 r = new OfferDays();
                 r.totalpoints = (int)sdr["point"];
                 r.seats_offer = (int)sdr["available_seats"];
                 r.ex_time = sdr["e_time"].ToString();
-
+                r.endDate = sdr["end_date"].ToString();
+                r.days = sdr["days"].ToString();
                 list.Add(r);
             }
             con.Close();
@@ -144,6 +154,8 @@ namespace Car_Pooling.Controllers
                 info.Add(v);
                 info.Add(extime);
                 info.Add(a_seats);
+                info.Add(days);
+                info.Add(EndDate);
             }
             sdr1.Close();
             string query = "Select AVG(score) As Rank from Review where to_ID ='" + phoneNo + "'";

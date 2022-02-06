@@ -10,10 +10,13 @@
         <a   [routerLink]= "['/theme']"><span class="fa fa-car mr-3"></span>Search Ride</a>
       </li>
       <li [routerLinkActive]= "['active']">
+        <a [routerLink]="['/object']"><span class="fa fa-user-circle mr-3"></span> Current Ride</a>
+      </li>
+      <li [routerLinkActive]= "['active']">
         <a [routerLink]="['/mybookings']"><span class="fa fa-road mr-3"></span> My Bookings</a>
       </li>
-      <li>
-        <a ><span class="fa fa-user-circle mr-3"></span> Profile</a>
+      <li [routerLinkActive]= "['active']">
+        <a [routerLink]="['/c_profile']"><span class="fa fa-user-circle mr-3"></span> Profile</a>
       </li>
       <li [routerLinkActive]="['active']">
         <a [routerLink]= "['/notify']"><span class="fa fa-bell-o mr-3"></span>Notifications<span *ngIf="Sum>0" class="button__badge">{{Sum}}</span></a>

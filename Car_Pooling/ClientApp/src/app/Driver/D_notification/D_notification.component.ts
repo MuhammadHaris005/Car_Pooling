@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SignUpService } from 'src/app/general.service';
+import { GlobalService } from 'src/app/global.service';
 import { DriverGlobalService } from '../driver.service';
 
 @Component({
@@ -8,11 +10,13 @@ import { DriverGlobalService } from '../driver.service';
 })
 export class D_NotificationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service: SignUpService) { }
 
   list:any;
   ngOnInit() {
     this.list = DriverGlobalService.notifylist;
+    let reciever = GlobalService.PhoneNo;
+    this.service.UpdateStatus("api/User/","UpdateNotify",{reciever}).subscribe();
   }
 
 }

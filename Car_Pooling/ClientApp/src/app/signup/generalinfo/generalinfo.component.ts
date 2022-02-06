@@ -14,7 +14,7 @@ export class GeneralinfoComponent implements OnInit {
 
   generalForm: FormGroup;
   submitted = false;
-  constructor( private cd: ChangeDetectorRef, private signupservices : SignUpService, private route:Router,private formBuilder: FormBuilder) { }
+  constructor( private cd: ChangeDetectorRef, private postservices : SignUpService, private route:Router,private formBuilder: FormBuilder) { }
 
   ngOnInit() {
       this.generalForm = this.formBuilder.group({
@@ -46,12 +46,11 @@ export class GeneralinfoComponent implements OnInit {
     Global.personaldata = this.generalForm.value;
     // display form values on success
     alert(JSON.stringify(Global.personaldata));
+    //this.postservices.PostMethod("api/Captain/","General", Global.personaldata).subscribe();
     debugger;
-    if(GlobalService.role=="passenger"){
-      this.route.navigate(['/attributes']);
-    }
-    else
-    this.route.navigate(['/vehicle']);
+
+    this.route.navigate(['/attributes']);
+
   }
 
 

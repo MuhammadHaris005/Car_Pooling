@@ -31,14 +31,19 @@ import { MyBookingsComponent } from './customer/my-bookings/my-bookings.componen
 import { LoaderComponent } from './loader/loader.component';
 import { AttributesComponent } from './signup/attributes/attributes.component';
 import { RoutesComponent } from './Driver/routes/routes.component';
-import { PassengerComponent } from './Customer/theme/passenger/passenger.component';
+import { ReviewComponent } from './Customer/theme/review/review.component';
 import { NotificationComponent } from './Customer/notification/notification.component';
 import { ProfileComponent } from './Driver/profile/profile.component';
+import { ObjectComponent } from './Customer/current/object.component';
+import { C_profileComponent } from './Customer/c_profile/c_profile.component';
+import { SettingsComponent } from './Admin/settings/settings.component';
+import { A_sidebarComponent } from './Admin/a_sidebar/a_sidebar.component';
 @NgModule({
   declarations: [
     AppComponent,
     SignupComponent,
     ProfileComponent,
+    C_profileComponent,
     VehicleinfoComponent,
     GeneralinfoComponent,
     LandingpageComponent,
@@ -58,7 +63,10 @@ import { ProfileComponent } from './Driver/profile/profile.component';
     LoaderComponent,
     AttributesComponent,
     RoutesComponent,
-    PassengerComponent
+    ReviewComponent,
+    ObjectComponent,
+    SettingsComponent,
+    A_sidebarComponent
    ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -92,10 +100,13 @@ import { ProfileComponent } from './Driver/profile/profile.component';
       {path: 'loader', component: LoaderComponent},
       {path: 'attributes', component: AttributesComponent},
       {path: 'routes', component: RoutesComponent},
-      {path: 'passenger', component:PassengerComponent},
+      {path: 'passenger', component:ReviewComponent},
       {path: 'notify', component:NotificationComponent},
       {path: 'dnotify', component:D_NotificationComponent},
-      {path: 'profile', component:ProfileComponent}
+      {path: 'profile', component:ProfileComponent},
+      {path: 'c_profile', component:C_profileComponent},
+      {path: 'object', component:ObjectComponent },
+      {path: 'settings', component: SettingsComponent}
     ]),
     BrowserAnimationsModule
   ],

@@ -32,6 +32,7 @@ export class MyBookingsComponent implements OnInit {
     });
   }
   Cancelbooking(x){
+    debugger;
     let booking_id = x.id;
     let id = x.order_id;
     let P1 = x.s_point;
@@ -41,6 +42,10 @@ export class MyBookingsComponent implements OnInit {
       if(resp){
         alert("Deleted.....");
         this.bookingList();
+        let sender = GlobalService.PhoneNo;
+          let reciever = x.d_phone;
+          let message = " Cancel booking with you";
+          this.service.PostMethod("api/User/","SendNotification",{sender,reciever,message}).subscribe();
       }
     })
   }

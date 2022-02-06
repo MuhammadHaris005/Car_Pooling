@@ -28,19 +28,60 @@ export class Add_RouteComponent implements OnInit {
     if(GlobalService.role!="driver"){
       this.route.navigate(['/login']);
     }
+    this.setCurrentLocation();
   }
-
+  private setCurrentLocation() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.lat = position.coords.latitude;
+        this.lng = position.coords.longitude;
+        this.zoom = 12;
+      });
+    }
+  }
   mapClicked($event: MouseEvent) {
-    this.markers.push({
-      lat: $event.coords.lat,
-      lng : $event.coords.lng,
-      iconURl: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
-      draggable: true
-    });
+    let url = "http://maps.google.com/mapfiles/ms/icons/";
+        url += 'green' + "-dot.png";
+    let url1 = "http://maps.google.com/mapfiles/ms/icons/";
+        url1 += 'red' + "-dot.png";
+    let url2 = "http://maps.google.com/mapfiles/ms/icons/";
+        url2 += 'blue' + "-dot.png";
+        if(this.markers.length>=2){
+          debugger;
+          this.markers = [...this.markers.slice(0, this.markers.length - 1), {lat: $event.coords.lat,
+            lng : $event.coords.lng,
+            iconUrl :url2,
+            label: "",
+            draggable: true}, this.markers[this.markers.length - 1]]
+        }
+        else{
+          if(this.markers.length==1){
+            this.markers.push({
+              lat: $event.coords.lat,
+              lng : $event.coords.lng,
+              iconUrl : url1,
+              label: "Dest",
+              draggable: true
+            });
+          }
+          else{
+            this.markers.push({
+              lat: $event.coords.lat,
+              lng : $event.coords.lng,
+              iconUrl : url,
+              label: "Source",
+              draggable: true
+            });
+          }
+        }
   }
-  markerDragEnd($event: MouseEvent) {
+  markerDragEnd(m:any,$event: MouseEvent) {
+    m.lat = $event.coords.lat;
+    m.lng = $event.coords.lng;
   }
-
+  markerclick(m:any,$event: MouseEvent){
+    this.markers = this.markers.filter(a=>a !== m)
+  }
   markers : marker[] =[];
 
   SavePoints(){
@@ -52,11 +93,10 @@ export class Add_RouteComponent implements OnInit {
   Save(){
     debugger
     var mappoints = this.points;
-
     var phoneNo = GlobalService.PhoneNo;
     var source = this.source;
     var destination = this.destination;
-    if(mappoints.lenght>2){
+    if(mappoints.length>2){
       this.service.PostMethod("api/Captain/","Routes",{mappoints,phoneNo,source,destination,'status':false}).subscribe(response => {
         if(response == true){
           alert("Route Added Successfully");
@@ -77,6 +117,6 @@ interface marker {
 	lat: number;
 	lng: number;
   label?: string;
-  iconURl:string | google.maps.Icon | google.maps.Symbol;
+  iconUrl:string | google.maps.Icon | google.maps.Symbol;
 	draggable: boolean;
 }

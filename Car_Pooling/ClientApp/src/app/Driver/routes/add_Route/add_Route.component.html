@@ -32,9 +32,11 @@
             [latitude]="m.lat"
             [longitude]="m.lng"
             [label]="m.label"
-            [iconUrl]="m.iconURl"
+            [iconUrl]="m.iconUrl"
             [markerDraggable]="m.draggable"
+            [markerClickable]="true"
             (dragEnd)="markerDragEnd(m, $event)"
+            (markerClick)="markerclick(m,$event)"
           >
           </agm-marker>
         </agm-map>

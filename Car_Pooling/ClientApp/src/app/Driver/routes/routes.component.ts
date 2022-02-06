@@ -19,13 +19,24 @@ export class RoutesComponent implements OnInit {
   latitude ;
 
   constructor(private service: SignUpService, private route: Router,private modalService: ModalService) {
-    this.get();
+
    }
 
   ngOnInit() {
     if(GlobalService.role!="driver"){
       this.route.navigate(['/login']);
     }
+    this.CheckVehicle();
+    this.get();
+  }
+  CheckVehicle(){
+    let phone = GlobalService.PhoneNo;
+    this.service.PostMethod("api/Home/","CheckVehicle",{'phone':phone}).subscribe(responce=>{
+      if(responce==false){
+        alert("Kindly add Vehicle Details");
+        this.route.navigate(["/vehicle"])
+      }
+    });
   }
     openModal(id: string,apoints:any) {
       debugger;
@@ -42,9 +53,7 @@ export class RoutesComponent implements OnInit {
     this.phoneNo = GlobalService.PhoneNo;
     this.service.GetPointsMethod("api/Captain/","GetPoints",{'phoneNo':this.phoneNo}).subscribe(response => {
       if(response!= null){
-        //response.stringify;
         debugger;
-        //alert(JSON.stringify(response));
         this.list = response;
         for(let i=0;i<response.length;i++){
           if(response[i].status==true){
@@ -72,6 +81,10 @@ export class RoutesComponent implements OnInit {
   Delete(id){
     debugger;
     let ID = id;
+    this.service.PostMethod("api/Home/","DeleteRoute",{'ID':ID}).subscribe(res=>{
+      if(res == true){
+        alert("Route Deleted...")
+      }
+    });
   }
-
 }

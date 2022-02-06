@@ -20,13 +20,14 @@ export class CaptainComponent implements OnInit {
   Rtime:any;
   type:any;
   Date=new Date();
+  endDate = new Date();
   istwoway:any;
   showfield:boolean=false;
   labels=["Start"];
 
   id:any;
   seats:any;
-  miles:any;
+  miles:any=0.5;
 
   showDate :boolean= false;
   showDays:boolean=false;
@@ -59,9 +60,8 @@ export class CaptainComponent implements OnInit {
     //setTimeout(function(){ $("#sa-success").SweetAlert().init()}, 500);
     this.phoneNo = GlobalService.PhoneNo;
     this.signupservices.GetPointsMethod("api/Captain/","GetPoints",{'phoneNo':this.phoneNo}).subscribe(response => {
-      if(response!= null){
-        //response.stringify;
-        // alert(JSON.stringify(response));
+      if(response.length!=0){
+        debugger;
         for(let a of response){
           if(a.status==true){
             debugger;
@@ -77,7 +77,7 @@ export class CaptainComponent implements OnInit {
         this.findDistance();
       }
       else{
-        alert("Error");
+        alert("Kindly add Route.....");
       }
     });
   }
@@ -130,6 +130,7 @@ export class CaptainComponent implements OnInit {
     let route_ID = e;
     var type = this.type;
     var date = new Date(this.Date);
+    var endDate = new Date(this.endDate);
     let seats_offer = this.seats;
     let totalpoints = this.points.length;
     let distance = this.miles;
@@ -141,10 +142,11 @@ export class CaptainComponent implements OnInit {
     debugger;
 
     if(today<date  && s_time!=undefined && date!=undefined){
-      if(type="Once"){
+      if(type=="Once"){
         days=null;
+        endDate = date;
       }
-      this.signupservices.PostMethod("api/Captain/","Offer",{route_ID,type,seats_offer,date,s_time,r_time,days,totalpoints,e_time,distance}).subscribe(response => {
+      this.signupservices.PostMethod("api/Captain/","Offer",{route_ID,type,seats_offer,date,endDate,s_time,r_time,days,totalpoints,e_time,distance}).subscribe(response => {
         if(response==true){
           document.getElementById('sa-success').click();
         }

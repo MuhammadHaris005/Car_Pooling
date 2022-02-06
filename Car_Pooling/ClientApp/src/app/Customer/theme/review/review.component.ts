@@ -4,10 +4,10 @@ import { ModalService } from 'src/app/_modal';
 
 @Component({
   selector: 'app-passenger',
-  templateUrl: './passenger.component.html',
-  styleUrls: ['passenger.component.css'],
+  templateUrl: './review.component.html',
+  styleUrls: ['review.component.css'],
 })
-export class PassengerComponent implements OnInit,AfterViewInit {
+export class ReviewComponent implements OnInit,AfterViewInit {
 
 
   @Input() childMessage: any;
@@ -22,7 +22,7 @@ export class PassengerComponent implements OnInit,AfterViewInit {
   }
 
   ngAfterViewInit(){
-    this.openModal('custom-modal-1');
+    this.openModal('custom-modal-3');
   }
 
   openModal(id: string) {
@@ -38,10 +38,11 @@ export class PassengerComponent implements OnInit,AfterViewInit {
     debugger;
     let score= this.stars;
     let from_ID = this.childMessage[0];
-    let booking_ID = this.childMessage[1];
-    this.service.PostMethod("api/User/","GiveReview",{from_ID,booking_ID,score}).subscribe(res=>{
+    let to_ID = this.childMessage[1]
+    let booking_ID = this.childMessage[2];
+    this.service.PostMethod("api/User/","GiveReview",{from_ID,to_ID,booking_ID,score}).subscribe(res=>{
 
     })
-    this.closeModal('custom-modal-1');
+    this.closeModal('custom-modal-3');
   }
 }

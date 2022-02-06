@@ -26,10 +26,10 @@
               <td>{{i.model}}</td>
               <td>{{i.seats}}</td>
               <td>
-                <button class="btn btn-danger" (click)="Cancelbooking(i)">cancel</button>
+                <h6 class="text-success" *ngIf="i.status==1">Completed</h6>
+                <button class="btn btn-danger" (click)="Cancelbooking(i)" *ngIf="i.status==0">cancel</button>
               </td>
             </tr>
-
           </tbody>
         </table>
       </div>

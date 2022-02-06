@@ -1,4 +1,5 @@
 <!-- <app-headerfooter></app-headerfooter> -->
+
 		<div class="wrapper d-flex align-items-stretch">
 			<app-sidebar></app-sidebar>
         <!-- Page Content  -->
@@ -27,7 +28,7 @@
               <div class="form-group mt-3" *ngIf="showDays" >
                 <label class="col-sm-12 col-md-4 col-form-label">End Date</label>
                 <div class="col-sm-12 col-md-12">
-                  <input class="form-control pl-2" [(ngModel)]="Date" name="Date" placeholder=" Select Date" type="datetime-local" required>
+                  <input class="form-control pl-2" [(ngModel)]="endDate" name="endDate" placeholder=" Select end Date" type="date" required>
                 </div>
               </div>
               <div class="form-row mt-3" *ngIf="showDays">
@@ -35,7 +36,7 @@
                   <label class="col-form-label">Days</label>
                 </div>
                 <div class="custom-control custom-checkbox ml-2" >
-                  <input type="checkbox"  name="Mon" [(ngModel)]="Mon" class="custom-control-input" id="M" checked>
+                  <input type="checkbox"  name="Mon" [(ngModel)]="Mon" class="custom-control-input" id="M"  checked>
                   <label class="custom-control-label" for="M">Mon</label>
                 </div>
                 <div class="custom-control custom-checkbox ml-2">
@@ -84,7 +85,7 @@
                 </div>
                 <div class="col-md-6  px-0 pl-1">
                   <label class="form--label" >Kilometers</label>
-                  <input type="number" class="form-control pl-2" [(ngModel)]="miles"  name="miles"  min="0"  >
+                  <input type="number" class="form-control pl-2" [(ngModel)]="miles"  name="miles"  min="0.5" step="0.1"  >
                 </div>
               </div>
               <div class="form-group d-flex justify-content-center mt-3" *ngIf="showDays || showDate">

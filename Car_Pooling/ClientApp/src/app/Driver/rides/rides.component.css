@@ -1,3 +1,21 @@
 .btn{
   border-radius: 4px;
 }
+.Img{
+    height: 90px;
+    position: relative;
+    border-radius: 100%;
+}
+.btn-outline-primary:hover {
+  color: #fff;
+  background-color: #4d5761;
+  border-color: #007bff;
+}
+.row {
+  display: flex;
+  margin-right: -15px;
+  margin-left: -15px;
+  align-items: center;
+  justify-content: space-around;
+  line-height: 8px;
+}

@@ -2,9 +2,9 @@ import { Component, ViewEncapsulation, ElementRef, Input, OnInit, OnDestroy } fr
 
 import { ModalService } from './modal.service';
 
-@Component({ 
-    selector: 'jw-modal', 
-    templateUrl: 'modal.component.html', 
+@Component({
+    selector: 'jw-modal',
+    templateUrl: 'modal.component.html',
     styleUrls: ['modal.component.less'],
     encapsulation: ViewEncapsulation.None
 })
@@ -29,7 +29,7 @@ export class ModalComponent implements OnInit, OnDestroy {
         // close modal on background click
         this.element.addEventListener('click', el => {
             if (el.target.className === 'jw-modal') {
-                this.close();
+                //this.close();
             }
         });
 

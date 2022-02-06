@@ -49,10 +49,14 @@ export class AttributesComponent implements OnInit {
     Global.habits = this.HabitsForm.value;
     // display form values on success
     alert(JSON.stringify(Global.habits));
-    if (GlobalService.role == "passenger") {
+    // this.postservices.PostMethod("api/Captain/","Habits",Global.habits).subscribe(response => {
+    //   if(response == true){}
+    // });
+    /* if (GlobalService.role == "passenger") {
       this.Register();
     }
-    else this.rout.navigate(["/routemap"]);
+    else this.rout.navigate(["/routemap"]); */
+    this.Register();
   }
 
   Register() {
@@ -73,6 +77,13 @@ export class AttributesComponent implements OnInit {
           alert("Api Error");
         }
       });
-      this.rout.navigate(["/login"]);
+      GlobalService.PhoneNo = Global.personaldata.phoneNo;
+      GlobalService.role = Global.personaldata.role;
+      if (GlobalService.role == "passenger") {
+        this.rout.navigate(["/theme"]);
+      }
+      else
+        this.rout.navigate(["/vehicle"]);
+      //this.rout.navigate(["/login"]);
   }
 }

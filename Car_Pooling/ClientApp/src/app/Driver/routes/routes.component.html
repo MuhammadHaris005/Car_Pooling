@@ -45,7 +45,7 @@
   <div class="row">
     <div class="col-md-8 col-sm-12">
       <agm-map  style="width: 800px; height: 400px;" [zoom]= "12" [latitude]= "latitude" [longitude]= "longitude">
-        <agm-marker *ngFor="let item of points let i=index " [latitude]=item.lat [longitude]=item.lng  >
+        <agm-marker *ngFor="let item of points let i=index " [latitude]=item.lat [longitude]=item.lng [iconUrl]=item.iconUrl >
           <agm-polyline [visible]="true" [strokeWeight]="3" [strokeColor]="'#07b57a'">
             <agm-polyline-point
             *ngFor="let p of points;"

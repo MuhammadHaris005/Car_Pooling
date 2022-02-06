@@ -11,35 +11,82 @@
       <div class="card card-box col-md-10 mb-2" *ngFor="let i of list">
         <div class="card-body">
           <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-3">
 
               <b><p>{{i.source}}</p></b>
               <p>to</p>
               <b><p>{{i.destination}}</p></b>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
               <p>Seats</p>
               <p>{{i.seats_offer}}</p>
             </div>
             <div class="col-md-2">
-              <p>Start Time</p>
-              <p>{{i.s_time}}</p>
+              <p>Time </p>
+              <p>{{i.date.toLocaleTimeString()}}</p>
             </div>
             <div class="col-md-2">
-              <p>Date</p>
-              <p>{{i.date}}</p>
+              <p>From </p>
+              <p>{{i.date.toLocaleDateString()}}</p>
             </div>
-            <div class="col-md-4 d-flex justify-content-center ">
+            <div class="col-md-2">
+              <p>Till Date</p>
+              <p>{{i.endDate.toLocaleDateString()}}</p>
+            </div>
+            <div class="col-md-2 d-flex justify-content-center ">
               <div>
+                <h6 class=" text-success" *ngIf="i.ridestatus==1">Ride Completed</h6><br>
+                <button class="btn btn-sm btn-secondary mt-1" *ngIf="i.ridestatus==0" (click)="UpdateStatus(i.id,1)">Finish</button>
                 <button class="btn btn-sm btn-success" *ngIf="i.ridestatus==-1" (click)="UpdateStatus(i.id,0)">Start</button><br>
-                <button class="btn btn-sm btn-info mt-1" *ngIf="i.ridestatus==-1" >Update</button><br>
                 <button class="btn btn-sm btn-danger mt-1 " *ngIf="i.ridestatus==-1" (click)="Cancel(i.id,i.source,i.destination)" >Cancel</button><br>
-                <button class="btn btn-sm btn-info mt-1" *ngIf="i.ridestatus==0">Complete</button>
               </div>
             </div>
+          </div>
+          <div class="row d-flex justify-content-center">
+            <a class="btn btn-outline-primary border-danger" (click)="GetBookings(i.id)"><strong>Bookings</strong></a>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<jw-modal id="custom-modal-1" style="height: 400px;">
+  <div class="row d-flex justify-content-end pr-md-3 mb-1">
+    <button class="btn border-5" (click)="closeModal('custom-modal-1');"><i class="fa fa-times"></i></button>
+  </div>
+  <div class="row" >
+    <h6 *ngIf="person.length==0" class="text-info">No one booked your ride yet..</h6>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <div class="card card-box col-md-12 mb-2" *ngFor="let i of person">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <img class="Img" src={{i.image}}>
+            </div>
+            <div class="col-md-8 pl-3">
+              <div class="row">
+                <b><p>{{i.firstname}} {{i.lastname}}</p></b>
+              </div>
+              <div class="row">
+                <p>seats : {{i.seats}} </p>
+              </div>
+              <div class="row">
+                <p class="text-success">Pickup Time:  {{i.exp_time.toLocaleTimeString()}}</p>
+              </div>
+              <div class="row">
+                <p class="text-blue-50">{{i.book_date.split('T')[0]}}</p><p class="text-blue-50" *ngIf="i.book_date.split('T')[0]!=i.till_date.split('T')[0]"> to &nbsp; {{i.till_date.split('T')[0]}}</p>
+              </div>
+              <div class="row">
+                <p>{{i.book_days}}</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</jw-modal>

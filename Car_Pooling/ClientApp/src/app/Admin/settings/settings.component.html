@@ -1,0 +1,19 @@
+<div class="wrapper d-flex align-items-stretch">
+  <app-a_sidebar></app-a_sidebar>
+  <!-- Page Content  -->
+  <div id="content" class="p-md-3 px-2">
+    <h4>Settings</h4>
+    <hr />
+    <div class="col-md-4  px-0 pr-1">
+      <label class="form--label" >Initial Fare</label>
+      <input type="number" class="form-control p-2" [(ngModel)]="Initial"  name="Initial" >
+    </div>
+    <div class="col-md-4  px-0 pl-1">
+      <label class="form--label" >Fare per/Km</label>
+      <input type="number" class="form-control pl-2" [(ngModel)]="perKm"  name="perKm" >
+    </div>
+    <div class="col-md-4 mt-3  px-0 pl-1 d-flex justify-content-end">
+      <button class="btn btn-primary" (click)="UpdateFare()">Update Fare</button>
+    </div>
+  </div>
+</div>

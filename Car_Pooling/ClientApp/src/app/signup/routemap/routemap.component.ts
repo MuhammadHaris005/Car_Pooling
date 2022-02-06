@@ -1,5 +1,4 @@
 import { Component, OnInit, Output,EventEmitter } from "@angular/core";
-import { SignupComponent } from "../signup.component";
 import{MouseEvent} from '@agm/core'
 import { Router } from "@angular/router";
 import { Global } from "../signup_global";
@@ -71,36 +70,36 @@ export class RoutemapComponent{
     var phoneNo = Global.personaldata.phoneNo;
     var source = this.source;
     var destination = this.destination;
-    this.postservices.PostMethod("api/Captain/","General", Global.personaldata).subscribe(response => {
-      if(response == true){
-        this.postservices.PostMethod("api/Captain/","Vehicle",Global.vehicledata).subscribe(response => {
-          if(response == true){
-            this.postservices.PostMethod("api/Captain/","Habits",Global.habits).subscribe(response => {
-              if(response == true){
-                debugger
-                this.postservices.PostMethod("api/Captain/","Routes",{'mappoints':mappoints,'phoneNo':phoneNo,'source':source,'destination':destination,'status':true}).subscribe(response => {
-                  if(response == true){
-                    alert("Registration Successfully.......");
-                  }
-                  else{
-                    alert("api Error");
-                  }
-                });
-              }
-              else{
-                alert("Api Error")
-              }
-            });
-          }
-          else{
-            alert("Api Error")
-          }
-        });
-      }
-      else{
-        alert("Api Error")
-      }
-    });
+    // this.postservices.PostMethod("api/Captain/","General", Global.personaldata).subscribe(response => {
+    //   if(response == true){
+    //     this.postservices.PostMethod("api/Captain/","Vehicle",Global.vehicledata).subscribe(response => {
+    //       if(response == true){
+    //         this.postservices.PostMethod("api/Captain/","Habits",Global.habits).subscribe(response => {
+    //           if(response == true){
+    //             debugger
+    //             this.postservices.PostMethod("api/Captain/","Routes",{'mappoints':mappoints,'phoneNo':phoneNo,'source':source,'destination':destination,'status':true}).subscribe(response => {
+    //               if(response == true){
+    //                 alert("Registration Successfully.......");
+    //               }
+    //               else{
+    //                 alert("api Error");
+    //               }
+    //             });
+    //           }
+    //           else{
+    //             alert("Api Error")
+    //           }
+    //         });
+    //       }
+    //       else{
+    //         alert("Api Error")
+    //       }
+    //     });
+    //   }
+    //   else{
+    //     alert("Api Error")
+    //   }
+    // });
     this.route.navigate(['/login']);
   }
 

@@ -1,0 +1,15 @@
+<div class="wrapper d-flex align-items-stretch">
+  <app-csidebar></app-csidebar>
+  <!-- Page Content  -->
+  <div id="content" class="p-md-3 px-2">
+    <agm-map [zoom]="12" [latitude]="lati" [longitude]="longi">
+      <agm-marker
+        [(latitude)]="latitude"
+        [(longitude)]="longitude"
+        [iconUrl]="iconUrl"
+      >
+      </agm-marker>
+    </agm-map>
+  </div>
+</div>
+

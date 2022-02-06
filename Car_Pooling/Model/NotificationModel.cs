@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Car_Pooling.Model
 {
-    public class NotificationModel
+    public class NotificationModel : CaptainInfo
     {
         public string sender { get; set; }
         public string reciever { get; set; }

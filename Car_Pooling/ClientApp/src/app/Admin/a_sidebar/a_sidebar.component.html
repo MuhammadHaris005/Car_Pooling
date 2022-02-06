@@ -1,0 +1,17 @@
+<nav id="sidebar">
+  <h4 id="logo"><a  class="navbar-brand navbar-logo" href="#">ᑕᗩᖇ ᑭᗝᗝᒪIᑎᎶ
+  </a></h4>
+  <div class="p-4">
+    <ul class="list-unstyled components mb-5">
+      <!-- <li [routerLinkActive]= "['active']">
+          <a ><span class="fa fa-bars mr-3"></span> About</a>
+      </li> -->
+      <li [routerLinkActive]= "['active']">
+        <a   [routerLink]= "['/settings']"><span class="fa fa-cogs mr-3"></span>Settings</a>
+      </li>
+      <li [routerLinkActive]= "['active']">
+        <a  routerLink="/login"><span class="fa fa-sign-out mr-3"></span> LogOut</a>
+      </li>
+    </ul>
+  </div>
+</nav>

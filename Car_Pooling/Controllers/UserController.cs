@@ -19,7 +19,7 @@ namespace Car_Pooling.Controllers
         {
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string query = "insert into Review values('"+reviewModel.from_ID+"','"+reviewModel.score+ "','" + reviewModel.booking_id + "')";
+            string query = "insert into Review values('"+reviewModel.from_ID+ "','" + reviewModel.to_ID + "','" + reviewModel.score+ "','" + reviewModel.booking_id + "')";
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.ExecuteNonQuery();
             return true;
@@ -46,6 +46,7 @@ namespace Car_Pooling.Controllers
         [HttpPost]
         [Route("SendNotification")]
         public async Task<bool> SendNotification([FromBody] NotificationModel obj)
+
         {
             SqlConnection con = new SqlConnection(constring);
             con.Open();
@@ -60,7 +61,7 @@ namespace Car_Pooling.Controllers
         {
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string query = "Select Message,first_name,last_name from Notification inner join Personal on Notification.Sender_id = Personal.phone_no where Reciever_id='" + obj.reciever + "'";
+            string query = "Select Message,first_name,last_name from Notification inner join Personal on Notification.Sender_id = Personal.phone_no where Reciever_id='" + obj.reciever + "' and isRead=0";
             SqlCommand cmd = new SqlCommand(query,con);
             SqlDataReader sdr =  cmd.ExecuteReader();
             List<NotificationModel> list = new List<NotificationModel>();
@@ -69,18 +70,19 @@ namespace Car_Pooling.Controllers
             {
                 n = new NotificationModel();
                 n.message = sdr["Message"].ToString();
+                n.firstname = sdr["first_name"].ToString();
+                n.lastname = sdr["last_name"].ToString();
                 list.Add(n);
             }
             return list;
         }
-
         [HttpPost]
-        [Route("GetPerson")]
+        [Route("GetProfile")]
         async public Task<List<Profile>> GetProfile([FromBody] LoginModel obj)
         {
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string query = "select * from Personal p inner join VehicleInfo v on p.phone_no = v.phone_no inner join HabitsAllowed ha on p.phone_no = ha.phone_no inner join PersonHabits ph on p.phone_no = ph.phone_no where p.phone_no ='"+obj.phone+"'";
+            string query = "select * from Personal p inner join HabitsAllowed ha on p.phone_no = ha.phone_no inner join PersonHabits ph on p.phone_no = ph.phone_no where p.phone_no ='"+obj.phone+"'";
             SqlCommand cmd = new SqlCommand(query,con);
             SqlDataReader sdr = cmd.ExecuteReader();
             List<Profile> list = new List<Profile>();
@@ -95,15 +97,56 @@ namespace Car_Pooling.Controllers
                 p.Personal.cnic = sdr["cnic"].ToString();
                 p.Personal.city = sdr["city"].ToString();
                 p.Personal.role = sdr["role"].ToString();
-                
-                p.Vehicle.regno = sdr["registration_no"].ToString();
-                p.Vehicle.model = sdr["model"].ToString();
-                p.Vehicle.maker = sdr["maker"].ToString();
-                p.Vehicle.color = sdr["color"].ToString();
-                p.Vehicle.seats = (Int32)sdr["seats"];
-
+                p.Personal.gender = sdr["gender"].ToString();
+                p.Personal.password = sdr["password"].ToString();
+                p.Habits.music = sdr["ListenMusic"].ToString();
+                p.Habits.smooking = sdr["Smooker"].ToString();
+                p.Habits.talkative = sdr["Talkative"].ToString();
+                p.Habits.allowmusic = sdr["AllowMusic"].ToString();
+                p.Habits.allowsmooking = sdr["AllowSmooker"].ToString();
+                p.Habits.allowtalkative = sdr["AllowTalkative"].ToString();
+                list.Add(p);
             }
             return list;
+        }
+        [HttpPost]
+        [Route("GetBookRides")]
+        async public Task<List<Object>> GetBookedrides([FromBody] BookingModel obj)
+        {
+            SqlConnection con = new SqlConnection(constring);
+            con.Open();
+            string query = "Select * from Bookings b  inner Join Personal p on b.P_ID = p.phone_no where b.order_ID = '"+obj.order_id+"'";
+            SqlCommand cmd = new SqlCommand(query, con);
+            SqlDataReader sdr = cmd.ExecuteReader();
+            List<Object> list = new List<Object>();
+            while (sdr.Read())
+            {
+                ReturnBooking p = new ReturnBooking();
+                p.captianInfo.firstname = sdr["first_name"].ToString();
+                p.captianInfo.lastname = sdr["last_name"].ToString();
+                p.captianInfo.image = sdr["image"].ToString();
+                p.booking.ID = (int)sdr["ID"];
+                p.booking.seats = (int)sdr["book_seats"];
+                p.booking.order_id = (int)sdr["order_ID"];
+                p.booking.s_point = (byte)sdr["start_point"];
+                p.booking.e_point = (byte)sdr["end_point"];
+                p.booking.book_date = (DateTime)sdr["book_date"];
+                p.booking.till_date = (DateTime)sdr["till_date"];
+                p.booking.book_days = sdr["booked_days"].ToString();
+                p.booking.exp_time = sdr["exp_time"].ToString();
+                list.Add(p);
+            }
+            return list;
+        }
+        [HttpPost]
+        [Route("UpdateNotify")]
+        async public void UpdateNotify([FromBody] NotificationModel obj)
+        {
+            SqlConnection con = new SqlConnection(constring);
+            con.Open();
+            string query = "Update Notification set isRead = 1 where Reciever_id='" + obj.reciever + "'";
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.ExecuteNonQuery();
         }
     }
     

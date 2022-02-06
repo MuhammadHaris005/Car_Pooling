@@ -9,7 +9,6 @@ namespace Car_Pooling.Model
     {
         public Profile(){
             Personal = new CaptainInfo();
-            Vehicle = new VehicleModel();
             Habits = new HabitsModel();
         }
         public CaptainInfo Personal { get; set; }
