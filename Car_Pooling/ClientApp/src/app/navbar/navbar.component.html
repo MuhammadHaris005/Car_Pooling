@@ -1,22 +1,32 @@
-<nav class="navbar navbar-expand-custom navbar-mainbg">
-  <h4><a id="logo" class="navbar-brand navbar-logo" href="#">ᑕᗩᖇ ᑭᗝᗝᒪIᑎᎶ
-  </a></h4>
-  <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-  <i class="fas fa-bars text-white"></i>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <!-- <ul class="navbar-nav ml-auto">
-          <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
-          <li class="nav-item">
-              <a class="nav-link" routerLink="/login"><i class="fa fa-tachometer"></i>Login</a>
-          </li>
-          <li class="nav-item active">
-              <a class="nav-link" routerLink="/signup"><i class="fa fa-address-book"></i>SignUp</a>
-          </li>
 
-      </ul> -->
+<div class="login-header box-shadow">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <div class="brand-logo ">
+      <a routerLink="/login">
+        <h3>ᑕᗩᖇ ᑭᗝᗝᒪIᑎᎶ</h3>
+      </a>
+    </div>
+    <div class="login-menu">
+      <ul>
+        <li>
+          <a class="dropdown-toggle no-arrow" role="button" data-toggle="dropdown" (click)="RemoveNotif()"><span class="icon-copy dw dw-notification white mr-5"></span><span *ngIf="Sum>0" class="button__badge">{{Sum}}</span></a>
+          <div class="dropdown-menu dropdown-menu-right">
+						<div class="notification-list mx-h-350 customscroll">
+							<div id="noti">
+								<div class="row pl-3 pr-3 d-flex justify-content-center">
+                  <h6>Notification</h6><hr/>
+                  <div class="col-md-12 d-flex" *ngFor="let i of list">
+                    <p class="font-weight-bold">{{i.firstname }} {{i.lastname}} &nbsp; &nbsp; </p><p> {{i.message}}</p><hr/>
+                  </div>
+                </div>
+							</div>
+						</div>
+					</div>
+        </li>
+        <li >
+          <a  routerLink="/login"><span class="icon-copy dw dw-logout mr-3"></span></a>
+        </li>
+      </ul>
+    </div>
   </div>
-</nav>
-<nav class="navbar navbar-expand-custom navbar-mainbg1">
-  <div class="tab">Hello</div>
-</nav>
+</div>

@@ -63,32 +63,52 @@ namespace Car_Pooling.Controllers
         }
         [HttpPost]
         [Route("CurrentLocation")]
-        async public Task<string> CurrentLocation([FromBody] Offered obj )
+        async public Task<List<object>> CurrentLocation([FromBody] Offered obj )
         {
             SqlConnection con = new SqlConnection(constring);
             con.Open();
             DateTime d = new DateTime();
+            List<object> list = new List<object>();
             string query = "Select order_ID from Bookings where P_ID = '" + obj.phoneNo + "' and book_date >= '" + obj.date + "' order by book_date Asc";
             SqlCommand cmd = new SqlCommand(query,con);
             SqlDataReader sdr = cmd.ExecuteReader();
             if (!sdr.HasRows)
             {
-                return "null";
+                return list;
             }
             sdr.Read();
             string o_id = sdr["order_ID"].ToString();
             sdr.Close();
+            con.Close();
             if (o_id != "")
             {
+                con.Open();
                 string query1 = "Select route_points from Routes r inner join OfferedRides o on r.route_ID = o.route_ID where o.ID = '" + o_id + "' and o.ridestatus=0";
                 SqlCommand cmd1 = new SqlCommand(query1, con);
                 SqlDataReader sdr1 = cmd1.ExecuteReader();
                 sdr1.Read();
-                string points = sdr1["route_points"].ToString();
-                return points;
+                if (!sdr1.HasRows)
+                {
+                    return list;
+                }
+                else
+                {
+                    string points = sdr1["route_points"].ToString();
+                    list.Add(points);
+                    sdr1.Close();
+                    string query2 = "Select source,destination from Passenger_Route where ride_ID = '" + o_id + "' and phoneNo = '" + obj.phoneNo + "'";
+                    SqlCommand cmd2 = new SqlCommand(query2, con);
+                    SqlDataReader sdr2 = cmd2.ExecuteReader();
+                    sdr2.Read();
+                    string source = sdr2["source"].ToString();
+                    string destination = sdr2["destination"].ToString();
+                    list.Add(source);
+                    list.Add(destination);
+                    return list;
+                }
             }
             else
-            return "null";
+            return list;
         }
         [HttpGet]
         [Route("GetFare")]

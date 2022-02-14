@@ -13,6 +13,7 @@ namespace Car_Pooling.Model
         public string maker { get; set; }
         public string color { get; set; }
         public int seats { get; set; }
+        public string AC { get; set; }
         public string phoneNo { get; set; }
     }
 }

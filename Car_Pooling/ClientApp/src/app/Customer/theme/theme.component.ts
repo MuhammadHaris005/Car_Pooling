@@ -47,6 +47,7 @@ import { ModalService } from 'src/app/_modal';
 
     initial;
     perkm;
+    f;
 
     bookings: Booking[]=[];
     showDate :boolean= false;
@@ -99,6 +100,7 @@ import { ModalService } from 'src/app/_modal';
       this.routedetails=[];
       this.exp_time = [];
       this.drivers=[];
+      this.days = [];
       this.ShowHideButton();
     }
 
@@ -205,100 +207,105 @@ import { ModalService } from 'src/app/_modal';
               this.available_seats=10;
               this.signupservices.Searching("api/Captain/","Searching",{type,date}).subscribe( response => {
                 if(response){
-                  debugger;
                   for (let i = 0; i < response.length; i++) {
-                    let a  =eval(response[i].mappoints) ;
-                    for (let j = 0; j < a.length; j++) {
-                      var d = this.getDistanceFromLatLonInKm(a[j].lat,a[j].lng,this.markers[0].lat,this.markers[0].lng);
-                      if(d<=response[i].distance){
-                        let P1 = j;
-                        for (let x = j; x < a.length; x++) {
-                          var z = this.getDistanceFromLatLonInKm(a[x].lat,a[x].lng,this.markers[1].lat,this.markers[1].lng);
-                          if(z<=response[i].distance){
-                            let P2 = x;
-                            let id = response[i].id;
-                            var seats =this.seats;
-                            let ph = response[i].phoneNo;
-                            var t = this.getDistanceFromLatLonInKm(this.markers[0].lat,this.markers[0].lng,this.markers[1].lat,this.markers[1].lng);
-                            let o = (t*this.perkm+this.initial).toLocaleString();
-                            let f =parseInt(o);
-                            this.signupservices.PostMethod("api/Search/","MatchRide",{'P1':P1,'P2':P2,'seats':seats,'id':id,'owner_phoneNo':ph,'user_phoneNo':GlobalService.PhoneNo}).subscribe(response1 => {
-                              if(response1){
+                    debugger;
+                    if(!(type=="Daily" && response[i].type=="Once")){
+
+                      let a  =eval(response[i].mappoints) ;
+                      for (let j = 0; j < a.length; j++) {
+                        var d = this.getDistanceFromLatLonInKm(a[j].lat,a[j].lng,this.markers[0].lat,this.markers[0].lng);
+                        if(d<=response[i].distance){
+                          let P1 = j;
+                          for (let x = j; x < a.length; x++) {
+                            var z = this.getDistanceFromLatLonInKm(a[x].lat,a[x].lng,this.markers[1].lat,this.markers[1].lng);
+                            if(z<=response[i].distance){
+                              let P2 = x;
+                              let id = response[i].id;
+                              var seats =this.seats;
+                              let ph = response[i].phoneNo;
+                              var t = this.getDistanceFromLatLonInKm(this.markers[0].lat,this.markers[0].lng,this.markers[1].lat,this.markers[1].lng);
+                              let o = (t*this.perkm+this.initial).toLocaleString();
+                              this.f =parseInt(o);
+                              this.signupservices.PostMethod("api/Search/","MatchRide",{'P1':P1,'P2':P2,'seats':seats,'id':id,'owner_phoneNo':ph,'user_phoneNo':GlobalService.PhoneNo}).subscribe(response1 => {
+                                if(response1){
+                                  debugger;
+                                  let t = new Date(response1[2]);
+                                  var date = response[i].date.split('T');
+                                  const booldays =response1[4].split(',').map(s => s === 'true');;
+                                  const temp = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                                  const days = booldays.map((d,i)=>d? temp[i]:d).filter(d=>d);
+                                  this.drivers.push({
+                                    driver: response1[0],
+                                    vehicle:response1[1],
+                                    seats: response1[3],
+                                    time: t,
+                                    date: date[0],
+                                    rank : response1[6],
+                                    end_date: response1[5],
+                                    days:days,
+                                    fare:this.f,
+                                    Booking: {o_id:id,p1:P1,p2:P2,bookseats:seats}
+                                  });
+                                  this.drivers.sort((a, b) => a.rank - b.rank);
+                                }
+                              });
+                              break;
+                              /* const reslt = await this.CHeckSeats(P1,P2,id,s)
                                 debugger;
-                                let t = new Date(response1[2]);
-                                var date = response[i].date.split('T');
-                                const booldays =response1[4].split(',').map(s => s === 'true');;
-                                const temp = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-                                const days = booldays.map((d,i)=>d? temp[i]:d).filter(d=>d);
-                                this.drivers.push({
-                                  driver: response1[0],
-                                  vehicle:response1[1],
-                                  seats: response1[3],
-                                  time: t,
-                                  date: date[0],
-                                  rank : 5,
-                                  end_date: response1[5],
-                                  days:days,
-                                  fare:f,
-                                  Booking: {o_id:id,p1:P1,p2:P2,bookseats:seats}
-                                });
-                                this.drivers.sort((a, b) => a.rank - b.rank);
-                              }
-                            });
-                            break;
-                            /* const reslt = await this.CHeckSeats(P1,P2,id,s)
-                              debugger;
-                              if(reslt==true){
-                                debugger;
-                                var phoneNo = response[i].phoneNo;
-                                this.signupservices.GetCaptainMethod("api/Captain/","GetCaptain",{'phoneNo':phoneNo}).subscribe(async response1=>{
-                                  if(response1!=null){
-                                    debugger;
-                                    //let check = this.GetUserHabits(GlobalService.PhoneNo,response1[2]);
-                                    const ret = await this.GetUserHabits(GlobalService.PhoneNo,response1[2]);
-                                      if(ret==true){
-                                        debugger;
-                                        let a_seats = this.available_seats
-                                        //this.seatsArray.push(a_seats);
-                                        let t = new Date(this.extime);
-                                        //this.exp_time.push(t);
-                                        var date = response[i].date.split('T');
-                                        //this.routedetails.push(date[0]);
-                                        this.drivers.push({
-                                          driver: response1[0],
-                                          vehicle:response1[1],
-                                          seats: a_seats,
-                                          time: t,
-                                          date: date[0],
-                                          rank : response1[3],
-                                          Booking: {o_id:id,p1:P1,p2:P2,bookseats:s}
-                                        });
-                                        this.drivers.sort((a, b) => a.rank - b.rank);
-                                        //this.driversdetails.push(response1[0]);
-                                        //this.vehicledetails.push(response1[1]);
-                                        // this.bookings.push({
-                                        //   o_id:id,
-                                        //   p1:P1,
-                                        //   p2:P2,
-                                        //   bookseats:s,
-                                        // });
-                                      }
-                                  }
-                                });
-                                break;
-                              } */
+                                if(reslt==true){
+                                  debugger;
+                                  var phoneNo = response[i].phoneNo;
+                                  this.signupservices.GetCaptainMethod("api/Captain/","GetCaptain",{'phoneNo':phoneNo}).subscribe(async response1=>{
+                                    if(response1!=null){
+                                      debugger;
+                                      //let check = this.GetUserHabits(GlobalService.PhoneNo,response1[2]);
+                                      const ret = await this.GetUserHabits(GlobalService.PhoneNo,response1[2]);
+                                        if(ret==true){
+                                          debugger;
+                                          let a_seats = this.available_seats
+                                          //this.seatsArray.push(a_seats);
+                                          let t = new Date(this.extime);
+                                          //this.exp_time.push(t);
+                                          var date = response[i].date.split('T');
+                                          //this.routedetails.push(date[0]);
+                                          this.drivers.push({
+                                            driver: response1[0],
+                                            vehicle:response1[1],
+                                            seats: a_seats,
+                                            time: t,
+                                            date: date[0],
+                                            rank : response1[3],
+                                            Booking: {o_id:id,p1:P1,p2:P2,bookseats:s}
+                                          });
+                                          this.drivers.sort((a, b) => a.rank - b.rank);
+                                          //this.driversdetails.push(response1[0]);
+                                          //this.vehicledetails.push(response1[1]);
+                                          // this.bookings.push({
+                                          //   o_id:id,
+                                          //   p1:P1,
+                                          //   p2:P2,
+                                          //   bookseats:s,
+                                          // });
+                                        }
+                                    }
+                                  });
+                                  break;
+                                } */
+                            }
                           }
+                          break;
                         }
-                        break;
                       }
                     }
                   }
-                  this.ShowHideButton();
+
+                  //this.ShowHideButton();
                 }
                 else{
                   alert("Error");
                 }
               });
+
             }
       }
     }
@@ -394,12 +401,12 @@ import { ModalService } from 'src/app/_modal';
       }
     }
     Book(x){
-      debugger;
       let id = x.Booking.o_id;
       let P1 = x.Booking.p1;
       let P2 = x.Booking.p2;
       let book_date = this.Date;
       let till_date = this.end_date;
+      let fare = this.f;
       let book_days = this.days.toString();
       if(this.type=='Once'){
         till_date = book_date;
@@ -415,20 +422,27 @@ import { ModalService } from 'src/app/_modal';
         if(response1!=null){
           alert("Your Seats Reserved");
 
-          this.signupservices.BookingMethod("api/Captain/","Booking",{d_phone,u_phone,vehicle_ID,seats,exp_time,'order_id':id,book_date,till_date,book_days,status,'s_point':P1,'e_point':P2}).subscribe(response=>{
+          this.signupservices.BookingMethod("api/Captain/","Booking",{d_phone,u_phone,vehicle_ID,seats,exp_time,fare,'order_id':id,book_date,till_date,book_days,status,'s_point':P1,'e_point':P2}).subscribe(response=>{
             if(response==true){
               alert("Booked");
               let sender = GlobalService.PhoneNo;
               let reciever = d_phone;
               let message = "Book your ride";
-
               this.signupservices.PostMethod("api/User/","SendNotification",{sender,reciever,message}).subscribe();
+              this.closeModal('custom-modal-2');
               this.closeModal('custom-modal-1');
               this.ShowHideButton();
+              this.drivers=[];
             }
           });
         }
       });
+      let source = [this.markers[0].lat,this.markers[0].lng].toString();
+      let destination = [this.markers[1].lat,this.markers[1].lng].toString();
+      let ride_ID = id;
+      let phoneNo =  GlobalService.PhoneNo;
+      debugger;
+      this.signupservices.PostMethod("api/User/","PassengerRoute",{source,destination,ride_ID,phoneNo}).subscribe();
     }
     openModal(id: string) {
       debugger;

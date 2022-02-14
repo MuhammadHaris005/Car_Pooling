@@ -134,6 +134,7 @@ namespace Car_Pooling.Controllers
                 p.booking.till_date = (DateTime)sdr["till_date"];
                 p.booking.book_days = sdr["booked_days"].ToString();
                 p.booking.exp_time = sdr["exp_time"].ToString();
+                p.booking.fare = (int)sdr["fare"];
                 list.Add(p);
             }
             return list;
@@ -145,6 +146,16 @@ namespace Car_Pooling.Controllers
             SqlConnection con = new SqlConnection(constring);
             con.Open();
             string query = "Update Notification set isRead = 1 where Reciever_id='" + obj.reciever + "'";
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.ExecuteNonQuery();
+        }
+        [HttpPost]
+        [Route("PassengerRoute")]
+        async public void SaveRoute([FromBody] PassengerRouteModel obj)
+        {
+            SqlConnection con = new SqlConnection(constring);
+            con.Open();
+            string query = "Insert into Passenger_Route values('" + obj.source + "','" + obj.destination + "','" + obj.ride_ID + "','" + obj.phoneNo + "')";
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.ExecuteNonQuery();
         }

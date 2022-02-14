@@ -18,7 +18,7 @@ export class CaptainComponent implements OnInit {
   previous;
   //Stime= new Date().getTime().toLocaleString();
   Rtime:any;
-  type:any;
+  type:any="Once";
   Date=new Date();
   endDate = new Date();
   istwoway:any;
@@ -29,7 +29,7 @@ export class CaptainComponent implements OnInit {
   seats:any;
   miles:any=0.5;
 
-  showDate :boolean= false;
+  showDate :boolean= true;
   showDays:boolean=false;
 
   Mon=true;
@@ -55,7 +55,7 @@ export class CaptainComponent implements OnInit {
       this.router.navigate(['/login']);
     }
     debugger;
-    $.SweetAlert.init();
+    // $.SweetAlert.init();
 
     //setTimeout(function(){ $("#sa-success").SweetAlert().init()}, 500);
     this.phoneNo = GlobalService.PhoneNo;
@@ -148,7 +148,7 @@ export class CaptainComponent implements OnInit {
       }
       this.signupservices.PostMethod("api/Captain/","Offer",{route_ID,type,seats_offer,date,endDate,s_time,r_time,days,totalpoints,e_time,distance}).subscribe(response => {
         if(response==true){
-          document.getElementById('sa-success').click();
+          alert("Ride Offer Succcessfully");
         }
       });
     }

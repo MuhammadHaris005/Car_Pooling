@@ -1,8 +1,9 @@
+<app-navbar></app-navbar>
 <div class="wrapper d-flex align-items-stretch">
   <app-csidebar></app-csidebar>
 
     <!-- Page Content  -->
-  <div id="content" class="p-1" *ngIf="showMainContent">
+  <div id="content" class="p-1" *ngIf="drivers.length==0">
     <div class="row d-flex justify-content-center">
         <div class="p-3 d-flex justify-content-center">
           <h3>Mark Your Sourse & Destination</h3>
@@ -105,7 +106,7 @@
     </div>
 
   </div>
-  <div id="content" class="p-md-3" *ngIf="!showMainContent">
+  <div id="content" class="p-md-3" *ngIf="drivers.length>0">
     <div class="row">
       <div class="col-lg-3 col-md-3 col-sm-12 mb-30 mx-3" *ngFor="let i of drivers;let a=index">
         <div class="row card card-box" >
@@ -120,18 +121,21 @@
               <h5 class="row card-title weight-500">{{i.driver.firstname}} {{i.driver.lastname}}</h5>
             </div>
             <div class="d-flex justify-content-start mt-1">
-              <p class="text-dark"> {{i.vehicle.model}} &nbsp; seats:{{i.seats}} &nbsp;</p>
+              <p class="text-dark">{{i.vehicle.regno}} &nbsp;{{i.vehicle.color}}-{{i.vehicle.model}} &nbsp; {{i.seats}}seats &nbsp; &nbsp;</p>
+              <label *ngIf="i.vehicle.ac ==true"><i class="fa fa-snowflake-o "></i>AC</label>
+            </div>
+            <div class="d-flex justify-content-start mt-1">
               <p class="text-success">Time: {{i.time.toLocaleTimeString()}}</p>
             </div>
             <div class="d-flex justify-content-start">
-              <p class="text-black" >From : {{i.date}}  &nbsp;</p>
-              <p *ngIf="i.days.length!=0"> Till: {{i.end_date.split('T')[0]}}</p>
+              <p class="text-black" >From : {{i.date}}  &nbsp; &nbsp;</p>
+              <p *ngIf="i.days.length!=0"> Till : {{i.end_date.split('T')[0]}}</p>
             </div>
 
             <div class="d-flex flex-wrap mt-1" >
               <div class="text-blue-50" *ngFor="let a of i.days">{{a}} &nbsp;</div>
             </div>
-            <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-end mr-2">
 
               <h5 class="text-danger"> RS {{i.fare}}</h5>
             </div>

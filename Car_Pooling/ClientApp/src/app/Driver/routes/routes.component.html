@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <div class="wrapper d-flex align-items-stretch">
   <app-sidebar></app-sidebar>
     <!-- Page Content  -->
@@ -8,7 +9,7 @@
       </div>
     </div>
     <div class="row d-flex justify-content-end mr-md-5 mb-3 pr-md-5">
-      <button class="btn btn-primary p-2 border-2" routerLink="/addroute"><i class="fa fa-plus"></i> Add New Route</button>
+      <button class="btn btn-primary p-2 border-2"  (click)="openModal2('custom-modal-2')"><i class="fa fa-plus"></i> Add New Route</button>
     </div>
     <div class=" row d-flex justify-content-center">
       <div class="card card-box col-md-10 mb-2" *ngFor="let i of list">
@@ -45,10 +46,10 @@
   <div class="row">
     <div class="col-md-8 col-sm-12">
       <agm-map  style="width: 800px; height: 400px;" [zoom]= "12" [latitude]= "latitude" [longitude]= "longitude">
-        <agm-marker *ngFor="let item of points let i=index " [latitude]=item.lat [longitude]=item.lng [iconUrl]=item.iconUrl >
+        <agm-marker *ngFor="let item of points1 let i=index " [latitude]=item.lat [longitude]=item.lng [iconUrl]=item.iconUrl [label]=item.label>
           <agm-polyline [visible]="true" [strokeWeight]="3" [strokeColor]="'#07b57a'">
             <agm-polyline-point
-            *ngFor="let p of points;"
+            *ngFor="let p of points1;"
             [latitude]=p.lat
             [longitude]=p.lng></agm-polyline-point>
           </agm-polyline>
@@ -56,6 +57,57 @@
       </agm-map>
     </div>
   </div>
+
+</jw-modal>
+<jw-modal id="custom-modal-2" style="height: 400px;">
+  <div class="row d-flex justify-content-end pr-md-3 mb-1">
+    <button class="btn border-5" (click)="closeModal('custom-modal-2');"><i class="fa fa-times"></i></button>
+  </div>
+  <div class="row">
+
+      <div class="map pl-2">
+        <h4 class="text-center text-black">Mark Your Pickup Points</h4><hr>
+        <form class="row d-flex justify-content-center" >
+          <div class="form-group">
+            <label class="col-sm-12 col-md-6 col-form-label">Source</label>
+            <div class="col-sm-12 col-md-12">
+              <input class="form-control" type="text" [(ngModel)]= "source" name="source" placeholder="Enter Source">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-12 col-md-6 col-form-label">Destination</label>
+            <div class="col-sm-12 col-md-12">
+              <input class="form-control" type="text" [(ngModel)]= "destination" name="destination" placeholder="Enter Destination">
+            </div>
+          </div>
+        </form>
+        <agm-map
+        [latitude]="lat"
+        [longitude]="lng"
+        [zoom]="zoom"
+        [zoomControl]="false"
+        (mapClick)="mapClicked($event)"
+        >
+          <agm-marker
+            *ngFor="let m of markers; let i = index"
+            [latitude]="m.lat"
+            [longitude]="m.lng"
+            [label]="m.label"
+            [iconUrl]="m.iconUrl"
+            [markerDraggable]="m.draggable"
+            [markerClickable]="true"
+            (dragEnd)="markerDragEnd(m, $event)"
+            (markerClick)="markerclick(m,$event)"
+          >
+          </agm-marker>
+        </agm-map>
+      </div>
+
+    </div>
+    <div class="row p-3 d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary rounded-top " (click)="SavePoints()">Save Points</button>
+    </div>
+
 
 </jw-modal>
 

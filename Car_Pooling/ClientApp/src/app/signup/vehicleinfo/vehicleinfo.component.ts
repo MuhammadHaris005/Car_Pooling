@@ -23,6 +23,7 @@ export class VehicleinfoComponent implements OnInit {
       maker: ['', Validators.required],
       seats: ['', Validators.required],
       color: ['', Validators.required],
+      AC: ['',Validators.required],
       phoneNo: GlobalService.PhoneNo,
   });
   }

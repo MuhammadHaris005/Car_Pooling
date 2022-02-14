@@ -20,11 +20,11 @@ namespace Car_Pooling.Controllers
         string EndDate;
         [HttpPost]
         [Route("MatchRide")]
-        public List<object> Match([FromBody] UpdateSeats obj)
+        async public Task<List<object>> Match([FromBody] UpdateSeats obj)
         {
             List<object> details = new List<object>();
 
-            bool check = Checkseat(obj.id, obj.P1, obj.P2, obj.seats);
+            bool check =  Checkseat(obj.id, obj.P1, obj.P2, obj.seats);
             if (check == true)
             {
                 bool check2 = Checkhabits(obj.user_phoneNo, obj.owner_phoneNo);
@@ -150,6 +150,7 @@ namespace Car_Pooling.Controllers
                 v.model = sdr1["model"].ToString();
                 v.maker = sdr1["maker"].ToString();
                 v.color = sdr1["color"].ToString();
+                v.AC = sdr1["AC"].ToString();
                 v.seats = (Int32)sdr1["seats"];
                 info.Add(v);
                 info.Add(extime);
@@ -167,6 +168,10 @@ namespace Car_Pooling.Controllers
             {
                 double rank = (double)sdr["Rank"];
                 info.Add(rank);
+            }
+            else
+            {
+                info.Add(0);
             }
             con.Close();
             return info;

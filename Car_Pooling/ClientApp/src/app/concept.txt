@@ -1,0 +1,74 @@
+port { Component, OnInit } from "@angular/core";
+
+@Component({
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"]
+})
+export class AppComponent implements OnInit {
+  allowedDays: boolean[];
+  days: boolean[];
+
+  ngOnInit() {
+    // Simulate delayed response from API
+    setTimeout(() => {
+      const d = [true, true, false, true, true, false, false];
+      this.allowedDays = d;
+      this.days = d;
+    }, 10);
+  }
+
+  /** Switches day between true and false
+   * @param index Index to toggle
+   */
+  onDayChange = (index: number) => {
+    const newDays = [...this.days];
+    newDays[index] = !this.days[index];
+    this.days = newDays;
+  };
+
+  /** Saves data */
+  onSave = () => {
+    const toSave = this.days
+      .map((d, i) => d && this.getDayOfWeek(i))
+      .filter((d) => d);
+    console.log(`Saving Data: ${toSave.join(", ")}`);
+  };
+
+  /** Gets day of week based on index
+   * @param number Number of day
+   */
+  getDayOfWeek = (number: number) =>
+    number === 0
+      ? "Monday"
+      : number === 1
+      ? "Tuesday"
+      : number === 2
+      ? "Wednesday"
+      : number === 3
+      ? "Thursday"
+      : number === 4
+      ? "Friday"
+      : number === 5
+      ? "Saturday"
+      : "Sunday";
+}
+//html
+<div>
+  <h1>
+    Test
+  </h1>
+  <div *ngIf="allowedDays">
+    <div
+      *ngFor="let day of allowedDays; let i = index"
+      style="flex-direction: row; display: flex; align-self: center;"
+    >
+      <input type="checkbox" [checked]="days[i]" (click)="onDayChange(i)" />
+      <label>{{getDayOfWeek(i)}}</label>
+    </div>
+    <button (click)="onSave()">Save</button>
+  </div>
+  <div *ngIf="!allowedDays">
+    Loading...
+  </div>
+</div>

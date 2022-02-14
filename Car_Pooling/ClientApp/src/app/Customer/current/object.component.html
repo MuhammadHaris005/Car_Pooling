@@ -1,14 +1,30 @@
+<app-navbar></app-navbar>
 <div class="wrapper d-flex align-items-stretch">
   <app-csidebar></app-csidebar>
   <!-- Page Content  -->
   <div id="content" class="p-md-3 px-2">
-    <agm-map [zoom]="12" [latitude]="lati" [longitude]="longi">
+    <agm-map [zoom]="12" [latitude]="lati" [longitude]="longi" [disableDefaultUI]="false" [zoomControl]="false">
       <agm-marker
         [(latitude)]="latitude"
         [(longitude)]="longitude"
         [iconUrl]="iconUrl"
       >
       </agm-marker>
+      <agm-marker
+        [latitude]="srclatitude"
+        [longitude]="srclongitude"
+        [iconUrl]="url"
+      >
+      </agm-marker>
+      <agm-marker
+        [latitude]="deslatitude"
+        [longitude]="deslongitude"
+        [iconUrl]="url1"
+      >
+      </agm-marker>
+      <!-- <agm-circle [latitude]="lati" [longitude]="longi" [radius]="1000" [fillColor]="'red'" [circleDraggable]="true"
+      [editable]="true">
+      </agm-circle> -->
     </agm-map>
   </div>
 </div>

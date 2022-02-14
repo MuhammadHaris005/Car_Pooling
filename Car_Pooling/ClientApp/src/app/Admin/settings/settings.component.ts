@@ -38,5 +38,6 @@ export class SettingsComponent implements OnInit {
     let initialfare = this.Initial;
     let perKm = this.perKm;
     this.service.PostMethod("api/Home/","UpdateFare",{initialfare,perKm}).subscribe();
+    alert("Settings Update..")
   }
 }

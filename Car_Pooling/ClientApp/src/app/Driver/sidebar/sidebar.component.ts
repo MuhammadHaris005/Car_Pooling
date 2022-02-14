@@ -14,17 +14,17 @@ export class SidebarComponent implements OnInit {
   constructor( private service : SignUpService) { }
 
   ngOnInit() {
-    this.getNotification();
+
   }
 
-  getNotification(){
-    let reciever = GlobalService.PhoneNo;
-    this.service.PostMethod("api/User/","GetNotifications",{reciever}).subscribe(responce =>{
-      if(responce){
-        DriverGlobalService.notifylist = responce;
-        this.Sum = responce.length;
-        debugger;
-      }
-    });
-  }
+  // getNotification(){
+  //   let reciever = GlobalService.PhoneNo;
+  //   this.service.PostMethod("api/User/","GetNotifications",{reciever}).subscribe(responce =>{
+  //     if(responce){
+  //       DriverGlobalService.notifylist = responce;
+  //       this.Sum = responce.length;
+  //       debugger;
+  //     }
+  //   });
+  // }
 }

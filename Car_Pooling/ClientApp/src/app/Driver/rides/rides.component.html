@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <div class="wrapper d-flex align-items-stretch">
   <app-sidebar></app-sidebar>
     <!-- Page Content  -->
@@ -8,7 +9,7 @@
       </div>
     </div>
     <div class=" row d-flex justify-content-center">
-      <div class="card card-box col-md-10 mb-2" *ngFor="let i of list">
+      <div class="card card-box col-md-10 mb-2" *ngFor="let i of list" >
         <div class="card-body">
           <div class="row">
             <div class="col-md-3">
@@ -70,7 +71,8 @@
                 <b><p>{{i.firstname}} {{i.lastname}}</p></b>
               </div>
               <div class="row">
-                <p>seats : {{i.seats}} </p>
+                <p> {{i.seats}} seats &nbsp; &nbsp; </p>
+                <b><p class="text-green">RS {{i.fare}}</p></b>
               </div>
               <div class="row">
                 <p class="text-success">Pickup Time:  {{i.exp_time.toLocaleTimeString()}}</p>
@@ -82,7 +84,14 @@
                 <p>{{i.book_days}}</p>
               </div>
             </div>
-
+          </div>
+          <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+              <button class="btn btn-danger">Pick</button>
+            </div>
+            <div class="col-md-6">
+              <button class="btn btn-danger">Cancel</button>
+            </div>
           </div>
         </div>
       </div>

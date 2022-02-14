@@ -8194,8 +8194,8 @@ h1, h2, h3, h4, h5,
 #sidebar {
   min-width: 280px;
   max-width: 280px;
-  min-height: 760px;
-  max-height: 760px;
+  min-height: 700px;
+  max-height: 700px;
   background: white;
   color: #343a40ff;
   box-shadow: 0 5px 10px #e2e7ec;
@@ -8303,6 +8303,7 @@ a[data-toggle="collapse"] {
 #content {
   width: 100%;
   padding: 0;
+  background: #f8f9fa;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s; }

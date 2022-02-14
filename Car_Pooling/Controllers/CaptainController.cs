@@ -32,7 +32,7 @@ namespace Car_Pooling.Controllers
         {
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string query = "insert into VehicleInfo values('"+ vehicle.regno + "','" + vehicle.model + "','" + vehicle.maker + "','" + vehicle.seats + "','" + vehicle.color + "','" + vehicle.phoneNo+ "')";
+            string query = "insert into VehicleInfo values('"+ vehicle.regno + "','" + vehicle.model + "','" + vehicle.maker + "','" + vehicle.seats + "','" + vehicle.color + "','"+vehicle.AC+"','" + vehicle.phoneNo+ "')";
             SqlCommand com = new SqlCommand(query, con);
             com.ExecuteNonQuery();
             return true;
@@ -235,7 +235,7 @@ namespace Car_Pooling.Controllers
         {
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string query = "Insert into Bookings values ('" + obj.d_phone + "','" + obj.u_phone + "','" + obj.vehicle_ID + "','" + obj.order_id + "','" + obj.seats + "','"+obj.book_date+"','"+obj.till_date+"','"+obj.book_days+"','"+obj.status+"','"+obj.s_point+"','"+obj.e_point+"','"+obj.exp_time+"')";
+            string query = "Insert into Bookings values ('" + obj.d_phone + "','" + obj.u_phone + "','" + obj.vehicle_ID + "','" + obj.order_id + "','" + obj.seats + "','"+obj.book_date+"','"+obj.till_date+"','"+obj.book_days+"','"+obj.status+"','"+obj.s_point+"','"+obj.e_point+"','"+obj.exp_time+ "','" + obj.fare + "')";
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.ExecuteNonQuery();
             return true;
@@ -265,6 +265,8 @@ namespace Car_Pooling.Controllers
                 p.booking.s_point = (byte)sdr["start_point"];
                 p.booking.e_point = (byte)sdr["end_point"];
                 p.booking.status = (byte)sdr["status"];
+                p.booking.book_date = (DateTime)sdr["book_date"];
+                p.booking.fare = (int)sdr["fare"];
                 p.vehicle.regno = sdr["registration_no"].ToString();
                 p.vehicle.model = sdr["model"].ToString();
                 list.Add(p);
@@ -319,7 +321,7 @@ namespace Car_Pooling.Controllers
             List<OfferDays> list = new List<OfferDays>();
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string query = "Select route_points,status,phone_no,ID,days,date,distance from Routes INNER JOIN OfferedRides ON Routes.route_ID=OfferedRides.route_ID WHERE end_date >= '"+obj.date+"'";
+            string query = "Select route_points,status,phone_no,ID,days,date,distance,type from Routes INNER JOIN OfferedRides ON Routes.route_ID=OfferedRides.route_ID WHERE end_date >= '"+obj.date+"'";
             SqlCommand com = new SqlCommand(query, con);
             SqlDataReader sdr = com.ExecuteReader();
             OfferDays r;
@@ -333,6 +335,7 @@ namespace Car_Pooling.Controllers
                 r.days = sdr["days"].ToString();
                 r.date = sdr["date"].ToString();
                 r.distance = (double)sdr["distance"];
+                r.type = sdr["type"].ToString();
                 list.Add(r);
             }
             con.Close();

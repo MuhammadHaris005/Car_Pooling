@@ -14,7 +14,7 @@ export class RidesComponent implements OnInit,AfterViewInit {
 
   phoneNo:any;
   route_ID:any;
-  list:any;
+  list:any=[];
   person:any=[];
   constructor(private service : SignUpService,private router:Router,private modalService: ModalService) {
     this.phoneNo = GlobalService.PhoneNo;

@@ -20,5 +20,6 @@ namespace Car_Pooling.Model
         public int s_point { get; set; }
         public int e_point { get; set; }
         public string exp_time { get; set;}
+        public int fare { get; set; }
     }
 }

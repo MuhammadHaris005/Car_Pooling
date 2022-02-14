@@ -81,7 +81,7 @@ import { A_sidebarComponent } from './Admin/a_sidebar/a_sidebar.component';
     AmexioEnterpriseModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyB6NeN5Q5VygIWwneagajZHad3Pcevcgt8',
-      libraries: ['geometry']
+      //libraries: ['geometry','']
     }),
     RouterModule.forRoot([
       {path: '', component: LandingpageComponent, pathMatch: 'full' },

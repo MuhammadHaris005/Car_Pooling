@@ -73,6 +73,13 @@
                       <div *ngIf= "f.regno.errors.required">Registration No is required</div>
                     </div>
                   </div>
+                  <div class="form-floating form-group col-6 pl-3">
+                    <input type="text"  class="form-control" id="comment" placeholder="Color" formControlName="color" [ngClass]= "{ 'is-invalid': submitted && f.color.errors }">
+                    <label class="pl-4"  for="comment">Color</label>
+                    <div *ngIf= "submitted && f.color.errors" class="invalid-feedback">
+                      <div *ngIf= "f.color.errors.required">Color is required</div>
+                    </div>
+                  </div>
                 </div>
                 <div class="form-row ">
                   <div class="form-floating form-group col-6 pr-3">
@@ -93,17 +100,21 @@
 
                 <div class="form-row ">
                   <div class="form-floating form-group col-6 pr-3">
-                    <input type="text"  class="form-control" id="comment" placeholder="Color" formControlName="color" [ngClass]= "{ 'is-invalid': submitted && f.color.errors }">
-                    <label  for="comment">Color</label>
-                    <div *ngIf= "submitted && f.color.errors" class="invalid-feedback">
-                      <div *ngIf= "f.color.errors.required">Color is required</div>
-                    </div>
-                  </div>
-                  <div class="form-floating form-group col-6 pl-3">
                     <input type="number"  class="form-control" id="comment" placeholder="Seating Capacity" formControlName="seats" [ngClass]= "{ 'is-invalid': submitted && f.seats.errors }">
-                    <label class="pl-4" for="comment">Seats</label>
+                    <label  for="comment">Seats</label>
                     <div *ngIf= "submitted && f.seats.errors" class="invalid-feedback">
                       <div *ngIf= "f.seats.errors.required">No. of Vehicle Seats is required</div>
+                    </div>
+                  </div>
+                  <div class="form-group pt-1 pl-3">
+                    <label class="weight-100"><i class="fa fa-snowflake-o "></i><strong> &nbsp; Air Conditioner</strong></label>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="smook1" formControlName="AC" class="custom-control-input" value=true>
+                      <label class="custom-control-label" for="smook1">Yes</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="smook0" formControlName="AC" class="custom-control-input" value=false>
+                      <label class="custom-control-label" for="smook0">No</label>
                     </div>
                   </div>
                 </div>
